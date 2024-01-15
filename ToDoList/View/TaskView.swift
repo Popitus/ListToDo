@@ -16,17 +16,10 @@ struct TaskView: View {
                     }
                     .onDelete(perform: taskViewModel.removeTask)
                 }
-                
-                HStack {
-                    TextField("Nueva Tarea", text: $newTaskTitle)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                    
-                    Button(action: {
+                AddTaskView(newTaskTitle: $newTaskTitle) {
+                    if !newTaskTitle.isEmpty {
                         taskViewModel.addTask(title: newTaskTitle)
-                        newTaskTitle = ""
-                    }, label: {
-                        Text("Agregar")
-                    })
+                    }
                 }
                 .padding()
             }
