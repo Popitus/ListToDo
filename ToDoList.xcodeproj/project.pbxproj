@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		12B1ABC82B554DE300225483 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 12B1ABC72B554DE300225483 /* README.md */; };
 		12CE7F9D2B553AD000D7974A /* ToDoListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CE7F9C2B553AD000D7974A /* ToDoListApp.swift */; };
 		12CE7F9F2B553AD000D7974A /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CE7F9E2B553AD000D7974A /* TaskView.swift */; };
 		12CE7FA12B553AD200D7974A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 12CE7FA02B553AD200D7974A /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12B1ABC72B554DE300225483 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		12CE7F992B553AD000D7974A /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		12CE7F9C2B553AD000D7974A /* ToDoListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListApp.swift; sourceTree = "<group>"; };
 		12CE7F9E2B553AD000D7974A /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
@@ -41,6 +43,7 @@
 		12CE7F902B553AD000D7974A = {
 			isa = PBXGroup;
 			children = (
+				12B1ABC72B554DE300225483 /* README.md */,
 				12CE7F9B2B553AD000D7974A /* ToDoList */,
 				12CE7F9A2B553AD000D7974A /* Products */,
 			);
@@ -166,6 +169,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12B1ABC82B554DE300225483 /* README.md in Resources */,
 				12CE7FA42B553AD200D7974A /* Preview Assets.xcassets in Resources */,
 				12CE7FA12B553AD200D7974A /* Assets.xcassets in Resources */,
 			);
