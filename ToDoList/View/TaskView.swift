@@ -1,8 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct TaskView: View {
     
-    @StateObject private var taskViewModel = TaskViewModel()
+    @State private var taskViewModel = TaskViewModel()
     @State private var newTaskTitle = ""
     
     var body: some View {

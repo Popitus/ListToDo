@@ -1,10 +1,20 @@
 import SwiftUI
 
-class TaskViewModel: ObservableObject {
-    @Published var tasks: [TaskItem] = []
+@Observable
+class TaskViewModel {
+    @ObservationIgnored
+    private let swiftDataManager: SwiftDataManager
+    
+    var tasks: [TaskItem] = []
+    
+    init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
+        self.swiftDataManager = swiftDataManager
+        self.tasks = swiftDataManager.fetchTaskItem()
+    }
 
     func addTask(title: String) {
         let newTask = TaskItem(title: title)
+        swiftDataManager.addTaskItem(item: newTask)
         tasks.append(newTask)
     }
 
@@ -15,6 +25,9 @@ class TaskViewModel: ObservableObject {
     }
 
     func removeTask(at index: IndexSet) {
-        tasks.remove(atOffsets: index)
+        for index in index {
+            swiftDataManager.removeTaskItem(item: tasks[index])
+            tasks.remove(at: index)
+        }
     }
 }
