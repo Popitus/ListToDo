@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		12614E082B5587D300869790 /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12614E072B5587D300869790 /* SwiftDataManager.swift */; };
+		1263F4892B568CE6006B7B42 /* PreviewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263F4882B568CE6006B7B42 /* PreviewContainer.swift */; };
 		12B1ABC82B554DE300225483 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 12B1ABC72B554DE300225483 /* README.md */; };
 		12B1ABCA2B5553EE00225483 /* AddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B1ABC92B5553EE00225483 /* AddTaskView.swift */; };
 		12CE7F9D2B553AD000D7974A /* ToDoListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12CE7F9C2B553AD000D7974A /* ToDoListApp.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		12614E072B5587D300869790 /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
+		1263F4882B568CE6006B7B42 /* PreviewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContainer.swift; sourceTree = "<group>"; };
 		12B1ABC72B554DE300225483 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		12B1ABC92B5553EE00225483 /* AddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskView.swift; sourceTree = "<group>"; };
 		12CE7F992B553AD000D7974A /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				12614E072B5587D300869790 /* SwiftDataManager.swift */,
+				1263F4882B568CE6006B7B42 /* PreviewContainer.swift */,
 			);
 			path = SwiftData;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 				12CE7FAC2B553B4300D7974A /* TaskItem.swift in Sources */,
 				12B1ABCA2B5553EE00225483 /* AddTaskView.swift in Sources */,
 				12CE7FB32B553C9600D7974A /* TaskItemRow.swift in Sources */,
+				1263F4892B568CE6006B7B42 /* PreviewContainer.swift in Sources */,
 				12CE7F9D2B553AD000D7974A /* ToDoListApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

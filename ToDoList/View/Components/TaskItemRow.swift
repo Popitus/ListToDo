@@ -29,5 +29,7 @@ struct TaskItemRow: View {
 }		
 
 #Preview {
-        TaskItemRow(task: TaskItem(title: "Test"), toggleCompletion: {})
+    let preview = PreviewContainer([TaskItem.self])
+    return TaskItemRow(task: TaskItem(title: "Test"), toggleCompletion: {})
+        .modelContainer(preview.container)
 }
