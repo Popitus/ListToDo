@@ -8,12 +8,18 @@ struct TaskView: View {
     
     var body: some View {
         NavigationView {
+            
             VStack {
                 List {
                     ForEach(taskViewModel.tasks) { task in
-                        TaskItemRow(task: task) {
-                            taskViewModel.toggleTaskCompletion(task: task)
-                        }                    }
+                        TaskItemRow(task: task)
+                            .onTapGesture {
+                                withAnimation {
+                                    taskViewModel.toggleTaskCompletion(task: task)
+                                }
+                                
+                            }
+                    }
                     .onDelete(perform: taskViewModel.removeTask)
                 }
                 AddTaskView(newTaskTitle: $newTaskTitle) {

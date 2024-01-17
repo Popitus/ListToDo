@@ -3,16 +3,12 @@ import SwiftUI
 struct TaskItemRow: View {
     
     var task: TaskItem
-    var toggleCompletion: () -> Void
+    //var toggleCompletion: () -> Void
     
     var body: some View {
         VStack {
             HStack {
-                Button(action: toggleCompletion, label: {
-                    Image(systemName: task.completed ? "checkmark.square" : "square")
-                        .foregroundStyle(task.completed ? .green : .black)
-                })
-                
+                             
                 Text(task.title)
                     .strikethrough(task.completed)
                     .foregroundColor(task.completed ? .gray : .primary)
@@ -38,7 +34,6 @@ struct TaskItemRow: View {
 #Preview {
     let preview = PreviewSwiftdata([TaskItem.self])
     return TaskItemRow(
-        task: TaskItem(title: "Test", date: Date(), status: .pending),
-        toggleCompletion: {})
+        task: TaskItem(title: "Test", date: Date(), status: .pending))
     .modelContainer(preview.container)
 }
