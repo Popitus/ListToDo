@@ -13,14 +13,25 @@ class TaskViewModel {
     }
 
     func addTask(title: String) {
-        let newTask = TaskItem(title: title)
+        let newTask = TaskItem(
+            title: title,
+            date: Date(),
+            status: TodoStatus.pending
+        )
         swiftDataManager.addTaskItem(item: newTask)
         tasks.append(newTask)
     }
 
     func toggleTaskCompletion(task: TaskItem) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            let status = task.status
             tasks[index].completed.toggle()
+            switch status {
+            case .completed:
+                return tasks[index].status = .pending
+            case .pending:
+                return tasks[index].status = .completed
+            }
         }
     }
 

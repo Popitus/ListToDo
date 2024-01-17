@@ -13,8 +13,7 @@ struct TaskView: View {
                     ForEach(taskViewModel.tasks) { task in
                         TaskItemRow(task: task) {
                             taskViewModel.toggleTaskCompletion(task: task)
-                        }
-                    }
+                        }                    }
                     .onDelete(perform: taskViewModel.removeTask)
                 }
                 AddTaskView(newTaskTitle: $newTaskTitle) {
@@ -30,5 +29,7 @@ struct TaskView: View {
 }
 
 #Preview {
-    TaskView()
+    let preview = PreviewSwiftdata([TaskItem.self])
+    return TaskView()
+        .modelContainer(preview.container)
 }

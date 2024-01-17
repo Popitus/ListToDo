@@ -9,9 +9,15 @@ final class SwiftDataManager {
     static let shared = SwiftDataManager()
     
     @MainActor
-    private init() {
-        self.modelContainer = try! ModelContainer(for: TaskItem.self)
-        self.modelContext = modelContainer.mainContext
+    init() {
+        let schema = Schema([TaskItem.self])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        do {
+            self.modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
+            self.modelContext = modelContainer.mainContext
+        } catch {
+            fatalError("Could not initialize ModelContainer")
+        }
     }
     
     func addTaskItem(item: TaskItem) {
