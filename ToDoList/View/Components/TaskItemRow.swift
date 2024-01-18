@@ -2,8 +2,8 @@ import SwiftUI
 
 struct TaskItemRow: View {
     
+    //Propierties
     var task: TaskItem
-    //var toggleCompletion: () -> Void
     
     var body: some View {
         VStack {

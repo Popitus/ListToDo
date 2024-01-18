@@ -10,6 +10,10 @@ final class TaskItem {
     var status: TodoStatus
     var completed = false
     
+    // Relantionship
+    @Relationship(deleteRule: .cascade, inverse: \TaskPageItem.tasksItems)
+    var taskPageItem: TaskPageItem?
+    
     init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, completed: Bool = false) {
         self.id = id
         self.title = title

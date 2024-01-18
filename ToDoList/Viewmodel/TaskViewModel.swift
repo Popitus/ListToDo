@@ -6,12 +6,15 @@ class TaskViewModel {
     private let swiftDataManager: SwiftDataManager
     
     var tasks: [TaskItem] = []
+    var pages: [TaskPageItem] = []
     
     init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
         self.tasks = swiftDataManager.fetchTaskItem()
+        self.pages = swiftDataManager.fetchTaskPageItem()
     }
 
+    // MARK: TaskItems functions
     func addTask(title: String) {
         let newTask = TaskItem(
             title: title,
@@ -41,4 +44,20 @@ class TaskViewModel {
             tasks.remove(at: index)
         }
     }
+    
+    // MARK: TaskPageItems Functions
+    
+    func addTaskPage(title: String) {
+        let newTaskPage = TaskPageItem(title: title)
+        swiftDataManager.addTaskPageItem(item: newTaskPage)
+        pages.append(newTaskPage)
+    }
+    
+    func removePages(with uuid: UUID) {
+        if let index = pages.firstIndex(where: {$0.id == uuid}) {
+            swiftDataManager.removeTaskPageItem(item: pages[index])
+            pages.remove(at: index)
+        }
+    }
+
 }
