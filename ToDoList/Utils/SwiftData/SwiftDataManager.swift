@@ -10,7 +10,7 @@ final class SwiftDataManager {
     
     @MainActor
     init() {
-        let schema = Schema([TaskItem.self, TaskPageItem.self])
+        let schema = Schema([TaskPageItem.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             self.modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -22,7 +22,16 @@ final class SwiftDataManager {
     
     // MARK: TaskItems Functions
     
-    func addTaskItem(item: TaskItem) {
+    func addTaskItem(item: TaskItem, idTaskPage: UUID) {
+        modelContext.insert(item)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func addTaskItem2(item: TaskPageItem) {
         modelContext.insert(item)
         do {
             try modelContext.save()

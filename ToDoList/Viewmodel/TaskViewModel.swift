@@ -10,20 +10,21 @@ class TaskViewModel {
     
     init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
-        self.tasks = swiftDataManager.fetchTaskItem()
         self.pages = swiftDataManager.fetchTaskPageItem()
     }
     
     // MARK: TaskItems functions
+    // add task into taskPage
     func addTask(title: String, idTaskPage: UUID) {
+        print("Pages: \(pages)")
         let newTask = TaskItem(
             title: title,
             date: Date(),
             status: TodoStatus.pending
         )
         if let index = pages.firstIndex(where: {$0.id == idTaskPage}) {
-            swiftDataManager.addTaskItem(item: newTask)
-            tasks.append(newTask)
+            pages[index].tasksItems?.append(newTask)
+            swiftDataManager.addTaskItem2(item: pages[index])
         }
         
     }
@@ -60,7 +61,6 @@ class TaskViewModel {
         guard let index = pages.firstIndex(where: { $0.id == page.id }) else {
             return
         }
-        let selectedPage = pages[index].selected
         pages[index].selected.toggle()
         pages.indices
             .filter { $0 != index }

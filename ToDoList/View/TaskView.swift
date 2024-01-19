@@ -5,7 +5,7 @@ struct TaskView: View {
     
     //Properties
     @State private var taskViewModel = TaskViewModel()
-    @State private var newTaskTitle = ""
+    @State private var newTaskTitle = String()
     @State private var titleSelected = "Tarea"
     @State private var idTaskFromPage = UUID()
     
@@ -14,15 +14,22 @@ struct TaskView: View {
             
             VStack {
                 List {
-                    ForEach(taskViewModel.tasks) { task in
-                        TaskItemRow(task: task)
-                            .onTapGesture {
-                                withAnimation {
-                                    taskViewModel.toggleTaskCompletion(task: task)
-                                }
+                    
+                    ForEach(taskViewModel.pages) { tasks in
+                        if tasks.id == idTaskFromPage {
+                            ForEach(tasks.tasksItems ?? []) { task in
+                                TaskItemRow(task: task)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            taskViewModel.toggleTaskCompletion(task: task)
+                                        }
+                                    }
                             }
+                            .onDelete(perform: taskViewModel.removeTask)
+                        }
+                       
                     }
-                    .onDelete(perform: taskViewModel.removeTask)
+                    
                 }
                 
                 HorizontalPages(
@@ -53,6 +60,7 @@ struct TaskView: View {
                     toggleDeletedPage: { idPage in
                         withAnimation {
                             taskViewModel.removePages(with: idPage)
+                            titleSelected = String()
                         }
                     })
                 .padding()
