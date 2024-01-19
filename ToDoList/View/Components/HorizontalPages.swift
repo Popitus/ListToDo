@@ -4,9 +4,8 @@ struct HorizontalPages: View {
     // Properties
     var pages: [TaskPageItem] = []
     var toggleCompletionAddPage: () -> Void
-    var toggleSelectedPage: (String) -> Void
+    var toggleSelectedPage: (TaskPageItem) -> Void
     var toggleDeletedPage: (UUID) -> Void
-
 
     
     var body: some View {
@@ -19,8 +18,8 @@ struct HorizontalPages: View {
                         } else {
                             ForEach(pages) { page in
                                 TabPage(
-                                    title: page.title,
-                                    toggleSelectedPage: { toggleSelectedPage(page.title) },
+                                    page: page,
+                                    toggleSelectedPage: { toggleSelectedPage(page) },
                                     toggleDeletedPage: { toggleDeletedPage(page.id) })
                             }
                             AddPage().onTapGesture { toggleCompletionAddPage() }

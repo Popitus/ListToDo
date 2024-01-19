@@ -7,6 +7,7 @@ struct TaskView: View {
     @State private var taskViewModel = TaskViewModel()
     @State private var newTaskTitle = ""
     @State private var titleSelected = "Tarea"
+    @State private var idTaskFromPage = UUID()
     
     var body: some View {
         NavigationView {
@@ -28,34 +29,42 @@ struct TaskView: View {
                     pages: taskViewModel.pages,
                     toggleCompletionAddPage: {
                         alertTextField(
-                            title: "Añadir nueva pagina",
-                            message: "Esto es una prueba del mensaje",
-                            hintText: "añadir aqui gañan",
+                            title: "Añadir nueva categoría",
+                            message: "Crea una nueva categoria para tus tareas",
+                            hintText: "Titulo de categoría",
                             primaryTitle: "Añadir",
-                            secondaryTitle: "Cancelar",
+                            secondaryTitle: "Descartar",
                             primaryAction: { text in
                                 if !text.isEmpty {
                                     taskViewModel.addTaskPage(title: text)
                                 }
                             },
-                            secondaryAction: {
-                                print("Cancelado")
-                            })
+                            secondaryAction: {})
                     },
-                    toggleSelectedPage:  { titlePage in
-                        titleSelected = titlePage
+                    toggleSelectedPage:  { page in
+                        taskViewModel.togglePageSelection(page: page)
+                        titleSelected = page.selected ? page.title : ""
+                        if page.selected {
+                            idTaskFromPage = page.id
+                        } else {
+                            idTaskFromPage = UUID()
+                        }
                     },
-                    toggleDeletedPage: { idPage in taskViewModel.removePages(with: idPage)})
+                    toggleDeletedPage: { idPage in
+                        withAnimation {
+                            taskViewModel.removePages(with: idPage)
+                        }
+                    })
                 .padding()
                 
                 AddTaskView(newTaskTitle: $newTaskTitle) {
                     if !newTaskTitle.isEmpty {
-                        taskViewModel.addTask(title: newTaskTitle)
+                        taskViewModel.addTask(title: newTaskTitle, idTaskPage: idTaskFromPage)
                     }
                 }
                 .padding()
             }
-            .navigationTitle("\(titleSelected) Seleccionada")
+            .navigationTitle(titleSelected.isEmpty ? "Seleccionar Tarea" :"\(titleSelected)" )
         }
     }
 }
