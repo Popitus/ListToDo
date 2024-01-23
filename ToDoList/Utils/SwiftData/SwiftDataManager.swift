@@ -10,11 +10,12 @@ final class SwiftDataManager {
     
     @MainActor
     init() {
-        let schema = Schema([TaskPageItem.self])
+        let schema = Schema([TaskPageItem.self, TaskItem.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             self.modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             self.modelContext = modelContainer.mainContext
+            print(URL.documentsDirectory.path())
         } catch {
             fatalError("Could not initialize ModelContainer")
         }
@@ -22,16 +23,7 @@ final class SwiftDataManager {
     
     // MARK: TaskItems Functions
     
-    func addTaskItem(item: TaskItem, idTaskPage: UUID) {
-        modelContext.insert(item)
-        do {
-            try modelContext.save()
-        } catch {
-            fatalError(error.localizedDescription)
-        }
-    }
-    
-    func addTaskItem2(item: TaskPageItem) {
+    func addTaskItem(item: TaskItem) {
         modelContext.insert(item)
         do {
             try modelContext.save()

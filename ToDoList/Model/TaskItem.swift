@@ -4,18 +4,14 @@ import SwiftData
 
 @Model
 final class TaskItem {
-    @Attribute(.unique) var id = UUID()
     var title: String
     var date: Date
     var status: TodoStatus
     var completed = false
     
-    // Relantionship
-    @Relationship(deleteRule: .cascade, inverse: \TaskPageItem.tasksItems)
     var taskPageItem: TaskPageItem?
     
-    init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, completed: Bool = false) {
-        self.id = id
+    init(title: String, date: Date, status: TodoStatus, completed: Bool = false) {
         self.title = title
         self.date = date
         self.status = status

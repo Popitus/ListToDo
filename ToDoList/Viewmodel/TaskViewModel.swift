@@ -11,25 +11,27 @@ class TaskViewModel {
     init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
         self.pages = swiftDataManager.fetchTaskPageItem()
+        self.tasks = swiftDataManager.fetchTaskItem()
     }
     
     // MARK: TaskItems functions
     // add task into taskPage
     func addTask(title: String, idTaskPage: UUID) {
+       
         if let index = pages.firstIndex(where: {$0.id == idTaskPage}) {
-            print("Pages: \(pages)")
             let newTask = TaskItem(
                 title: title,
                 date: Date(),
                 status: TodoStatus.pending
             )
-            pages[index].tasksItems?.append(newTask)
-            swiftDataManager.addTaskItem2(item: pages[index])
+            newTask.taskPageItem = pages[index]
+            swiftDataManager.addTaskItem(item: newTask)
+            tasks = swiftDataManager.fetchTaskItem()
         }
         
     }
     
-    func toggleTaskCompletion(task: TaskItem) {
+    func toggleTaskCompletion(task: TaskItem, withPageId uuid: UUID) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             let status = task.status
             tasks[index].completed.toggle()
@@ -43,10 +45,11 @@ class TaskViewModel {
     }
     
     func removeTask(at index: IndexSet) {
+        print("tasks BF: \(tasks.map{$0.title})")
         for index in index {
             swiftDataManager.removeTaskItem(item: tasks[index])
-            tasks.remove(at: index)
         }
+        tasks = swiftDataManager.fetchTaskItem()
     }
     
     // MARK: TaskPageItems Functions
@@ -54,7 +57,7 @@ class TaskViewModel {
     func addTaskPage(title: String) {
         let newTaskPage = TaskPageItem(title: title)
         swiftDataManager.addTaskPageItem(item: newTaskPage)
-        pages.append(newTaskPage)
+        pages = swiftDataManager.fetchTaskPageItem()
     }
     
     func togglePageSelection(page: TaskPageItem) {
@@ -70,7 +73,7 @@ class TaskViewModel {
     func removePages(with uuid: UUID) {
         if let index = pages.firstIndex(where: {$0.id == uuid}) {
             swiftDataManager.removeTaskPageItem(item: pages[index])
-            pages.remove(at: index)
+            pages = swiftDataManager.fetchTaskPageItem()
         }
     }
     

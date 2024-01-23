@@ -10,6 +10,8 @@ final class TaskPageItem {
     var title: String
     var selected = false
     
+    // Relantionship
+    @Relationship(deleteRule: .cascade, inverse: \TaskItem.taskPageItem)
     var tasksItems: [TaskItem]?
     
     init(id: UUID = UUID(), title: String, selected: Bool = false) {

@@ -14,22 +14,17 @@ struct TaskView: View {
             
             VStack {
                 List {
-                    
-                    ForEach(taskViewModel.pages) { tasks in
-                        if tasks.id == idTaskFromPage {
-                            ForEach(tasks.tasksItems ?? []) { task in
-                                TaskItemRow(task: task)
-                                    .onTapGesture {
-                                        withAnimation {
-                                            taskViewModel.toggleTaskCompletion(task: task)
-                                        }
+                    ForEach(taskViewModel.tasks) { item in
+                        if item.taskPageItem?.id == idTaskFromPage {
+                            TaskItemRow(task: item)
+                                .onTapGesture{
+                                    withAnimation {
+                                        taskViewModel.toggleTaskCompletion(task: item, withPageId: idTaskFromPage)
                                     }
-                            }
-                            .onDelete(perform: taskViewModel.removeTask)
+                                }
                         }
-                       
                     }
-                    
+                    .onDelete(perform: taskViewModel.removeTask)
                 }
                 
                 HorizontalPages(
@@ -50,11 +45,13 @@ struct TaskView: View {
                     },
                     toggleSelectedPage:  { page in
                         taskViewModel.togglePageSelection(page: page)
-                        titleSelected = page.selected ? page.title : ""
+ 
                         if page.selected {
                             idTaskFromPage = page.id
+                            titleSelected = page.title
                         } else {
                             idTaskFromPage = UUID()
+                            titleSelected = String()
                         }
                     },
                     toggleDeletedPage: { idPage in
@@ -73,6 +70,10 @@ struct TaskView: View {
                 .padding()
             }
             .navigationTitle(titleSelected.isEmpty ? "Seleccionar Tarea" :"\(titleSelected)" )
+            
+            .onAppear {
+                
+            }
         }
     }
 }
