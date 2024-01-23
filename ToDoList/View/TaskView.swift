@@ -72,7 +72,7 @@ struct TaskView: View {
             .navigationTitle(titleSelected.isEmpty ? "Seleccionar Tarea" :"\(titleSelected)" )
             
             .onAppear {
-                
+                idTaskFromPage = taskViewModel.checkPageSelected()
             }
         }
     }
