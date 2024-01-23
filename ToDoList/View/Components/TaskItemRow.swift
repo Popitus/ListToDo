@@ -8,7 +8,6 @@ struct TaskItemRow: View {
     var body: some View {
         VStack {
             HStack {
-                             
                 Text(task.title)
                     .strikethrough(task.completed)
                     .foregroundColor(task.completed ? .gray : .primary)

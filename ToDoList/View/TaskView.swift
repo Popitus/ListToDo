@@ -9,22 +9,26 @@ struct TaskView: View {
     @State private var titleSelected = "Tarea"
     @State private var idTaskFromPage = UUID()
     
+    
     var body: some View {
         NavigationView {
-            
             VStack {
                 List {
                     ForEach(taskViewModel.tasks) { item in
-                        if item.taskPageItem?.id == idTaskFromPage {
-                            TaskItemRow(task: item)
-                                .onTapGesture{
-                                    withAnimation {
-                                        taskViewModel.toggleTaskCompletion(task: item, withPageId: idTaskFromPage)
+                        NavigationLink(destination: DetailTaskView(tag: item.title)) {
+                            if item.taskPageItem?.id == idTaskFromPage {
+                                TaskItemRow(task: item)
+                                    .onTapGesture{
+                                        withAnimation {
+                                            taskViewModel.toggleTaskCompletion(task: item, withPageId: idTaskFromPage)
+                                        }
                                     }
-                                }
+                            }
                         }
+                        
                     }
                     .onDelete(perform: taskViewModel.removeTask)
+                    
                 }
                 
                 HorizontalPages(
@@ -70,7 +74,7 @@ struct TaskView: View {
                 .padding()
             }
             .navigationTitle(titleSelected.isEmpty ? "Seleccionar Tarea" :"\(titleSelected)" )
-            
+
             .onAppear {
                 idTaskFromPage = taskViewModel.checkPageSelected()
             }

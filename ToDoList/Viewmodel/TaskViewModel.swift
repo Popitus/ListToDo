@@ -71,13 +71,11 @@ class TaskViewModel {
     }
     
     func removePages(with uuid: UUID) {
-        print("Pages BF -> \(pages.map{$0.title}) - \(tasks.map{$0.title})")
         if let index = pages.firstIndex(where: {$0.id == uuid}) {
             swiftDataManager.removeTaskPageItem(item: pages[index])
             pages = swiftDataManager.fetchTaskPageItem()
             tasks = swiftDataManager.fetchTaskItem()
         }
-        print("Pages AF -> \(pages.map{$0.title}) - \(tasks.map{$0.title})")
     }
     
     // MARK: Utils functions
