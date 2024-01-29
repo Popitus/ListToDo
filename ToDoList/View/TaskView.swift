@@ -15,8 +15,8 @@ struct TaskView: View {
             VStack {
                 List {
                     ForEach(taskViewModel.tasks) { item in
-                        NavigationLink(destination: DetailTaskView(tag: item.title)) {
-                            if item.taskPageItem?.id == idTaskFromPage {
+                        if item.taskPageItem?.id == idTaskFromPage {
+                            NavigationLink(destination: DetailTaskView(task: item)) {
                                 TaskItemRow(task: item)
                                     .onTapGesture{
                                         withAnimation {
@@ -25,7 +25,6 @@ struct TaskView: View {
                                     }
                             }
                         }
-                        
                     }
                     .onDelete(perform: taskViewModel.removeTask)
                     

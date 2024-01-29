@@ -33,6 +33,6 @@ struct TaskItemRow: View {
 #Preview {
     let preview = PreviewSwiftdata([TaskItem.self])
     return TaskItemRow(
-        task: TaskItem(title: "Test", date: Date(), status: .pending))
+        task: TaskItem(title: "Test", date: Date(), status: .pending, note: "Prueba de nota"))
     .modelContainer(preview.container)
 }

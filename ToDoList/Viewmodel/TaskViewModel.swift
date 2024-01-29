@@ -22,7 +22,8 @@ class TaskViewModel {
             let newTask = TaskItem(
                 title: title,
                 date: Date(),
-                status: TodoStatus.pending
+                status: TodoStatus.pending,
+                note: ""
             )
             newTask.taskPageItem = pages[index]
             swiftDataManager.addTaskItem(item: newTask)

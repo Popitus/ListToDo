@@ -10,7 +10,7 @@ import SwiftUI
 struct TagField: View {
     @Binding var tags: [Tag]
     var body: some View {
-        HStack {
+        TagLayout(alignment: .leading) {
             ForEach($tags) { $tag in
                 TagsView(tag: $tag, allTags: $tags)
                     .onChange(of: tag.title) { oldValue, newValue in
@@ -21,9 +21,9 @@ struct TagField: View {
                             }
                         }
                     }
-                
             }
         }
+        .clipped()
         .padding(.vertical, 10)
         .padding(.horizontal, 15)
         .background(.bar, in: .rect(cornerRadius: 12))
@@ -32,6 +32,11 @@ struct TagField: View {
                 tags.append(.init(title: "", isInitial: true))
             }
         }
+        .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification), perform: { _ in
+            if let lastTag = tags.last, !lastTag.title.isEmpty {
+                tags.append(.init(title: "", isInitial: true))
+            }
+        })
        
     }
 }
