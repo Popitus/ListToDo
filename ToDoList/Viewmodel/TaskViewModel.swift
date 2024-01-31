@@ -7,11 +7,14 @@ class TaskViewModel {
     
     var tasks: [TaskItem] = []
     var pages: [TaskPageItem] = []
+    var tags: [Tag] = []
     
     init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
         self.pages = swiftDataManager.fetchTaskPageItem()
         self.tasks = swiftDataManager.fetchTaskItem()
+        self.tags = swiftDataManager.fetchTags()
+        print("Fetch")
     }
     
     // MARK: TaskItems functions
@@ -79,6 +82,33 @@ class TaskViewModel {
         }
     }
     
+    // MARK: Tags Functions
+    func addTag(addTags: [Tag], idTaskItem: UUID) {
+        if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
+            for tag in addTags {
+                if !tag.title.isEmpty {
+                    tag.taskItem = tasks[index]
+                    swiftDataManager.addTagToTask(tag: tag)
+                    
+                } else {
+                    removeTag(with: tag.id)
+                }
+                
+            }
+           
+        }
+        tags = swiftDataManager.fetchTags()
+        tasks = swiftDataManager.fetchTaskItem()
+        pages = swiftDataManager.fetchTaskPageItem()
+    }
+    
+    func removeTag(with uuid: UUID) {
+        if let index = tags.firstIndex(where: {$0.id == uuid}) {
+            swiftDataManager.removeTagTask(tag: tags[index])
+           
+        }
+    }
+    
     // MARK: Utils functions
     func checkPageSelected() -> UUID {
         if let selectedPage =  pages.firstIndex(where: {$0.selected == true }) {
@@ -87,5 +117,4 @@ class TaskViewModel {
             return UUID()
         }
     }
-    
 }

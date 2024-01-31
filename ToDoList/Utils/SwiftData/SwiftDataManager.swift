@@ -10,7 +10,7 @@ final class SwiftDataManager {
     
     @MainActor
     init() {
-        let schema = Schema([TaskPageItem.self, TaskItem.self])
+        let schema = Schema([TaskPageItem.self, TaskItem.self, Tag.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         do {
             self.modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
@@ -67,6 +67,27 @@ final class SwiftDataManager {
         modelContext.delete(item)
     }
 
+    // MARK: Tagsfunctions
     
+    func addTagToTask(tag: Tag) {
+        modelContext.insert(tag)
+        do {
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func fetchTags() -> [Tag] {
+        do {
+            return try modelContext.fetch(FetchDescriptor<Tag>())
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+    }
+    
+    func removeTagTask(tag: Tag) {
+        modelContext.delete(tag)
+    }
     
 }

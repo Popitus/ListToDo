@@ -14,7 +14,7 @@ struct TaskItemRow: View {
                     .font(.title3)
                 
                 Spacer()
-        
+                
                 StatusIndicator(status: task.status)
             }
             
@@ -26,6 +26,30 @@ struct TaskItemRow: View {
                 
                 Spacer()
             }
+            HStack {
+                if task.tag != [] {
+                    Image(systemName: "tag.circle")
+                        .padding(.vertical, 4)
+                    if let tags = task.tag {
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(tags) { tag in
+                                    TagsListView(tag: tag.title)
+                                }
+                            }
+                        }
+                    }
+                    
+                    Spacer()
+                }
+                if !task.note.isEmpty {
+                    Spacer()
+                    Image(systemName: "text.bubble")
+                        .padding(.vertical, 4)
+                }
+                
+            }
+            
         }
     }
 }		

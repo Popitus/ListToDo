@@ -4,6 +4,7 @@ import SwiftData
 
 @Model
 final class TaskItem:Hashable {
+    @Attribute(.unique) var id = UUID()
     var title: String
     var date: Date
     var status: TodoStatus
@@ -13,7 +14,8 @@ final class TaskItem:Hashable {
     @Relationship(deleteRule: .cascade, inverse: \Tag.taskItem)
     var tag: [Tag]?
         
-    init(title: String, date: Date, status: TodoStatus, note: String, completed: Bool = false) {
+    init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, note: String, completed: Bool = false) {
+        self.id = id
         self.title = title
         self.date = date
         self.status = status

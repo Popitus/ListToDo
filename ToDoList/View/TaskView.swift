@@ -45,7 +45,7 @@ struct TaskView: View {
                                 }
                             },
                             secondaryAction: {})
-                    },
+                    },		
                     toggleSelectedPage:  { page in
                         taskViewModel.togglePageSelection(page: page)
  
@@ -76,6 +76,7 @@ struct TaskView: View {
 
             .onAppear {
                 idTaskFromPage = taskViewModel.checkPageSelected()
+                
             }
         }
     }

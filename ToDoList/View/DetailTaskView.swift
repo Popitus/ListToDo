@@ -5,7 +5,9 @@ struct DetailTaskView: View {
     // State properties
     @State private var taskTitle: String = "Titulo..."
     @State private var taskNote: String = "Añadir Nota..."
-    @State private var tags: [Tag] = []
+    @State private var localTags: [Tag] = []
+    @State private var taskViewModel = TaskViewModel()
+    
     @FocusState private var focused: Bool
     @State var task: TaskItem
   
@@ -21,7 +23,10 @@ struct DetailTaskView: View {
             }
            
             Section("Tags") {
-                TagField(tags: $tags)
+                TagField(tags: $localTags)
+                    .onChange(of: localTags.count) { _, _ in
+                        taskViewModel.addTag(addTags: localTags, idTaskItem: task.id)
+                    }
             }
             
             Section("Completado?") {
@@ -30,17 +35,30 @@ struct DetailTaskView: View {
             
             Section("Notas") {
                 TextField(task.note.isEmpty ? "Nota.." :"\(taskNote)", text: $task.note)
+                    
             }
         }
         Text("\(task.title)")
         .navigationTitle("\(task.title)")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            localTags = taskViewModel.tags.filter({ tag in
+                tag.taskItem?.id == task.id
+            })
+        }
+        .onDisappear {
+            localTags.removeAll { tag in
+                tag.title == ""
+            }
+            task.tag = localTags
+        }
+        
+        
     }
 }
 
 #Preview {
     let preview = PreviewSwiftdata([TaskItem.self, Tag.self])
-
     let task = TaskItem(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota")
     
     return DetailTaskView(task: task)
