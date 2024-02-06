@@ -8,7 +8,6 @@ struct DetailTaskView: View {
     @State private var taskTitle: String = "Titulo..."
     @State private var taskNote: String = "Añadir Nota..."
    
-    
     @FocusState private var focused: Bool
     @State var task: TaskItem
     @State var localTags: [Tag]
@@ -26,21 +25,45 @@ struct DetailTaskView: View {
             Section("Tags") {
                 TagField(tags: $localTags)
                     .onChange(of: localTags) { newTag, oldTag in
-                        if newTag.count < oldTag.count {
-                            taskViewModel.addTag(addTag: newTag.last ?? Tag(title: ""), idTaskItem: task.id)
-                        } else {
-                            taskViewModel.removeOneTag(tag: oldTag.last ?? Tag(title: ""))
+                        if let _ = newTag.last, (oldTag.last != nil) {
+                            if newTag.count < oldTag.count {
+                                taskViewModel.addTag(addTag: newTag.last ?? Tag(title: ""), idTaskItem: task.id)
+                            } else {
+                                taskViewModel.removeOneTag(tag: oldTag.last ?? Tag(title: ""))
+                            }
                         }
                     }
-            }
+            }            
             
             Section("Completado?") {
                 StatusIndicator(status: task.status)
+                    .onTapGesture{
+                        withAnimation {
+                            taskViewModel.toggleTaskCompletion(task: task)
+                        }
+                    }
             }
+            .listRowBackground(Color.clear)
             
             Section("Notas") {
-                TextField(task.note.isEmpty ? "Nota.." :"\(taskNote)", text: $task.note)
-                
+                ZStack {
+                    TextEditor(text: $task.note)
+                        .frame(height: 100)
+                    if task.note.isEmpty {
+                        VStack{
+                            HStack{
+                                Text(taskNote)
+                                    .foregroundStyle(.tertiary)
+                                    .padding(.top, 16)
+                                    .padding(.leading, 5)
+                                
+                                Spacer()
+                            }
+                            Spacer()
+                        }
+                    }
+                }
+                 
             }
         }
         Text("\(task.title)")
@@ -54,8 +77,8 @@ struct DetailTaskView: View {
 
 #Preview {
     @State var taskViewModel = TaskViewModel()
-    var tags = [Tag(title: "Tag1"), Tag(title: "Tag2")]
-    var task = TaskItem(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota")
+    let tags = [Tag(title: "Tag1"), Tag(title: "Tag2")]
+    let task = TaskItem(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota")
     
     return DetailTaskView(task: task, localTags: tags)
         .environment(taskViewModel)

@@ -10,7 +10,7 @@ struct TabPage: View {
     var body: some View {
         
         Text("\(page.title)")
-            .frame(width: .infinity)
+            .frame(maxWidth: .infinity)
             .font(.footnote)
             .foregroundColor(.white)
             .padding(8)

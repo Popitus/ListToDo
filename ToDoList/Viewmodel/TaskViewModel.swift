@@ -38,7 +38,7 @@ class TaskViewModel {
         
     }
     
-    func toggleTaskCompletion(task: TaskItem, withPageId uuid: UUID) {
+    func toggleTaskCompletion(task: TaskItem) {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             let status = task.status
             tasks[index].completed.toggle()
@@ -85,24 +85,6 @@ class TaskViewModel {
     }
     
     // MARK: Tags Functions
-    func addTags(addTags: [Tag], idTaskItem: UUID) {
-        if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
-            for tag in addTags {
-                if !(tag.title == "") {
-                    tag.taskItem = tasks[index]
-                    swiftDataManager.addTagToTask(tag: tag)
-                    tags = swiftDataManager.fetchTags()
-                } else {
-                    removeTag(with: tag.id)
-                }
-                
-            }
-           
-        }
-        print("add tags: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
-        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
-
-    }
     
     func addTag(addTag: Tag, idTaskItem: UUID) {
         if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
@@ -111,35 +93,16 @@ class TaskViewModel {
                 swiftDataManager.addTagToTask(tag: addTag)
                 tags = swiftDataManager.fetchTags()
             } else {
-                removeTag(with: addTag.id)
+                removeOneTag(tag: addTag)
             }
-            
         }
-        print("add tag: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
-        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
-
-       
     }
-    
-    func removeTag(with uuid: UUID) {
-        if let index = tags.firstIndex(where: {$0.id == uuid}) {
-            swiftDataManager.removeTagTask(tag: tags[index])
-            tags = swiftDataManager.fetchTags()
-        }
-        print("remove tags: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
-        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
-
-       
-    }
-    
+        
     func removeOneTag(tag: Tag) {
         if let index = tags.firstIndex(where: {$0.id == tag.id}) {
             swiftDataManager.removeTagTask(tag: tags[index])
             tags = swiftDataManager.fetchTags()
         }
-        print("remove tag: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
-        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
-
     }
     
     func removeAllTag(tag: [Tag]) {

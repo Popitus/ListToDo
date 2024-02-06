@@ -10,7 +10,6 @@ struct TaskView: View {
     @State private var titleSelected = "Tarea"
     @State private var idTaskFromPage = UUID()
     
-    
     var body: some View {
         NavigationView {
             VStack {
@@ -24,7 +23,7 @@ struct TaskView: View {
                                         task: item)
                                     .onTapGesture{
                                         withAnimation {
-                                            taskViewModel.toggleTaskCompletion(task: item, withPageId: idTaskFromPage)
+                                            taskViewModel.toggleTaskCompletion(task: item)
                                         }
                                     }
                                 }
@@ -68,6 +67,7 @@ struct TaskView: View {
                         }
                     })
                 .padding()
+                
                 
                 AddTaskView(newTaskTitle: $newTaskTitle) {
                     if !newTaskTitle.isEmpty {

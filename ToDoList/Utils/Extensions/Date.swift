@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 extension Date {
-    func format(_ format: String = "d MMM yyyy") -> String {
+    func format(_ format: String = "HH:mm - dd/MM/yyyy") -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = format
         formatter.locale = Locale.autoupdatingCurrent

@@ -6,7 +6,7 @@ extension String {
 
         let formatter = DateFormatter()
         formatter.locale =  .autoupdatingCurrent
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        formatter.dateFormat = "HH:mm - dd/MM/yyyy"
 
         return formatter
     }

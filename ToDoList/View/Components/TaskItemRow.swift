@@ -22,7 +22,7 @@ struct TaskItemRow: View {
             }
             
             HStack {
-                Text(task.date.toString())
+                Text(task.date.format())
                     .strikethrough(task.completed)
                     .foregroundColor(.gray)
                     .font(.subheadline)
@@ -33,7 +33,7 @@ struct TaskItemRow: View {
                 if taskViewModel.tags.filter({$0.taskItem?.id == task.id}) != [] {
                     Image(systemName: "tag.circle")
                         .padding(.vertical, 4)
-                    ScrollView(.horizontal) {
+                    ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
                             ForEach(taskViewModel.tags.filter{$0.taskItem?.id == task.id}) { tag in
                                 TagsListView(tag: tag.title)

@@ -18,8 +18,7 @@ struct TagField: View {
         }
         .clipped()
         .padding(.vertical, 10)
-        .padding(.horizontal, 15)
-        .background(.bar, in: .rect(cornerRadius: 12))
+        .padding(.horizontal, 10)
         .onAppear {
             if tags.isEmpty {
                 tags.append(.init(title: "", isInitial: true))
