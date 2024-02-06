@@ -14,7 +14,10 @@ class TaskViewModel {
         self.pages = swiftDataManager.fetchTaskPageItem()
         self.tasks = swiftDataManager.fetchTaskItem()
         self.tags = swiftDataManager.fetchTags()
-        print("Fetch")
+        
+        print("Fetch tags: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
+        print("Fetch tasks: \(tasks.map{$0.tag?.map{$0.title}})")
+        
     }
     
     // MARK: TaskItems functions
@@ -49,7 +52,6 @@ class TaskViewModel {
     }
     
     func removeTask(at index: IndexSet) {
-        print("tasks BF: \(tasks.map{$0.title})")
         for index in index {
             swiftDataManager.removeTaskItem(item: tasks[index])
         }
@@ -83,13 +85,13 @@ class TaskViewModel {
     }
     
     // MARK: Tags Functions
-    func addTag(addTags: [Tag], idTaskItem: UUID) {
+    func addTags(addTags: [Tag], idTaskItem: UUID) {
         if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
             for tag in addTags {
-                if !tag.title.isEmpty {
+                if !(tag.title == "") {
                     tag.taskItem = tasks[index]
                     swiftDataManager.addTagToTask(tag: tag)
-                    
+                    tags = swiftDataManager.fetchTags()
                 } else {
                     removeTag(with: tag.id)
                 }
@@ -97,18 +99,56 @@ class TaskViewModel {
             }
            
         }
-        tags = swiftDataManager.fetchTags()
-        tasks = swiftDataManager.fetchTaskItem()
-        pages = swiftDataManager.fetchTaskPageItem()
+        print("add tags: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
+        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
+
+    }
+    
+    func addTag(addTag: Tag, idTaskItem: UUID) {
+        if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
+            if !addTag.title.isEmpty {
+                addTag.taskItem = tasks[index]
+                swiftDataManager.addTagToTask(tag: addTag)
+                tags = swiftDataManager.fetchTags()
+            } else {
+                removeTag(with: addTag.id)
+            }
+            
+        }
+        print("add tag: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
+        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
+
+       
     }
     
     func removeTag(with uuid: UUID) {
         if let index = tags.firstIndex(where: {$0.id == uuid}) {
             swiftDataManager.removeTagTask(tag: tags[index])
-           
+            tags = swiftDataManager.fetchTags()
         }
+        print("remove tags: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
+        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
+
+       
     }
     
+    func removeOneTag(tag: Tag) {
+        if let index = tags.firstIndex(where: {$0.id == tag.id}) {
+            swiftDataManager.removeTagTask(tag: tags[index])
+            tags = swiftDataManager.fetchTags()
+        }
+        print("remove tag: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
+        print("tasks: \(tasks.map{$0.tag?.map{$0.title}})")
+
+    }
+    
+    func removeAllTag(tag: [Tag]) {
+        for tags in tags {
+            swiftDataManager.removeTagTask(tag: tags)
+        }
+        tags = swiftDataManager.fetchTags()
+    }
+        
     // MARK: Utils functions
     func checkPageSelected() -> UUID {
         if let selectedPage =  pages.firstIndex(where: {$0.selected == true }) {

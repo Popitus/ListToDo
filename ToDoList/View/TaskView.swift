@@ -4,7 +4,8 @@ import SwiftData
 struct TaskView: View {
     
     //Properties
-    @State private var taskViewModel = TaskViewModel()
+    @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
+    
     @State private var newTaskTitle = String()
     @State private var titleSelected = "Tarea"
     @State private var idTaskFromPage = UUID()
@@ -16,14 +17,17 @@ struct TaskView: View {
                 List {
                     ForEach(taskViewModel.tasks) { item in
                         if item.taskPageItem?.id == idTaskFromPage {
-                            NavigationLink(destination: DetailTaskView(task: item)) {
-                                TaskItemRow(task: item)
+                            NavigationLink(destination: DetailTaskView(
+                                task: item,
+                                localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                                    TaskItemRow(
+                                        task: item)
                                     .onTapGesture{
                                         withAnimation {
                                             taskViewModel.toggleTaskCompletion(task: item, withPageId: idTaskFromPage)
                                         }
                                     }
-                            }
+                                }
                         }
                     }
                     .onDelete(perform: taskViewModel.removeTask)
@@ -45,10 +49,10 @@ struct TaskView: View {
                                 }
                             },
                             secondaryAction: {})
-                    },		
+                    },
                     toggleSelectedPage:  { page in
                         taskViewModel.togglePageSelection(page: page)
- 
+                        
                         if page.selected {
                             idTaskFromPage = page.id
                             titleSelected = page.title
@@ -73,17 +77,16 @@ struct TaskView: View {
                 .padding()
             }
             .navigationTitle(titleSelected.isEmpty ? "Seleccionar Tarea" :"\(titleSelected)" )
-
+            
             .onAppear {
                 idTaskFromPage = taskViewModel.checkPageSelected()
-                
             }
         }
     }
 }
 
 #Preview {
-    let preview = PreviewSwiftdata([TaskItem.self])
+    @State var taskViewModel = TaskViewModel()
     return TaskView()
-        .modelContainer(preview.container)
+        .environment(taskViewModel)
 }

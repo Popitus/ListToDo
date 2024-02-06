@@ -3,9 +3,12 @@ import SwiftUI
 struct TaskItemRow: View {
     
     //Propierties
-    var task: TaskItem
+    @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
+
+    @State var task: TaskItem
     
     var body: some View {
+
         VStack {
             HStack {
                 Text(task.title)
@@ -27,19 +30,16 @@ struct TaskItemRow: View {
                 Spacer()
             }
             HStack {
-                if task.tag != [] {
+                if taskViewModel.tags.filter({$0.taskItem?.id == task.id}) != [] {
                     Image(systemName: "tag.circle")
                         .padding(.vertical, 4)
-                    if let tags = task.tag {
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(tags) { tag in
-                                    TagsListView(tag: tag.title)
-                                }
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(taskViewModel.tags.filter{$0.taskItem?.id == task.id}) { tag in
+                                TagsListView(tag: tag.title)
                             }
                         }
                     }
-                    
                     Spacer()
                 }
                 if !task.note.isEmpty {
@@ -51,12 +51,15 @@ struct TaskItemRow: View {
             }
             
         }
+        .onAppear {
+            
+        }
     }
-}		
+}
 
 #Preview {
-    let preview = PreviewSwiftdata([TaskItem.self])
+    @State var taskViewModel = TaskViewModel()
     return TaskItemRow(
         task: TaskItem(title: "Test", date: Date(), status: .pending, note: "Prueba de nota"))
-    .modelContainer(preview.container)
+    .environment(taskViewModel)
 }
