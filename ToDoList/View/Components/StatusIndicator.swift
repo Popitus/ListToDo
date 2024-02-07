@@ -2,7 +2,6 @@ import SwiftUI
 
 struct StatusIndicator: View {
     
-    @State private var isTapped = false
     var status: TodoStatus
 
     var body: some View {

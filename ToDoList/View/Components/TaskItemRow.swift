@@ -22,7 +22,7 @@ struct TaskItemRow: View {
             }
             
             HStack {
-                Text(task.date.format())
+                Text(task.lastUpdate.format())
                     .strikethrough(task.completed)
                     .foregroundColor(.gray)
                     .font(.subheadline)
@@ -51,15 +51,12 @@ struct TaskItemRow: View {
             }
             
         }
-        .onAppear {
-            
-        }
     }
 }
 
 #Preview {
     @State var taskViewModel = TaskViewModel()
     return TaskItemRow(
-        task: TaskItem(title: "Test", date: Date(), status: .pending, note: "Prueba de nota"))
+        task: TaskItem(title: "Test", date: Date(), status: .pending, note: "Prueba de nota", lastUpdate: Date()))
     .environment(taskViewModel)
 }

@@ -9,29 +9,79 @@ struct TaskView: View {
     @State private var newTaskTitle = String()
     @State private var titleSelected = "Tarea"
     @State private var idTaskFromPage = UUID()
+    @State private var showActive = true
+    @State private var showInactive = true
     
     var body: some View {
+        @Bindable var taskvmBindable = taskViewModel //<- @Environment object aren’t directly bindable
         NavigationView {
             VStack {
                 List {
-                    ForEach(taskViewModel.tasks) { item in
-                        if item.taskPageItem?.id == idTaskFromPage {
-                            NavigationLink(destination: DetailTaskView(
-                                task: item,
-                                localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
-                                    TaskItemRow(
-                                        task: item)
-                                    .onTapGesture{
-                                        withAnimation {
-                                            taskViewModel.toggleTaskCompletion(task: item)
-                                        }
-                                    }
+                    Section {
+                        if showActive {
+                            ForEach(taskViewModel.taskSearch) { item in
+                                if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != true) {
+                                    NavigationLink(
+                                        destination: DetailTaskView(
+                                            task: item,
+                                            localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                                                TaskItemRow(task: item)
+                                                    .onTapGesture{
+                                                        withAnimation {
+                                                            taskViewModel.toggleTaskCompletion(task: item)
+                                                        }
+                                                    }
+                                            }
                                 }
+                            }
+                            .onDelete(perform: taskViewModel.removeTask)
                         }
+                        
+                    } header: {
+                        HStack {
+                            Text("Pendientes\(taskViewModel.checkActivetask(id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(id: idTaskFromPage))" : "")")
+                                .font(.headline)
+                            Spacer()
+                            Image(systemName: showActive ? "chevron.down" : "chevron.right")
+                        }
+                        .onTapGesture {
+                            withAnimation {
+                                showActive.toggle()
+                            }
+                        }
+                        .symbolEffect(.variableColor.reversing.iterative, value: showActive)
+                        
                     }
-                    .onDelete(perform: taskViewModel.removeTask)
-                    
+                    Section {
+                        if showInactive {
+                            ForEach(taskViewModel.taskSearch) { item in
+                                if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != false) {
+                                    NavigationLink(destination: DetailTaskView(
+                                        task: item,
+                                        localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                                            TaskItemRow(task: item)
+                                            .onTapGesture{
+                                                withAnimation {
+                                                    taskViewModel.toggleTaskCompletion(task: item)
+                                                }
+                                            }
+                                        }
+                                }
+                            }
+                            .onDelete(perform: taskViewModel.removeTask)
+                        }
+                        
+                    } header: {
+                        HStack {
+                            Text("Completadas\(taskViewModel.checkActivetask(is: true, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: true, id: idTaskFromPage))" : "")")
+                                .font(.headline)
+                            Spacer()
+                            Image(systemName: showInactive ? "chevron.down" : "chevron.right")
+                        }
+                        
+                    }
                 }
+                .searchable(text: $taskvmBindable.search, prompt:"Buscar Tarea...")
                 
                 HorizontalPages(
                     pages: taskViewModel.pages,

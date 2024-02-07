@@ -7,7 +7,7 @@ struct DetailTaskView: View {
     
     @State private var taskTitle: String = "Titulo..."
     @State private var taskNote: String = "Añadir Nota..."
-   
+    
     @FocusState private var focused: Bool
     @State var task: TaskItem
     @State var localTags: [Tag]
@@ -33,22 +33,18 @@ struct DetailTaskView: View {
                             }
                         }
                     }
-            }            
+            }
             
-            Section("Completado?") {
+            Section("Estado") {
                 StatusIndicator(status: task.status)
-                    .onTapGesture{
-                        withAnimation {
-                            taskViewModel.toggleTaskCompletion(task: task)
-                        }
-                    }
+                    
             }
             .listRowBackground(Color.clear)
             
             Section("Notas") {
                 ZStack {
                     TextEditor(text: $task.note)
-                        .frame(height: 100)
+                        .frame(height: 125)
                     if task.note.isEmpty {
                         VStack{
                             HStack{
@@ -63,22 +59,39 @@ struct DetailTaskView: View {
                         }
                     }
                 }
-                 
+                
             }
         }
-        Text("\(task.title)")
-            .onTapGesture {
-                taskViewModel.removeAllTag(tag: localTags)
+        HStack {
+            VStack {
+                Section("Creación") {
+                    Text(task.date.format())
+                        .font(.footnote)
+                }
+                .font(.subheadline)
+                .padding(.horizontal, 25)
             }
-            .navigationTitle("\(task.title)")
-            .navigationBarTitleDisplayMode(.inline)
+            VStack {
+                Section("Modificación") {
+                    Text(task.lastUpdate.format())
+                        .font(.footnote)
+                }
+                .font(.subheadline)
+                .padding(.horizontal, 25)
+            }
+        }
+       
+        .listRowBackground(Color.clear)
+        .scrollIndicators(.hidden)
+        .navigationTitle("\(task.title)")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
     @State var taskViewModel = TaskViewModel()
     let tags = [Tag(title: "Tag1"), Tag(title: "Tag2")]
-    let task = TaskItem(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota")
+    let task = TaskItem(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota", lastUpdate: Date())
     
     return DetailTaskView(task: task, localTags: tags)
         .environment(taskViewModel)
