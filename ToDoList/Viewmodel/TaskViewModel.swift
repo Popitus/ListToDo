@@ -99,6 +99,14 @@ class TaskViewModel {
             .forEach { pages[$0].selected = false }
     }
     
+    func checkPageSelected() -> TaskPageItem? {
+        if let index = pages.firstIndex(where: { $0.selected == true }) {
+            return pages[index]
+        } else {
+            return nil
+        }
+    }
+    
     func removePages(with uuid: UUID) {
         if let index = pages.firstIndex(where: {$0.id == uuid}) {
             swiftDataManager.removeTaskPageItem(item: pages[index])

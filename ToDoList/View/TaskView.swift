@@ -7,81 +7,121 @@ struct TaskView: View {
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
     
     @State private var newTaskTitle = String()
-    @State private var titleSelected = "Tarea"
+    @State private var titleSelected = ""
     @State private var idTaskFromPage = UUID()
     @State private var showActive = true
     @State private var showInactive = true
+    @State private var animationCount = 0
     
     var body: some View {
         @Bindable var taskvmBindable = taskViewModel //<- @Environment object aren’t directly bindable
         NavigationView {
             VStack {
-                List {
-                    Section {
-                        if showActive {
-                            ForEach(taskViewModel.taskSearch) { item in
-                                if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != true) {
-                                    NavigationLink(
-                                        destination: DetailTaskView(
-                                            task: item,
-                                            localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
-                                                TaskItemRow(task: item)
+                if taskViewModel.pages.isEmpty {
+                    Spacer()
+                    Image(systemName: "book.pages.fill")
+                        .symbolEffect(.bounce, value: animationCount)
+                        .font(.system(size: 100))
+                        .onTapGesture {
+                            animationCount += 1
+                        }
+                    Text("Sin páginas")
+                    Spacer()
+                } else {
+                    if !taskViewModel.tasks.isEmpty {
+                        List {
+                            Section {
+                                if showActive {
+                                    ForEach(taskViewModel.taskSearch) { item in
+                                        if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != true) {
+                                            NavigationLink(
+                                                destination: DetailTaskView(
+                                                    task: item,
+                                                    localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                                                        TaskItemRow(task: item)
+                                                            .onTapGesture{
+                                                                withAnimation {
+                                                                    taskViewModel.toggleTaskCompletion(task: item)
+                                                                }
+                                                            }
+                                                    }
+                                        }
+                                    }
+                                    .onDelete(perform: taskViewModel.removeTask)
+                                }
+                                
+                            } header: {
+                                if !taskViewModel.tasks.isEmpty {
+                                    HStack {
+                                        Text("Pendientes\(taskViewModel.checkActivetask(id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(id: idTaskFromPage))" : "")")
+                                            .font(.headline)
+                                        Spacer()
+                                        Image(systemName: showActive ? "chevron.down" : "chevron.right")
+                                    }
+                                    .onTapGesture {
+                                        withAnimation {
+                                            showActive.toggle()
+                                        }
+                                    }
+                                    .symbolEffect(.variableColor.reversing.iterative, value: showActive)
+                                }
+                            }
+                            Section {
+                                if showInactive {
+                                    ForEach(taskViewModel.taskSearch) { item in
+                                        if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != false) {
+                                            NavigationLink(destination: DetailTaskView(
+                                                task: item,
+                                                localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                                                    TaskItemRow(task: item)
                                                     .onTapGesture{
                                                         withAnimation {
                                                             taskViewModel.toggleTaskCompletion(task: item)
                                                         }
                                                     }
-                                            }
-                                }
-                            }
-                            .onDelete(perform: taskViewModel.removeTask)
-                        }
-                        
-                    } header: {
-                        HStack {
-                            Text("Pendientes\(taskViewModel.checkActivetask(id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(id: idTaskFromPage))" : "")")
-                                .font(.headline)
-                            Spacer()
-                            Image(systemName: showActive ? "chevron.down" : "chevron.right")
-                        }
-                        .onTapGesture {
-                            withAnimation {
-                                showActive.toggle()
-                            }
-                        }
-                        .symbolEffect(.variableColor.reversing.iterative, value: showActive)
-                        
-                    }
-                    Section {
-                        if showInactive {
-                            ForEach(taskViewModel.taskSearch) { item in
-                                if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != false) {
-                                    NavigationLink(destination: DetailTaskView(
-                                        task: item,
-                                        localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
-                                            TaskItemRow(task: item)
-                                            .onTapGesture{
-                                                withAnimation {
-                                                    taskViewModel.toggleTaskCompletion(task: item)
                                                 }
-                                            }
                                         }
+                                    }
+                                    .onDelete(perform: taskViewModel.removeTask)
                                 }
+                                
+                            } header: {
+                                if !taskViewModel.tasks.isEmpty {
+                                    HStack {
+                                        Text("Completadas\(taskViewModel.checkActivetask(is: true, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: true, id: idTaskFromPage))" : "")")
+                                            .font(.headline)
+                                        Spacer()
+                                        Image(systemName: showInactive ? "chevron.down" : "chevron.right")
+                                    }
+                                    .onTapGesture {
+                                        withAnimation {
+                                            showInactive.toggle()
+                                        }
+                                    }
+                                    .symbolEffect(.variableColor.reversing.iterative, value: showInactive)
+        
+                                }
+                                
+                                
                             }
-                            .onDelete(perform: taskViewModel.removeTask)
                         }
-                        
-                    } header: {
-                        HStack {
-                            Text("Completadas\(taskViewModel.checkActivetask(is: true, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: true, id: idTaskFromPage))" : "")")
-                                .font(.headline)
-                            Spacer()
-                            Image(systemName: showInactive ? "chevron.down" : "chevron.right")
+                        .searchable(text: $taskvmBindable.search, prompt:"Buscar Tarea...")
+                    } else {
+                        Spacer()
+                        Image(systemName: "list.clipboard")
+                            .symbolEffect(.bounce, value: animationCount)
+                            .font(.system(size: 100))
+                            .onTapGesture {
+                                animationCount += 1
+                            }
+                        if (titleSelected != "") && (taskViewModel.checkPageSelected() != nil) {
+                            Text("Sin tareas en \(titleSelected)")
                         }
-                        
+                        Spacer()
                     }
+                    
                 }
-                .searchable(text: $taskvmBindable.search, prompt:"Buscar Tarea...")
+                
                 
                 HorizontalPages(
                     pages: taskViewModel.pages,
@@ -95,6 +135,7 @@ struct TaskView: View {
                             primaryAction: { text in
                                 if !text.isEmpty {
                                     taskViewModel.addTaskPage(title: text)
+                                    titleSelected = "Seleccionar Página"
                                 }
                             },
                             secondaryAction: {})
@@ -107,13 +148,25 @@ struct TaskView: View {
                             titleSelected = page.title
                         } else {
                             idTaskFromPage = UUID()
-                            titleSelected = String()
+                            if let _ = taskViewModel.checkPageSelected() {
+                                titleSelected = ""
+                            } else {
+                                titleSelected = "Seleccionar Página"
+                            }
+                            
                         }
                     },
                     toggleDeletedPage: { idPage in
                         withAnimation {
                             taskViewModel.removePages(with: idPage)
-                            titleSelected = String()
+                            if let page = taskViewModel.checkPageSelected() {
+                                idTaskFromPage = page.id
+                                titleSelected = page.title
+                            } else {
+                                titleSelected = taskViewModel.pages.isEmpty ? "Añadir Página" : "Seleccionar Página"
+                            }
+                           
+                            
                         }
                     })
                 .padding()
@@ -126,7 +179,7 @@ struct TaskView: View {
                 }
                 .padding()
             }
-            .navigationTitle(titleSelected.isEmpty ? "Seleccionar Tarea" :"\(titleSelected)" )
+            .navigationTitle(titleSelected.isEmpty ? "Añadir Página" :"\(titleSelected)" )
             
             .onAppear {
                 idTaskFromPage = taskViewModel.checkPageSelected()
