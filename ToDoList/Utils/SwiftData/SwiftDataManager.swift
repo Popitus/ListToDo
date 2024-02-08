@@ -41,9 +41,14 @@ final class SwiftDataManager {
     }
     
     func removeTaskItem(item: TaskItem) {
-        modelContext.delete(item)
+        do {
+            modelContext.delete(item)
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
-        
+    
     // MARK: TaskPageItems functions
     
     func addTaskPageItem(item: TaskPageItem) {
@@ -64,7 +69,13 @@ final class SwiftDataManager {
     }
     
     func removeTaskPageItem(item: TaskPageItem) {
-        modelContext.delete(item)
+        do {
+            modelContext.delete(item)
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
+       
     }
 
     // MARK: Tagsfunctions
@@ -87,7 +98,12 @@ final class SwiftDataManager {
     }
     
     func removeTagTask(tag: Tag) {
-        modelContext.delete(tag)
+        do {
+            modelContext.delete(tag)
+            try modelContext.save()
+        } catch {
+            fatalError(error.localizedDescription)
+        }
     }
     
 }

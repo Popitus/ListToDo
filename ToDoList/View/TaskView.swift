@@ -7,6 +7,7 @@ struct TaskView: View {
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
     
     @State private var newTaskTitle = String()
+    @State private var checkTasks: [TaskItem] = []
     @State private var titleSelected = ""
     @State private var idTaskFromPage = UUID()
     @State private var showActive = true
@@ -28,7 +29,7 @@ struct TaskView: View {
                     Text("Sin páginas")
                     Spacer()
                 } else {
-                    if !taskViewModel.tasks.isEmpty {
+                    if (!checkTasks.isEmpty){
                         List {
                             Section {
                                 if showActive {
@@ -86,7 +87,7 @@ struct TaskView: View {
                                 }
                                 
                             } header: {
-                                if !taskViewModel.tasks.isEmpty {
+                                if !checkTasks.isEmpty {
                                     HStack {
                                         Text("Completadas\(taskViewModel.checkActivetask(is: true, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: true, id: idTaskFromPage))" : "")")
                                             .font(.headline)
@@ -101,8 +102,7 @@ struct TaskView: View {
                                     .symbolEffect(.variableColor.reversing.iterative, value: showInactive)
         
                                 }
-                                
-                                
+
                             }
                         }
                         .searchable(text: $taskvmBindable.search, prompt:"Buscar Tarea...")
@@ -155,6 +155,7 @@ struct TaskView: View {
                             }
                             
                         }
+                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
                     },
                     toggleDeletedPage: { idPage in
                         withAnimation {
@@ -168,6 +169,7 @@ struct TaskView: View {
                            
                             
                         }
+                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
                     })
                 .padding()
                 
@@ -180,9 +182,14 @@ struct TaskView: View {
                 .padding()
             }
             .navigationTitle(titleSelected.isEmpty ? "Añadir Página" :"\(titleSelected)" )
+            .onChange(of: taskViewModel.tasks) { _, _ in
+                checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+                print("CheckTAsk: \(checkTasks.map{$0.title})")
+            }
             
             .onAppear {
                 idTaskFromPage = taskViewModel.checkPageSelected()
+                
             }
         }
     }
