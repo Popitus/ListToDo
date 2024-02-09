@@ -12,22 +12,14 @@ struct TaskView: View {
     @State private var idTaskFromPage = UUID()
     @State private var showActive = true
     @State private var showInactive = true
-    @State private var animationCount = 0
+    
     
     var body: some View {
         @Bindable var taskvmBindable = taskViewModel //<- @Environment object aren’t directly bindable
         NavigationView {
             VStack {
                 if taskViewModel.pages.isEmpty {
-                    Spacer()
-                    Image(systemName: "book.pages.fill")
-                        .symbolEffect(.bounce, value: animationCount)
-                        .font(.system(size: 100))
-                        .onTapGesture {
-                            animationCount += 1
-                        }
-                    Text("Sin páginas")
-                    Spacer()
+                    EmptyPageView()
                 } else {
                     if (!checkTasks.isEmpty){
                         List {
@@ -35,17 +27,7 @@ struct TaskView: View {
                                 if showActive {
                                     ForEach(taskViewModel.taskSearch) { item in
                                         if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != true) {
-                                            NavigationLink(
-                                                destination: DetailTaskView(
-                                                    task: item,
-                                                    localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
-                                                        TaskItemRow(task: item)
-                                                            .onTapGesture{
-                                                                withAnimation {
-                                                                    taskViewModel.toggleTaskCompletion(task: item)
-                                                                }
-                                                            }
-                                                    }
+                                            ListTask(item: item)
                                         }
                                     }
                                     .onDelete(perform: taskViewModel.removeTask)
@@ -71,16 +53,7 @@ struct TaskView: View {
                                 if showInactive {
                                     ForEach(taskViewModel.taskSearch) { item in
                                         if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != false) {
-                                            NavigationLink(destination: DetailTaskView(
-                                                task: item,
-                                                localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
-                                                    TaskItemRow(task: item)
-                                                    .onTapGesture{
-                                                        withAnimation {
-                                                            taskViewModel.toggleTaskCompletion(task: item)
-                                                        }
-                                                    }
-                                                }
+                                            ListTask(item: item)
                                         }
                                     }
                                     .onDelete(perform: taskViewModel.removeTask)
@@ -107,22 +80,13 @@ struct TaskView: View {
                         }
                         .searchable(text: $taskvmBindable.search, prompt:"Buscar Tarea...")
                     } else {
-                        Spacer()
-                        Image(systemName: "list.clipboard")
-                            .symbolEffect(.bounce, value: animationCount)
-                            .font(.system(size: 100))
-                            .onTapGesture {
-                                animationCount += 1
-                            }
-                        if (titleSelected != "") && (taskViewModel.checkPageSelected() != nil) {
-                            Text("Sin tareas en \(titleSelected)")
-                        }
-                        Spacer()
+                        EmptyTaskView(
+                            titleSelected: $titleSelected,
+                            checkPagedSelected: taskViewModel.checkPageSelected()
+                        )
                     }
-                    
                 }
-                
-                
+
                 HorizontalPages(
                     pages: taskViewModel.pages,
                     toggleCompletionAddPage: {
@@ -184,7 +148,6 @@ struct TaskView: View {
             .navigationTitle(titleSelected.isEmpty ? "Añadir Página" :"\(titleSelected)" )
             .onChange(of: taskViewModel.tasks) { _, _ in
                 checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
-                print("CheckTAsk: \(checkTasks.map{$0.title})")
             }
             
             .onAppear {

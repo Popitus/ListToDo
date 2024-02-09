@@ -36,9 +36,6 @@ class TaskViewModel {
         self.tasks = swiftDataManager.fetchTaskItem()
         self.tags = swiftDataManager.fetchTags()
         
-        print("Fetch tags: \(tags.map{$0.title}) - \(tags.map{$0.taskItem?.title}) ")
-        print("Fetch tasks: \(tasks.map{$0.tag?.map{$0.title}})")
-        
     }
     
     // MARK: TaskItems functions
@@ -111,9 +108,7 @@ class TaskViewModel {
         if let index = pages.firstIndex(where: {$0.id == uuid}) {
             swiftDataManager.removeTaskPageItem(item: pages[index])
         }
-        print("capt BF: \(pages.map{$0.title})")
         pages = swiftDataManager.fetchTaskPageItem()
-        print("capt AF: \(pages.map{$0.title})")
         tasks = swiftDataManager.fetchTaskItem()
     }
     
