@@ -10,6 +10,7 @@
 		121B88202B76262E009007B5 /* ListTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B881F2B76262E009007B5 /* ListTask.swift */; };
 		121B88222B762E63009007B5 /* EmptyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B88212B762E63009007B5 /* EmptyPageView.swift */; };
 		121B88242B762F6C009007B5 /* EmptyTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B88232B762F6C009007B5 /* EmptyTaskView.swift */; };
+		121B88262B763818009007B5 /* TitleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B88252B763818009007B5 /* TitleSection.swift */; };
 		12614E082B5587D300869790 /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12614E072B5587D300869790 /* SwiftDataManager.swift */; };
 		1263F48C2B56973C006B7B42 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263F48B2B56973C006B7B42 /* Enums.swift */; };
 		1263F48F2B569A1E006B7B42 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263F48E2B569A1E006B7B42 /* Log.swift */; };
@@ -49,6 +50,7 @@
 		121B881F2B76262E009007B5 /* ListTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTask.swift; sourceTree = "<group>"; };
 		121B88212B762E63009007B5 /* EmptyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyPageView.swift; sourceTree = "<group>"; };
 		121B88232B762F6C009007B5 /* EmptyTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTaskView.swift; sourceTree = "<group>"; };
+		121B88252B763818009007B5 /* TitleSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSection.swift; sourceTree = "<group>"; };
 		12614E072B5587D300869790 /* SwiftDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManager.swift; sourceTree = "<group>"; };
 		1263F48B2B56973C006B7B42 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		1263F48E2B569A1E006B7B42 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				12983DB52B5824ED000545EB /* TabPage.swift */,
 				12E62D962B5FDF560016C9B1 /* TagLayout.swift */,
 				12E62D9A2B600A0B0016C9B1 /* TagField.swift */,
+				121B88252B763818009007B5 /* TitleSection.swift */,
 			);
 			path = Elements;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 				1263F4962B569A52006B7B42 /* Date.swift in Sources */,
 				1263F48C2B56973C006B7B42 /* Enums.swift in Sources */,
 				121B88202B76262E009007B5 /* ListTask.swift in Sources */,
+				121B88262B763818009007B5 /* TitleSection.swift in Sources */,
 				128E02022B67E58200484AEB /* ViewRepresentable.swift in Sources */,
 				12B6CF392B57E06B008E5D92 /* PreviewSwiftdata.swift in Sources */,
 				12CE7F9D2B553AD000D7974A /* ToDoListApp.swift in Sources */,

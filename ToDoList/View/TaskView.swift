@@ -36,10 +36,7 @@ struct TaskView: View {
                             } header: {
                                 if !taskViewModel.tasks.isEmpty {
                                     HStack {
-                                        Text("Pendientes\(taskViewModel.checkActivetask(id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(id: idTaskFromPage))" : "")")
-                                            .font(.headline)
-                                        Spacer()
-                                        Image(systemName: showActive ? "chevron.down" : "chevron.right")
+                                        TitleSection(title: "Pendientes", showActive: $showActive, idTaskFromPage: $idTaskFromPage)
                                     }
                                     .onTapGesture {
                                         withAnimation {
@@ -62,10 +59,7 @@ struct TaskView: View {
                             } header: {
                                 if !checkTasks.isEmpty {
                                     HStack {
-                                        Text("Completadas\(taskViewModel.checkActivetask(is: true, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: true, id: idTaskFromPage))" : "")")
-                                            .font(.headline)
-                                        Spacer()
-                                        Image(systemName: showInactive ? "chevron.down" : "chevron.right")
+                                        TitleSection(title: "Completadas", conditional: true, showActive: $showInactive, idTaskFromPage: $idTaskFromPage)
                                     }
                                     .onTapGesture {
                                         withAnimation {
