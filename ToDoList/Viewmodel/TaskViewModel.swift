@@ -25,6 +25,16 @@ class TaskViewModel {
         return trueElements.count
     }
     
+    var titleSelected: String {
+        let page = pages.filter { $0.selected == true }
+        if let title = page.first?.title {
+            return title
+        } else {
+            return ""
+        }
+        
+    }
+    
     var pages: [TaskPageItem] = []
     var tags: [Tag] = []
     var search: String = ""

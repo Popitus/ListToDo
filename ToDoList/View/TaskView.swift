@@ -146,7 +146,8 @@ struct TaskView: View {
             
             .onAppear {
                 idTaskFromPage = taskViewModel.checkPageSelected()
-                
+                checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+                titleSelected = taskViewModel.titleSelected
             }
         }
     }
