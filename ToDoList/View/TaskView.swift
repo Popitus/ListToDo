@@ -74,10 +74,7 @@ struct TaskView: View {
                         }
                         .searchable(text: $taskvmBindable.search, prompt:"Buscar Tarea...")
                     } else {
-                        EmptyTaskView(
-                            titleSelected: $titleSelected,
-                            checkPagedSelected: taskViewModel.checkPageSelected()
-                        )
+                        EmptyTaskView(titleSelected: $titleSelected)
                     }
                 }
 
@@ -93,7 +90,7 @@ struct TaskView: View {
                             primaryAction: { text in
                                 if !text.isEmpty {
                                     taskViewModel.addTaskPage(title: text)
-                                    titleSelected = "Seleccionar Página"
+                                    self.titleSelected = "Seleccionar Página"
                                 }
                             },
                             secondaryAction: {})
@@ -103,26 +100,27 @@ struct TaskView: View {
                         
                         if page.selected {
                             idTaskFromPage = page.id
-                            titleSelected = page.title
+                            self.titleSelected = page.title
                         } else {
                             idTaskFromPage = UUID()
                             if let _ = taskViewModel.checkPageSelected() {
-                                titleSelected = ""
+                                self.titleSelected = ""
                             } else {
-                                titleSelected = "Seleccionar Página"
+                                self.titleSelected = "Seleccionar Página"
                             }
                             
                         }
                         checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+                        print("texto - \(titleSelected)")
                     },
                     toggleDeletedPage: { idPage in
                         withAnimation {
                             taskViewModel.removePages(with: idPage)
                             if let page = taskViewModel.checkPageSelected() {
                                 idTaskFromPage = page.id
-                                titleSelected = page.title
+                                self.titleSelected = page.title
                             } else {
-                                titleSelected = taskViewModel.pages.isEmpty ? "Añadir Página" : "Seleccionar Página"
+                                self.titleSelected = taskViewModel.pages.isEmpty ? "Añadir Página" : "Seleccionar Página"
                             }
                            
                             
