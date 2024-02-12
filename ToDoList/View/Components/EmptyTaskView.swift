@@ -21,11 +21,7 @@ struct EmptyTaskView: View {
                 Text("\(taskViewModel.checkPageSelected() != nil ? "Sin tareas en \(titleSelected)" : "Seleccionar Página")")
             }
             Spacer()
-        }
-        .onChange(of: titleSelected) { _,_ in
-            print("Cambio... \(titleSelected) - \(String(describing: taskViewModel.checkPageSelected()?.title))")
-        }
-        
+        }        
     }
 }
 

@@ -111,7 +111,6 @@ struct TaskView: View {
                             
                         }
                         checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
-                        print("texto - \(titleSelected)")
                     },
                     toggleDeletedPage: { idPage in
                         withAnimation {

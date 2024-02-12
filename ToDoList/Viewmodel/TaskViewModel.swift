@@ -30,7 +30,7 @@ class TaskViewModel {
         if let title = page.first?.title {
             return title
         } else {
-            return ""
+            return pages.count > 0 ? "Seleccionar Página" : ""
         }
         
     }
@@ -104,16 +104,13 @@ class TaskViewModel {
         pages.indices
             .filter { $0 != index }
             .forEach { pages[$0].selected = false }
-        print("VM -> \(pages.map{$0.selected})")
-        pages = swiftDataManager.fetchTaskPageItem()
+        //pages = swiftDataManager.fetchTaskPageItem()
     }
     
     func checkPageSelected() -> TaskPageItem? {
         if let index = pages.firstIndex(where: { $0.selected == true }) {
-            print("VM selected-> \(pages.map{$0.selected})")
             return pages[index]
         } else {
-            print("VM nil -> \(pages.map{$0.selected})")
             return nil
         }
     }
