@@ -19,5 +19,4 @@ struct EmptyPageView: View {
 
 #Preview {
     EmptyPageView()
-        .environment(\.locale, Locale(identifier: "EN"))
 }

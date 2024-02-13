@@ -157,16 +157,9 @@ struct TaskView: View {
     }
 }
 
-#Preview("Spanish") {
+#Preview {
     @State var taskViewModel = TaskViewModel()
     return TaskView()
         .environment(taskViewModel)
 }
 
-
-#Preview("English") {
-    @State var taskViewModel = TaskViewModel()
-    return TaskView()
-        .environment(taskViewModel)
-        .environment(\.locale, .init(identifier: "en"))
-}
