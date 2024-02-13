@@ -14,7 +14,7 @@ struct StatusIndicator: View {
                         }
                     }()
 
-        Text(status == .completed ? "Completed" : "Pending")
+        Text(status == .completed ? String(localized:"status_completed"): String(localized:"status_pending"))
             .font(.footnote)
             .foregroundColor(.white)
             .padding(8)

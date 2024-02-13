@@ -30,7 +30,7 @@ class TaskViewModel {
         if let title = page.first?.title {
             return title
         } else {
-            return pages.count > 0 ? "Seleccionar Página" : ""
+            return pages.count > 0 ? String(localized:"title_select_category") : ""
         }
         
     }

@@ -14,14 +14,14 @@ struct AddTaskView: View {
     
     var body: some View {
         HStack {
-            TextField("Nueva Tarea", text: $newTaskTitle)
+            TextField("new_task", text: $newTaskTitle)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             
             Button(action: {
                 addAdction()
                 newTaskTitle = ""
             }, label: {
-                Text("Agregar")
+                Text("button_add")
             })
         }
     }

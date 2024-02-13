@@ -28,5 +28,17 @@ extension String {
 
         return Date()
     }
+    
+    func localized() -> String {
+        return localized(withComment: "")
+    }
+    
+    func localized(withComment: String) -> String {
+        var localized = Bundle.main.localizedString(forKey: self, value: withComment, table: "Localizable")
+        if localized == self {
+            localized = Bundle.main.localizedString(forKey: self, value: withComment, table: nil)
+        }
+        return localized
+    }
 
 }

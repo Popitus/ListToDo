@@ -18,7 +18,7 @@ struct EmptyTaskView: View {
                     animationCount += 1
                 }
             if (titleSelected != "")  {
-                Text("\(taskViewModel.checkPageSelected() != nil ? "Sin tareas en \(titleSelected)" : "Seleccionar Página")")
+                Text("\(taskViewModel.checkPageSelected() != nil ? "\(String(localized:"empty_task_info")) \(titleSelected)" : String(localized:"title_select_category"))")
             }
             Spacer()
         }        

@@ -12,11 +12,12 @@ struct EmptyPageView: View {
             .onTapGesture {
                 animationCount += 1
             }
-        Text("Sin páginas")
+        Text("empty_categories")
         Spacer()
     }
 }
 
 #Preview {
     EmptyPageView()
+        .environment(\.locale, Locale(identifier: "EN"))
 }

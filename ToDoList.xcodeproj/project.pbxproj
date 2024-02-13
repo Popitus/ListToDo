@@ -44,6 +44,7 @@
 		12E62D972B5FDF560016C9B1 /* TagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E62D962B5FDF560016C9B1 /* TagLayout.swift */; };
 		12E62D992B5FE9CB0016C9B1 /* LayoutSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E62D982B5FE9CB0016C9B1 /* LayoutSubView.swift */; };
 		12E62D9B2B600A0B0016C9B1 /* TagField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E62D9A2B600A0B0016C9B1 /* TagField.swift */; };
+		12F247F82B7B85CC00763AFF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 12F247F72B7B85CC00763AFF /* Localizable.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -85,6 +86,7 @@
 		12E62D962B5FDF560016C9B1 /* TagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLayout.swift; sourceTree = "<group>"; };
 		12E62D982B5FE9CB0016C9B1 /* LayoutSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSubView.swift; sourceTree = "<group>"; };
 		12E62D9A2B600A0B0016C9B1 /* TagField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagField.swift; sourceTree = "<group>"; };
+		12F247F72B7B85CC00763AFF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		12614E052B5587B500869790 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				12F247F62B7B857600763AFF /* Localizable */,
 				128E02002B67E57A00484AEB /* Auxiliar */,
 				1263F4902B569A52006B7B42 /* Extensions */,
 				1263F48D2B569A1E006B7B42 /* Log */,
@@ -254,6 +257,14 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		12F247F62B7B857600763AFF /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				12F247F72B7B85CC00763AFF /* Localizable.xcstrings */,
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -291,11 +302,12 @@
 			};
 			buildConfigurationList = 12CE7F942B553AD000D7974A /* Build configuration list for PBXProject "ToDoList" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = es;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				es,
 			);
 			mainGroup = 12CE7F902B553AD000D7974A;
 			productRefGroup = 12CE7F9A2B553AD000D7974A /* Products */;
@@ -314,6 +326,7 @@
 			files = (
 				12B1ABC82B554DE300225483 /* README.md in Resources */,
 				12CE7FA42B553AD200D7974A /* Preview Assets.xcassets in Resources */,
+				12F247F82B7B85CC00763AFF /* Localizable.xcstrings in Resources */,
 				12CE7FA12B553AD200D7974A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

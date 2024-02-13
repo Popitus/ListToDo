@@ -36,7 +36,10 @@ struct TaskView: View {
                             } header: {
                                 if !taskViewModel.tasks.isEmpty {
                                     HStack {
-                                        TitleSection(title: "Pendientes", showActive: $showActive, idTaskFromPage: $idTaskFromPage)
+                                        TitleSection(
+                                            title: String(localized:"title_pending"),
+                                            showActive: $showActive,
+                                            idTaskFromPage: $idTaskFromPage)
                                     }
                                     .onTapGesture {
                                         withAnimation {
@@ -59,7 +62,11 @@ struct TaskView: View {
                             } header: {
                                 if !checkTasks.isEmpty {
                                     HStack {
-                                        TitleSection(title: "Completadas", conditional: true, showActive: $showInactive, idTaskFromPage: $idTaskFromPage)
+                                        TitleSection(
+                                            title: String(localized:"title_completed"),
+                                            conditional: true,
+                                            showActive: $showInactive,
+                                            idTaskFromPage: $idTaskFromPage)
                                     }
                                     .onTapGesture {
                                         withAnimation {
@@ -72,7 +79,7 @@ struct TaskView: View {
 
                             }
                         }
-                        .searchable(text: $taskvmBindable.search, prompt:"Buscar Tarea...")
+                        .searchable(text: $taskvmBindable.search, prompt:"searchbox_task...")
                     } else {
                         EmptyTaskView(titleSelected: $titleSelected)
                     }
@@ -82,15 +89,15 @@ struct TaskView: View {
                     pages: taskViewModel.pages,
                     toggleCompletionAddPage: {
                         alertTextField(
-                            title: "Añadir nueva categoría",
-                            message: "Crea una nueva categoria para tus tareas",
-                            hintText: "Titulo de categoría",
-                            primaryTitle: "Añadir",
-                            secondaryTitle: "Descartar",
+                            title: String(localized:"alert_title_category"),
+                            message: String(localized:"alert_message_category"),
+                            hintText: String(localized:"alert_title_category_placeholder"),
+                            primaryTitle: String(localized:"button_add"),
+                            secondaryTitle: String(localized:"button_discard"),
                             primaryAction: { text in
                                 if !text.isEmpty {
                                     taskViewModel.addTaskPage(title: text)
-                                    self.titleSelected = "Seleccionar Página"
+                                    self.titleSelected = String(localized:"title_select_category")
                                 }
                             },
                             secondaryAction: {})
@@ -106,7 +113,7 @@ struct TaskView: View {
                             if let _ = taskViewModel.checkPageSelected() {
                                 self.titleSelected = ""
                             } else {
-                                self.titleSelected = "Seleccionar Página"
+                                self.titleSelected = String(localized:"title_select_category")
                             }
                             
                         }
@@ -119,7 +126,7 @@ struct TaskView: View {
                                 idTaskFromPage = page.id
                                 self.titleSelected = page.title
                             } else {
-                                self.titleSelected = taskViewModel.pages.isEmpty ? "Añadir Página" : "Seleccionar Página"
+                                self.titleSelected = taskViewModel.pages.isEmpty ? String(localized:"title_add_category") : String(localized:"title_select_category")
                             }
                            
                             
@@ -136,7 +143,7 @@ struct TaskView: View {
                 }
                 .padding()
             }
-            .navigationTitle(titleSelected.isEmpty ? "Añadir Página" :"\(titleSelected)" )
+            .navigationTitle(titleSelected.isEmpty ? String(localized:"title_add_category"):"\(titleSelected)" )
             .onChange(of: taskViewModel.tasks) { _, _ in
                 checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
             }
@@ -150,8 +157,16 @@ struct TaskView: View {
     }
 }
 
-#Preview {
+#Preview("Spanish") {
     @State var taskViewModel = TaskViewModel()
     return TaskView()
         .environment(taskViewModel)
+}
+
+
+#Preview("English") {
+    @State var taskViewModel = TaskViewModel()
+    return TaskView()
+        .environment(taskViewModel)
+        .environment(\.locale, .init(identifier: "en"))
 }

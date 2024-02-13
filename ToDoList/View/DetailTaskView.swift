@@ -15,14 +15,14 @@ struct DetailTaskView: View {
     
     var body: some View {
         List {
-            Section("Título") {
+            Section("section_title") {
                 CustomTextField(placeholder: taskTitle, text: $task.title, onEditingChanged: { _ in
                 })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 
             }
             
-            Section("Tags") {
+            Section("section_tags") {
                 TagField(tags: $localTags)
                     .onChange(of: localTags) { newTag, oldTag in
                         if let _ = newTag.last, (oldTag.last != nil) {
@@ -35,13 +35,13 @@ struct DetailTaskView: View {
                     }
             }
             
-            Section("Estado") {
+            Section("section_status") {
                 StatusIndicator(status: task.status)
                     
             }
             .listRowBackground(Color.clear)
             
-            Section("Notas") {
+            Section("section_note") {
                 ZStack {
                     TextEditor(text: $task.note)
                         .frame(height: 125)
@@ -64,7 +64,7 @@ struct DetailTaskView: View {
         }
         HStack {
             VStack {
-                Section("Creación") {
+                Section("section_createAt") {
                     Text(task.date.format())
                         .font(.footnote)
                 }
@@ -72,7 +72,7 @@ struct DetailTaskView: View {
                 .padding(.horizontal, 25)
             }
             VStack {
-                Section("Modificación") {
+                Section("section_changeAt") {
                     Text(task.lastUpdate.format())
                         .font(.footnote)
                 }
