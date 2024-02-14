@@ -14,11 +14,6 @@ struct ListTask: View {
                     task: item,
                     localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
                         TaskItemRow(task: item)
-                            .onTapGesture{
-                                withAnimation {
-                                    taskViewModel.toggleTaskCompletion(task: item)
-                                }
-                            }
                     }
             #else
             if (item.completed != true) {
@@ -27,11 +22,6 @@ struct ListTask: View {
                         task: item,
                         localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
                             TaskItemRow(task: item)
-                                .onTapGesture{
-                                    withAnimation {
-                                        taskViewModel.toggleTaskCompletion(task: item)
-                                    }
-                                }
                         }
             }
             #endif

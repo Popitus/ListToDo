@@ -44,7 +44,10 @@
 		12E62D972B5FDF560016C9B1 /* TagLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E62D962B5FDF560016C9B1 /* TagLayout.swift */; };
 		12E62D992B5FE9CB0016C9B1 /* LayoutSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E62D982B5FE9CB0016C9B1 /* LayoutSubView.swift */; };
 		12E62D9B2B600A0B0016C9B1 /* TagField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E62D9A2B600A0B0016C9B1 /* TagField.swift */; };
+		12E7CA342B7CA87E00080386 /* TagUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E7CA332B7CA87E00080386 /* TagUseCase.swift */; };
 		12F247F82B7B85CC00763AFF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 12F247F72B7B85CC00763AFF /* Localizable.xcstrings */; };
+		12F247FF2B7BBBFD00763AFF /* TaskUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F247FE2B7BBBFD00763AFF /* TaskUseCase.swift */; };
+		12F248012B7BC78300763AFF /* TaskPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F248002B7BC78300763AFF /* TaskPageUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,7 +89,10 @@
 		12E62D962B5FDF560016C9B1 /* TagLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLayout.swift; sourceTree = "<group>"; };
 		12E62D982B5FE9CB0016C9B1 /* LayoutSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutSubView.swift; sourceTree = "<group>"; };
 		12E62D9A2B600A0B0016C9B1 /* TagField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagField.swift; sourceTree = "<group>"; };
+		12E7CA332B7CA87E00080386 /* TagUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagUseCase.swift; sourceTree = "<group>"; };
 		12F247F72B7B85CC00763AFF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		12F247FE2B7BBBFD00763AFF /* TaskUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskUseCase.swift; sourceTree = "<group>"; };
+		12F248002B7BC78300763AFF /* TaskPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,10 +199,11 @@
 		12CE7F9B2B553AD000D7974A /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
+				12F247FA2B7BBB9A00763AFF /* Data */,
+				12F247F92B7BBB9600763AFF /* Domain */,
 				12614E052B5587B500869790 /* Utils */,
 				12CE7FB02B553BE700D7974A /* View */,
 				12CE7FAD2B553B8A00D7974A /* Viewmodel */,
-				12CE7FAA2B553B2F00D7974A /* Model */,
 				12CE7F9C2B553AD000D7974A /* ToDoListApp.swift */,
 				12CE7FA02B553AD200D7974A /* Assets.xcassets */,
 				12CE7FA22B553AD200D7974A /* Preview Content */,
@@ -263,6 +270,48 @@
 				12F247F72B7B85CC00763AFF /* Localizable.xcstrings */,
 			);
 			path = Localizable;
+			sourceTree = "<group>";
+		};
+		12F247F92B7BBB9600763AFF /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				12F247FC2B7BBBB600763AFF /* Entities */,
+				12F247FB2B7BBBAD00763AFF /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		12F247FA2B7BBB9A00763AFF /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				12CE7FAA2B553B2F00D7974A /* Model */,
+				12F247FD2B7BBBC500763AFF /* Adapters */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		12F247FB2B7BBBAD00763AFF /* UseCases */ = {
+			isa = PBXGroup;
+			children = (
+				12F247FE2B7BBBFD00763AFF /* TaskUseCase.swift */,
+				12F248002B7BC78300763AFF /* TaskPageUseCase.swift */,
+				12E7CA332B7CA87E00080386 /* TagUseCase.swift */,
+			);
+			path = UseCases;
+			sourceTree = "<group>";
+		};
+		12F247FC2B7BBBB600763AFF /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		12F247FD2B7BBBC500763AFF /* Adapters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Adapters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,12 +406,15 @@
 				12CE7FB32B553C9600D7974A /* TaskItemRow.swift in Sources */,
 				12E62D972B5FDF560016C9B1 /* TagLayout.swift in Sources */,
 				12E62D932B5FD6A10016C9B1 /* TagsView.swift in Sources */,
+				12E7CA342B7CA87E00080386 /* TagUseCase.swift in Sources */,
 				12983DB82B582A00000545EB /* TaskPageItem.swift in Sources */,
 				12983DB12B581AED000545EB /* HorizontalPages.swift in Sources */,
 				1263F4972B569A52006B7B42 /* View.swift in Sources */,
 				121B88222B762E63009007B5 /* EmptyPageView.swift in Sources */,
 				121B88242B762F6C009007B5 /* EmptyTaskView.swift in Sources */,
 				1293C29E2B601785009BDCDB /* DetailTaskView.swift in Sources */,
+				12F248012B7BC78300763AFF /* TaskPageUseCase.swift in Sources */,
+				12F247FF2B7BBBFD00763AFF /* TaskUseCase.swift in Sources */,
 				12983DB42B581F27000545EB /* AddPage.swift in Sources */,
 				12E62D992B5FE9CB0016C9B1 /* LayoutSubView.swift in Sources */,
 				1263F4962B569A52006B7B42 /* Date.swift in Sources */,

@@ -19,6 +19,11 @@ struct TaskItemRow: View {
                 Spacer()
                 
                 StatusIndicator(status: task.status)
+                    .onTapGesture{
+                        withAnimation {
+                            taskViewModel.toggleTaskCompletion(task: task)
+                        }
+                    }
             }
             
             HStack {
