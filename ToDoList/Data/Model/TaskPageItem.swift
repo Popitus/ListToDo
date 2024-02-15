@@ -19,4 +19,9 @@ final class TaskPageItem {
         self.title = title
         self.selected = selected
     }
+    
+    @Attribute(.ephemeral)
+    var printObject: String {
+        return "id: \(self.id), title: \(self.title), selected: \(self.selected), taskItems: \(String(describing: self.tasksItems))"
+    }
 }
