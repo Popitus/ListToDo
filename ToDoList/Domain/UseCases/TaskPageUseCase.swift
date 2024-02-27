@@ -1,9 +1,9 @@
 import Foundation
 
 protocol TaskPageUseCaseProtocol {
-    func addTaskPage(title: String)
+    func addTaskPage(title: String) -> [TaskPageItem]
     func togglePageSelection(page: TaskPageItem)
-    func removePages(with uuid: UUID)
+    func removePages(with uuid: UUID) -> [TaskPageItem]
 }
 
 class TaskPageUseCase: TaskPageUseCaseProtocol {
@@ -14,9 +14,10 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
         self.swiftDataManager = swiftDataManager
     }
     
-    func addTaskPage(title: String) {
+    func addTaskPage(title: String) -> [TaskPageItem]{
         let newTaskPage = TaskPageItem(title: title)
         swiftDataManager.addTaskPageItem(item: newTaskPage)
+        return swiftDataManager.fetchTaskPageItem()
     }
     
     func togglePageSelection(page: TaskPageItem) {
@@ -30,11 +31,12 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
             .forEach { pages[$0].selected = false }
     }
     
-    func removePages(with uuid: UUID) {
+    func removePages(with uuid: UUID) -> [TaskPageItem] {
         let pages = swiftDataManager.fetchTaskPageItem()
         if let index = pages.firstIndex(where: {$0.id == uuid}) {
             swiftDataManager.removeTaskPageItem(item: pages[index])
         }
+        return swiftDataManager.fetchTaskPageItem()
     }
 }
 

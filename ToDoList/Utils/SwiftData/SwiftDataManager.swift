@@ -9,9 +9,12 @@ final class SwiftDataManager {
     static let shared = SwiftDataManager()
     
     @MainActor
-    init() {
+    static let sharedMock = SwiftDataManager(inMemory: true)
+    
+    @MainActor
+    init(inMemory: Bool = false) {
         let schema = Schema([TaskPageItem.self, TaskItem.self, Tag.self])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
         do {
             self.modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             self.modelContext = modelContainer.mainContext

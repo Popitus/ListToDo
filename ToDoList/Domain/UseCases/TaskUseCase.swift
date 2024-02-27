@@ -1,9 +1,9 @@
 import Foundation
 
 protocol TaskUseCaseProtocol {
-    func addTask(with title: String, idTaskPage: UUID)
+    func addTask(with title: String, idTaskPage: UUID) -> [TaskItem]
     func toggleTaskCompletion(task: TaskItem)
-    func removeTask(at index: IndexSet)
+    func removeTask(at index: IndexSet) -> [TaskItem]
 }
 
 class TaskUseCase: TaskUseCaseProtocol {
@@ -14,7 +14,7 @@ class TaskUseCase: TaskUseCaseProtocol {
         self.swiftDataManager = swiftDataManager
     }
     
-    func addTask(with title: String, idTaskPage: UUID) {
+    func addTask(with title: String, idTaskPage: UUID) -> [TaskItem]{
         let pages = swiftDataManager.fetchTaskPageItem()
         if let index = pages.firstIndex(where: {$0.id == idTaskPage}) {
             let newTask = TaskItem(
@@ -27,6 +27,7 @@ class TaskUseCase: TaskUseCaseProtocol {
             newTask.taskPageItem = pages[index]
             swiftDataManager.addTaskItem(item: newTask)
         }
+        return swiftDataManager.fetchTaskItem()
     }
     
     func toggleTaskCompletion(task: TaskItem) {
@@ -44,11 +45,12 @@ class TaskUseCase: TaskUseCaseProtocol {
         }
     }
     
-    func removeTask(at index: IndexSet) {
+    func removeTask(at index: IndexSet) -> [TaskItem] {
         let tasks = swiftDataManager.fetchTaskItem()
         for index in index {
             swiftDataManager.removeTaskItem(item: tasks[index])
         }
+        return swiftDataManager.fetchTaskItem()
     }
     
 }

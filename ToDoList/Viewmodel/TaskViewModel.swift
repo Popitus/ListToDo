@@ -6,16 +6,13 @@ class TaskViewModel {
     private let swiftDataManager: SwiftDataManager
     
     @ObservationIgnored
-    private let taskUseCase: TaskUseCase
+    private let taskUseCase: TaskUseCaseProtocol
     
     @ObservationIgnored
-    private let taskPageUseCase: TaskPageUseCase
+    private let taskPageUseCase: TaskPageUseCaseProtocol
     
     @ObservationIgnored
-    private let tagUseCase: TagUseCase
-    
-    
-    var tasks: [TaskItem] = []
+    private let tagUseCase: TagUseCaseProtocol
     
     var taskSearch: [TaskItem] {
         guard !search.isEmpty else { return tasks }
@@ -46,14 +43,15 @@ class TaskViewModel {
     
     var pages: [TaskPageItem] = []
     var tags: [Tag] = []
+    var tasks: [TaskItem] = []
     var search: String = ""
     
     
     init(
         swiftDataManager: SwiftDataManager = SwiftDataManager.shared,
-        taskUseCase: TaskUseCase = TaskUseCase(),
-        taskPageUseCase: TaskPageUseCase = TaskPageUseCase(),
-        tagUseCase: TagUseCase = TagUseCase()) {
+        taskUseCase: TaskUseCaseProtocol = TaskUseCase(),
+        taskPageUseCase: TaskPageUseCaseProtocol = TaskPageUseCase(),
+        tagUseCase: TagUseCaseProtocol = TagUseCase()) {
             
             self.swiftDataManager = swiftDataManager
             
@@ -70,8 +68,7 @@ class TaskViewModel {
     // MARK: TaskItems functions
     
     func addTask(title: String, idTaskPage: UUID) {
-        taskUseCase.addTask(with: title, idTaskPage: idTaskPage)
-        tasks = swiftDataManager.fetchTaskItem()
+        tasks = taskUseCase.addTask(with: title, idTaskPage: idTaskPage)
     }
     
     func toggleTaskCompletion(task: TaskItem) {
@@ -79,15 +76,13 @@ class TaskViewModel {
     }
     
     func removeTask(at index: IndexSet) {
-        taskUseCase.removeTask(at: index)
-        tasks = swiftDataManager.fetchTaskItem()
+        tasks = taskUseCase.removeTask(at: index)
     }
     
     // MARK: TaskPageItems Functions
     
     func addTaskPage(title: String) {
-        taskPageUseCase.addTaskPage(title: title)
-        pages = swiftDataManager.fetchTaskPageItem()
+        pages = taskPageUseCase.addTaskPage(title: title)
     }
     
     func togglePageSelection(page: TaskPageItem) {
@@ -95,26 +90,21 @@ class TaskViewModel {
     }
     
     func removePages(with uuid: UUID) {
-        taskPageUseCase.removePages(with: uuid)
-        pages = swiftDataManager.fetchTaskPageItem()
-        tasks = swiftDataManager.fetchTaskItem()
+        pages = taskPageUseCase.removePages(with: uuid)
     }
     
     // MARK: Tags Functions
     
     func addTag(addTag: Tag, idTaskItem: UUID) {
-        tagUseCase.addTag(addTag: addTag, idTaskItem: idTaskItem)
-        tags = swiftDataManager.fetchTags()
+        tags = tagUseCase.addTag(addTag: addTag, idTaskItem: idTaskItem)
     }
     
     func removeOneTag(tag: Tag) {
-        tagUseCase.removeOneTag(tag: tag)
-        tags = swiftDataManager.fetchTags()
+        tags = tagUseCase.removeOneTag(tag: tag)
     }
     
     func removeAllTag(tag: [Tag]) {
-        tagUseCase.removeAllTag(tag: tag)
-        tags = swiftDataManager.fetchTags()
+        tags = tagUseCase.removeAllTag(tag: tag)
     }
     
     // MARK: Utils functions
