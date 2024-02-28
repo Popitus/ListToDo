@@ -18,6 +18,7 @@ final class SwiftDataManager {
         do {
             self.modelContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
             self.modelContext = modelContainer.mainContext
+            self.modelContext.autosaveEnabled = true
             print(URL.documentsDirectory.path())
         } catch {
             fatalError("Could not initialize ModelContainer")
@@ -55,15 +56,12 @@ final class SwiftDataManager {
     // MARK: TaskPageItems functions
     
     func addTaskPageItem(item: TaskPageItem) {
-        print("Add BF- \(fetchTaskPageItem().map{$0.printObject})")
-        print(item.printObject)
         modelContext.insert(item)
         do {
             try modelContext.save()
         } catch {
             fatalError(error.localizedDescription)
         }
-        print("Add AF- \(fetchTaskPageItem().map{$0.printObject})")
     }
     
     func fetchTaskPageItem() -> [TaskPageItem] {
@@ -75,15 +73,12 @@ final class SwiftDataManager {
     }
     
     func removeTaskPageItem(item: TaskPageItem) {
-        print("Delete BF- \(fetchTaskPageItem().map{$0.printObject})")
         do {
             modelContext.delete(item)
             try modelContext.save()
         } catch {
             fatalError(error.localizedDescription)
         }
-        print("After BF- \(fetchTaskPageItem().map{$0.printObject})")
-
        
     }
 

@@ -2,8 +2,6 @@ import SwiftUI
 
 @Observable
 class TaskViewModel {
-    @ObservationIgnored
-    private let swiftDataManager: SwiftDataManager
     
     @ObservationIgnored
     private let taskUseCase: TaskUseCaseProtocol
@@ -45,25 +43,24 @@ class TaskViewModel {
     var tags: [Tag] = []
     var tasks: [TaskItem] = []
     var search: String = ""
-    
-    
+   
     init(
-        swiftDataManager: SwiftDataManager = SwiftDataManager.shared,
         taskUseCase: TaskUseCaseProtocol = TaskUseCase(),
         taskPageUseCase: TaskPageUseCaseProtocol = TaskPageUseCase(),
         tagUseCase: TagUseCaseProtocol = TagUseCase()) {
             
-            self.swiftDataManager = swiftDataManager
-            
-            self.pages = swiftDataManager.fetchTaskPageItem()
-            self.tasks = swiftDataManager.fetchTaskItem()
-            self.tags = swiftDataManager.fetchTags()
-            
             self.taskUseCase = taskUseCase
             self.taskPageUseCase = taskPageUseCase
             self.tagUseCase = tagUseCase
+            fetchData()
             
         }
+    
+    func fetchData() {
+        self.pages = taskPageUseCase.fetchAllPages()
+        self.tasks = taskUseCase.fetchAllTask()
+        self.tags = tagUseCase.fetchAllTags()
+    }
     
     // MARK: TaskItems functions
     
@@ -104,7 +101,7 @@ class TaskViewModel {
     }
     
     func removeAllTag(tag: [Tag]) {
-        tags = tagUseCase.removeAllTag(tag: tag)
+        tags = tagUseCase.removeAllTag(tag: tag)		
     }
     
     // MARK: Utils functions

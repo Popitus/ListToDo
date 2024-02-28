@@ -4,6 +4,7 @@ protocol TagUseCaseProtocol {
     func addTag(addTag: Tag, idTaskItem: UUID) -> [Tag]
     func removeOneTag(tag: Tag) -> [Tag]
     func removeAllTag(tag: [Tag]) -> [Tag]
+    func fetchAllTags() -> [Tag]
 }
 
 class TagUseCase: TagUseCaseProtocol {
@@ -41,6 +42,10 @@ class TagUseCase: TagUseCaseProtocol {
         for tags in tags {
             swiftDataManager.removeTagTask(tag: tags)
         }
+        return swiftDataManager.fetchTags()
+    }
+    
+    func fetchAllTags() -> [Tag] {
         return swiftDataManager.fetchTags()
     }
 }

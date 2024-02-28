@@ -4,6 +4,7 @@ protocol TaskPageUseCaseProtocol {
     func addTaskPage(title: String) -> [TaskPageItem]
     func togglePageSelection(page: TaskPageItem)
     func removePages(with uuid: UUID) -> [TaskPageItem]
+    func fetchAllPages() -> [TaskPageItem]
 }
 
 class TaskPageUseCase: TaskPageUseCaseProtocol {
@@ -36,6 +37,10 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
         if let index = pages.firstIndex(where: {$0.id == uuid}) {
             swiftDataManager.removeTaskPageItem(item: pages[index])
         }
+        return swiftDataManager.fetchTaskPageItem()
+    }
+    
+    func fetchAllPages() -> [TaskPageItem] {
         return swiftDataManager.fetchTaskPageItem()
     }
 }

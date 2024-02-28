@@ -6,6 +6,8 @@ struct TaskView: View {
     //Properties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
     
+    @AppStorage("check") var checkListEmpty: Bool = true
+    
     @State private var newTaskTitle = String()
     @State private var checkTasks: [TaskItem] = []
     @State private var titleSelected = ""
@@ -21,7 +23,7 @@ struct TaskView: View {
                 if taskViewModel.pages.isEmpty {
                     EmptyPageView()
                 } else {
-                    if (!checkTasks.isEmpty){
+                    if (!taskViewModel.tasks.isEmpty){
                         List {
                             Section {
                                 if showActive {
@@ -149,6 +151,7 @@ struct TaskView: View {
             }
             
             .onAppear {
+                taskViewModel.fetchData()
                 idTaskFromPage = taskViewModel.checkPageSelected()
                 checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
                 titleSelected = taskViewModel.titleSelected

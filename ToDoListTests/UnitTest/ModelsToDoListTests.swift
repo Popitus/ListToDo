@@ -8,7 +8,7 @@ final class ModelsToDoListTests: XCTestCase {
     
     // Test Tag Model
     
-    func test_initialization_model_tag() {
+    func testInitializationModelTag() {
         
         // Arrange
         let title = "Text Tag Title"
@@ -25,7 +25,7 @@ final class ModelsToDoListTests: XCTestCase {
     
     // Test TaskItem Model
     
-    func test_initialization_model_taskItem() {
+    func testInitializationModelTaskItem() {
         // Arrange
         let title = "Text TaskItem Title"
         
@@ -43,7 +43,7 @@ final class ModelsToDoListTests: XCTestCase {
     
     // Test TaskPageItem Model
     
-    func test_initialization_model_taskPageItem() {
+    func testInitializationModelTaskPageItem() {
         // Arrange
         let title = "Text Tag Title"
         

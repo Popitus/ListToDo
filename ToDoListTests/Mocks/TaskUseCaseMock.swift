@@ -7,14 +7,23 @@ var taskMock: [TaskItem] = []
 struct TaskUseCaseMock: TaskUseCaseProtocol {
     
     func addTask(with title: String, idTaskPage: UUID) -> [TaskItem] {
-        let newTask = TaskItem(title: title, date: Date(), status: .pending, note: "", lastUpdate: Date())
-        
-        taskMock.append(newTask)
+        let pages = pagesMock
+        if let index = pagesMock.firstIndex(where: {$0.id == idTaskPage }) {
+            let newTask = TaskItem(
+                title: title,
+                date: Date(),
+                status: TodoStatus.pending,
+                note: "",
+                lastUpdate: Date()
+            )
+            newTask.taskPageItem?.id = pages[index].id
+            taskMock.append(newTask)
+        }
         return taskMock
         
     }
     
-    func toggleTaskCompletion(task: ToDoList.TaskItem) {
+    func toggleTaskCompletion(task: TaskItem) {
         if let index = taskMock.firstIndex(where: {$0.id == task.id}) {
             let status = task.status
             taskMock[index].completed.toggle()
@@ -32,6 +41,10 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
         for index in index {
             taskMock.remove(at: index)
         }
+        return taskMock
+    }
+    
+    func fetchAllTask() -> [TaskItem] {
         return taskMock
     }
     
