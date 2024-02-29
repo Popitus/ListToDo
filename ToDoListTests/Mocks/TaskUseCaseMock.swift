@@ -44,6 +44,15 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
         return taskMock
     }
     
+    func removeTasks(tasks: [TaskItem]) -> [TaskItem] {
+        for task in tasks {
+            if let index = taskMock.firstIndex(of: task) {
+                taskMock.remove(at: index)
+            }
+        }
+        return taskMock
+    }
+    
     func fetchAllTask() -> [TaskItem] {
         return taskMock
     }
