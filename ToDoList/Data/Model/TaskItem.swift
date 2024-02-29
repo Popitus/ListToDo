@@ -13,8 +13,7 @@ final class TaskItem {
     var lastUpdate: Date
     var completed = false
     
-    @Relationship(deleteRule: .cascade, inverse: \Tag.taskItem)
-    var tag: [Tag]?
+    @Relationship(deleteRule: .cascade) var tag = [Tag]()
         
     init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, note: String, lastUpdate: Date, completed: Bool = false) {
         self.id = id

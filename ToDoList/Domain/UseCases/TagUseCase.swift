@@ -33,8 +33,7 @@ class TagUseCase: TagUseCaseProtocol {
     }
     
     func removeAllTag(tag: [Tag]) -> [Tag] {
-        let tags = swiftDataManager.fetchTags()
-        for tags in tags {
+        for tags in tag {
             swiftDataManager.removeTagTask(tag: tags)
         }
         return swiftDataManager.fetchTags()

@@ -4,6 +4,7 @@ protocol TaskUseCaseProtocol {
     func addTask(with title: String, idTaskPage: UUID) -> [TaskItem]
     func toggleTaskCompletion(task: TaskItem)
     func removeTask(at index: IndexSet) -> [TaskItem]
+    func removeTasks(tasks: [TaskItem]) -> [TaskItem]
     func fetchAllTask() -> [TaskItem]
 }
 
@@ -54,6 +55,14 @@ class TaskUseCase: TaskUseCaseProtocol {
         }
         return swiftDataManager.fetchTaskItem()
     }
+    
+    func removeTasks(tasks: [TaskItem]) -> [TaskItem] {
+        for task in tasks {
+            swiftDataManager.removeTaskItem(item: task)
+        }
+        return swiftDataManager.fetchTaskItem()
+    }
+
     
     func fetchAllTask() -> [TaskItem] {
         return swiftDataManager.fetchTaskItem()
