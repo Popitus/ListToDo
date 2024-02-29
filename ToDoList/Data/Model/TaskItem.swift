@@ -3,7 +3,8 @@ import Foundation
 import SwiftData
 
 @Model
-final class TaskItem:Hashable {
+final class TaskItem {
+    
     @Attribute(.unique) var id = UUID()
     var title: String
     var date: Date

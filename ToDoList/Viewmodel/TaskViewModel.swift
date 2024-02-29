@@ -66,6 +66,8 @@ class TaskViewModel {
     
     func addTask(title: String, idTaskPage: UUID) {
         tasks = taskUseCase.addTask(with: title, idTaskPage: idTaskPage)
+        print("AUX Task -> AddTask: \(tasks.map({$0.title})) - \(tasks.map({$0.tag?.map({$0.title})})) ")
+
     }
     
     func toggleTaskCompletion(task: TaskItem) {
@@ -74,12 +76,14 @@ class TaskViewModel {
     
     func removeTask(at index: IndexSet) {
         tasks = taskUseCase.removeTask(at: index)
+        print("AUX Task -> RemoveTask: \(tasks.map({$0.title})) - \(tasks.map({$0.tag?.map({$0.title})})) ")
     }
     
     // MARK: TaskPageItems Functions
     
     func addTaskPage(title: String) {
         pages = taskPageUseCase.addTaskPage(title: title)
+        print("AUX Pages -> AddPage: \(pages.map({$0.title})) - \(pages.map({$0.tasksItems?.map({$0.title})})) ")
     }
     
     func togglePageSelection(page: TaskPageItem) {
@@ -88,16 +92,19 @@ class TaskViewModel {
     
     func removePages(with uuid: UUID) {
         pages = taskPageUseCase.removePages(with: uuid)
+        print("AUX Pages -> RemovePage: \(pages.map({$0.title})) - \(pages.map({$0.tasksItems?.map({$0.title})})) ")
     }
     
     // MARK: Tags Functions
     
     func addTag(addTag: Tag, idTaskItem: UUID) {
         tags = tagUseCase.addTag(addTag: addTag, idTaskItem: idTaskItem)
+        print("AUX Tags -> AddTag: \(tags.map({$0.title}))")
     }
     
     func removeOneTag(tag: Tag) {
         tags = tagUseCase.removeOneTag(tag: tag)
+        print("AUX Tags -> RemoveOneTag: \(tags.map({$0.title}))")
     }
     
     func removeAllTag(tag: [Tag]) {

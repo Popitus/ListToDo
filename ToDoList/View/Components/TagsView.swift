@@ -11,8 +11,7 @@ struct TagsView: View {
    
     var body: some View {
         BackSpaceListnerTextField(hint: "Tag", text: $tag.title, onBackPressed: {
-            if allTags.count > 1 {
-                if tag.title.isEmpty {
+            if allTags.count > 1 {                if tag.title.isEmpty {
                     allTags.removeAll(where: {$0.id == tag.id })
                     if let lastIndex = allTags.indices.last {
                         allTags[lastIndex].isInitial = false

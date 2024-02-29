@@ -58,5 +58,4 @@ class TaskUseCase: TaskUseCaseProtocol {
     func fetchAllTask() -> [TaskItem] {
         return swiftDataManager.fetchTaskItem()
     }
-    
 }

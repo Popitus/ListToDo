@@ -17,14 +17,9 @@ class TagUseCase: TagUseCaseProtocol {
     
     func addTag(addTag: Tag, idTaskItem: UUID) -> [Tag] {
         let tasks = swiftDataManager.fetchTaskItem()
-        if let index = tasks.firstIndex(where: {$0.id == idTaskItem }) {
-            if !addTag.title.isEmpty {
-                addTag.taskItem = tasks[index]
-                swiftDataManager.addTagToTask(tag: addTag)
-            } else {
-                let _ = removeOneTag(tag: addTag)
-            }
-            tasks[index].lastUpdate = Date()
+        if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
+            addTag.taskItem = tasks[index]
+            swiftDataManager.addTagToTask(tag: addTag)
         }
         return swiftDataManager.fetchTags()
     }
@@ -48,4 +43,5 @@ class TagUseCase: TagUseCaseProtocol {
     func fetchAllTags() -> [Tag] {
         return swiftDataManager.fetchTags()
     }
+
 }
