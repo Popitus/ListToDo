@@ -6,12 +6,15 @@ import XCTest
 final class ViewModelIntegrationTest: XCTestCase {
     
     var sut: TaskViewModel?
-
+    
+    
     override func setUpWithError() throws {
-        let swiftDataManagerMock = SwiftDataManager.sharedMock
-        let taskUseCase = TaskUseCase(swiftDataManager: swiftDataManagerMock)
-        let taskPageUseCase = TaskPageUseCase(swiftDataManager: swiftDataManagerMock)
-        let tagUseCase = TagUseCase(swiftDataManager: swiftDataManagerMock)
+        let swiftDataManager = SwiftDataManagerFake.shared
+        swiftDataManager.modelContainer = SwiftDataManagerFake.setupContainer()
+        
+        let taskUseCase = TaskUseCase(swiftDataManager: swiftDataManager)
+        let taskPageUseCase = TaskPageUseCase(swiftDataManager: swiftDataManager)
+        let tagUseCase = TagUseCase(swiftDataManager: swiftDataManager)
         
         sut = TaskViewModel(
             taskUseCase: taskUseCase,
@@ -19,7 +22,10 @@ final class ViewModelIntegrationTest: XCTestCase {
             tagUseCase: tagUseCase)
     }
 
-    override func tearDownWithError() throws { sut = nil }
+    override func tearDownWithError() throws {
+        sut = nil
+    }
+    
     
     func testAddPage() {
         sut?.addTaskPage(title: "Texto pagina 1")
@@ -28,9 +34,9 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertNotNil(page)
         XCTAssertEqual(page?.title, "Texto pagina 1")
         XCTAssertEqual(sut?.pages.count, 1)
- 
+        
     }
-    /*
+    
     func testAddTwoPage() {
         sut?.addTaskPage(title: "Texto pagina 2")
         sut?.addTaskPage(title: "Texto pagina 3")
@@ -43,7 +49,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertEqual(page2?.title, "Texto pagina 3")
         XCTAssertEqual(sut?.pages.count, 2)
     }
-     */
+     
 
 
 }

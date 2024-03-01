@@ -1,17 +1,10 @@
 import Foundation
 
-protocol TagUseCaseProtocol {
-    func addTag(addTag: Tag, idTaskItem: UUID) -> [Tag]
-    func removeOneTag(tag: Tag) -> [Tag]
-    func removeAllTag(tag: [Tag]) -> [Tag]
-    func fetchAllTags() -> [Tag]
-}
-
 class TagUseCase: TagUseCaseProtocol {
     
-    private let swiftDataManager: SwiftDataManager
+    private let swiftDataManager: SwiftDataManagerProtocol
     
-    init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
+    init(swiftDataManager: SwiftDataManagerProtocol = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
     }
     

@@ -1,10 +1,9 @@
-import Foundation
+@testable import ToDoList
 import SwiftData
+import Foundation
 
-
-final class SwiftDataManager: SwiftDataManagerProtocol {
-        
-    static let shared = SwiftDataManager()
+final class SwiftDataManagerFake: SwiftDataManagerProtocol {
+    static let shared = SwiftDataManagerFake()
     
     @MainActor
     var modelContainer: ModelContainer = setupContainer()
@@ -12,7 +11,7 @@ final class SwiftDataManager: SwiftDataManagerProtocol {
     @MainActor
     static func setupContainer() -> ModelContainer {
         do {
-            let container = try ModelContainer(for: TaskPageItem.self, TaskItem.self, Tag.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
+            let container = try ModelContainer(for: TaskPageItem.self, TaskItem.self, Tag.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
             container.mainContext.autosaveEnabled = true
             return container
         } catch {
@@ -114,5 +113,4 @@ final class SwiftDataManager: SwiftDataManagerProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
 }

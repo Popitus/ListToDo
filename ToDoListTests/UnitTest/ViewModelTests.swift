@@ -32,6 +32,15 @@ final class ViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel?.pages.first?.title, pageTitle)
     }
     
+    func testAddEmptyPage() {
+        let pageTitle = ""
+        viewModel?.addTaskPage(title: pageTitle)
+        
+        XCTAssertTrue(((viewModel?.pages.isEmpty) != nil))
+        XCTAssertEqual(viewModel?.pages.count, 1)
+        XCTAssertEqual(viewModel?.pages.first?.title, pageTitle)
+    }
+    
     func testAddThreePages() {
         createArrayOfPages()
 

@@ -29,6 +29,8 @@
 		128E02042B67E5C200484AEB /* CustomTagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E02032B67E5C200484AEB /* CustomTagTextField.swift */; };
 		128E02062B67F6E300484AEB /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E02052B67F6E300484AEB /* CustomTextField.swift */; };
 		128FB6E22B70EEC4004968B4 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FB6E12B70EEC4004968B4 /* Optional.swift */; };
+		1290457E2B91C601007EDDA0 /* SwiftDataManagerFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290457D2B91C601007EDDA0 /* SwiftDataManagerFake.swift */; };
+		129045812B91CEE3007EDDA0 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129045802B91CEE3007EDDA0 /* Protocols.swift */; };
 		1293C29E2B601785009BDCDB /* DetailTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1293C29D2B601785009BDCDB /* DetailTaskView.swift */; };
 		12983DB12B581AED000545EB /* HorizontalPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12983DB02B581AED000545EB /* HorizontalPages.swift */; };
 		12983DB42B581F27000545EB /* AddPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12983DB32B581F27000545EB /* AddPage.swift */; };
@@ -90,6 +92,8 @@
 		128E02032B67E5C200484AEB /* CustomTagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTagTextField.swift; sourceTree = "<group>"; };
 		128E02052B67F6E300484AEB /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		128FB6E12B70EEC4004968B4 /* Optional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Optional.swift; sourceTree = "<group>"; };
+		1290457D2B91C601007EDDA0 /* SwiftDataManagerFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataManagerFake.swift; sourceTree = "<group>"; };
+		129045802B91CEE3007EDDA0 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		1293C29D2B601785009BDCDB /* DetailTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTaskView.swift; sourceTree = "<group>"; };
 		12983DB02B581AED000545EB /* HorizontalPages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalPages.swift; sourceTree = "<group>"; };
 		12983DB32B581F27000545EB /* AddPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPage.swift; sourceTree = "<group>"; };
@@ -161,6 +165,7 @@
 				120548912B8CCC6B00B841FA /* TagUseCaseMock.swift */,
 				120548942B8CCF7A00B841FA /* TaskUseCaseMock.swift */,
 				120548962B8CD26F00B841FA /* TaskPageUseCaseMock.swift */,
+				1290457D2B91C601007EDDA0 /* SwiftDataManagerFake.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -231,6 +236,14 @@
 				128E02052B67F6E300484AEB /* CustomTextField.swift */,
 			);
 			path = Auxiliar;
+			sourceTree = "<group>";
+		};
+		1290457F2B91CED5007EDDA0 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				129045802B91CEE3007EDDA0 /* Protocols.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		12983DB22B581F1C000545EB /* Elements */ = {
@@ -344,6 +357,7 @@
 		12F247F92B7BBB9600763AFF /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				1290457F2B91CED5007EDDA0 /* Protocols */,
 				12F247FC2B7BBBB600763AFF /* Entities */,
 				12F247FB2B7BBBAD00763AFF /* UseCases */,
 			);
@@ -487,6 +501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1205489A2B8CD8E600B841FA /* ViewModelIntegrationTest.swift in Sources */,
+				1290457E2B91C601007EDDA0 /* SwiftDataManagerFake.swift in Sources */,
 				120548932B8CCCA300B841FA /* TagUseCaseMock.swift in Sources */,
 				1205489C2B8CD97D00B841FA /* ViewModelTests.swift in Sources */,
 				120548822B8C956200B841FA /* ModelsToDoListTests.swift in Sources */,
@@ -508,6 +523,7 @@
 				12614E082B5587D300869790 /* SwiftDataManager.swift in Sources */,
 				1263F48F2B569A1E006B7B42 /* Log.swift in Sources */,
 				12CE7FAF2B553B9600D7974A /* TaskViewModel.swift in Sources */,
+				129045812B91CEE3007EDDA0 /* Protocols.swift in Sources */,
 				128E02042B67E5C200484AEB /* CustomTagTextField.swift in Sources */,
 				1263F4992B569A52006B7B42 /* String.swift in Sources */,
 				128FB6E22B70EEC4004968B4 /* Optional.swift in Sources */,

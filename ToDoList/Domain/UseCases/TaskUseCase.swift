@@ -1,18 +1,11 @@
 import Foundation
 
-protocol TaskUseCaseProtocol {
-    func addTask(with title: String, idTaskPage: UUID) -> [TaskItem]
-    func toggleTaskCompletion(task: TaskItem)
-    func removeTask(at index: IndexSet) -> [TaskItem]
-    func removeTasks(tasks: [TaskItem]) -> [TaskItem]
-    func fetchAllTask() -> [TaskItem]
-}
 
 class TaskUseCase: TaskUseCaseProtocol {
  
-    private let swiftDataManager: SwiftDataManager
+    private let swiftDataManager: SwiftDataManagerProtocol
     
-    init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
+    init(swiftDataManager: SwiftDataManagerProtocol = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
     }
     

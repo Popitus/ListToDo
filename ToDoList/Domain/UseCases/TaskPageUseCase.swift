@@ -1,17 +1,10 @@
 import Foundation
 
-protocol TaskPageUseCaseProtocol {
-    func addTaskPage(title: String) -> [TaskPageItem]
-    func togglePageSelection(page: TaskPageItem)
-    func removePages(with uuid: UUID) -> [TaskPageItem]
-    func fetchAllPages() -> [TaskPageItem]
-}
-
 class TaskPageUseCase: TaskPageUseCaseProtocol {
     
-    private let swiftDataManager: SwiftDataManager
+    private let swiftDataManager: SwiftDataManagerProtocol
     
-    init(swiftDataManager: SwiftDataManager = SwiftDataManager.shared) {
+    init(swiftDataManager: SwiftDataManagerProtocol = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
     }
     
