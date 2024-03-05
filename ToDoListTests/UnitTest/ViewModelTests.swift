@@ -36,9 +36,9 @@ final class ViewModelTests: XCTestCase {
         let pageTitle = ""
         viewModel?.addTaskPage(title: pageTitle)
         
-        XCTAssertTrue(((viewModel?.pages.isEmpty) != nil))
-        XCTAssertEqual(viewModel?.pages.count, 1)
-        XCTAssertEqual(viewModel?.pages.first?.title, pageTitle)
+        XCTAssertTrue(((viewModel?.pages) == []))
+        XCTAssertEqual(viewModel?.pages.count, 0)
+        XCTAssertNotEqual(viewModel?.pages.first?.title, pageTitle)
     }
     
     func testAddThreePages() {
@@ -57,10 +57,13 @@ final class ViewModelTests: XCTestCase {
             XCTFail("Unable to get random page")
             return
         }
-        let selected = page.selected
-        viewModel?.togglePageSelection(page: page)
+        if let index = viewModel?.pages.firstIndex(where: {$0.id == page.id}) {
+            let selected = page.selected
+            viewModel?.togglePageSelection(page: page)
+            XCTAssertTrue(selected != viewModel?.pages[index].selected)
+            XCTAssertTrue(selected != pagesMock[index].selected)
+        }
         
-        XCTAssertTrue(selected != page.selected)
     }
     
     func testRemoveSelectedPage() {
@@ -87,6 +90,18 @@ final class ViewModelTests: XCTestCase {
         
         XCTAssertTrue(taskTitle == viewModel?.tasks.first?.title)
         XCTAssertTrue(viewModel?.tasks.count == 1)
+    }
+    
+    func testAddEmpyTask() {
+        createArrayOfPages()
+        guard let idTaskPage = pagesMock.randomElement()?.id else {
+            return XCTFail()
+        }
+        let taskTitle = ""
+        viewModel?.addTask(title: taskTitle, idTaskPage: idTaskPage)
+        
+        XCTAssertFalse(taskTitle == viewModel?.tasks.first?.title)
+        XCTAssertTrue(viewModel?.tasks.count == 0)
     }
     
     func testAddThreeTasks() {

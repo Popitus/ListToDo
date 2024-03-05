@@ -6,8 +6,10 @@ var pagesMock: [TaskPageItem] = []
 struct TaskPageUseCaseMock: TaskPageUseCaseProtocol {
     
     func addTaskPage(title: String) -> [TaskPageItem] {
-        let newPage = TaskPageItem(title: title)
-        pagesMock.append(newPage)
+        if !title.isEmpty {
+            let newPage = TaskPageItem(title: title)
+            pagesMock.append(newPage)
+        }
         return pagesMock
     }
     

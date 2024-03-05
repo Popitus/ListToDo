@@ -12,7 +12,7 @@ class TaskUseCase: TaskUseCaseProtocol {
     
     func addTask(with title: String, idTaskPage: UUID) -> [TaskItem]{
         let pages = swiftDataManager.fetchTaskPageItem()
-        if let index = pages.firstIndex(where: {$0.id == idTaskPage}) {
+        if let index = pages.firstIndex(where: {$0.id == idTaskPage}), !title.isEmpty {
             let newTask = TaskItem(
                 title: title,
                 date: Date(),

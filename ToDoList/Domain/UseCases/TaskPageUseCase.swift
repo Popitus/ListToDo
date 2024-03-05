@@ -9,8 +9,10 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
     }
     
     func addTaskPage(title: String) -> [TaskPageItem]{
-        let newTaskPage = TaskPageItem(title: title)
-        swiftDataManager.addTaskPageItem(item: newTaskPage)
+        if !title.isEmpty {
+            let newTaskPage = TaskPageItem(title: title)
+            swiftDataManager.addTaskPageItem(item: newTaskPage)
+        }
         return swiftDataManager.fetchTaskPageItem()
     }
     

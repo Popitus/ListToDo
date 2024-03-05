@@ -8,7 +8,7 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
     
     func addTask(with title: String, idTaskPage: UUID) -> [TaskItem] {
         let pages = pagesMock
-        if let index = pagesMock.firstIndex(where: {$0.id == idTaskPage }) {
+        if let index = pagesMock.firstIndex(where: {$0.id == idTaskPage }), !title.isEmpty {
             let newTask = TaskItem(
                 title: title,
                 date: Date(),
