@@ -5,21 +5,22 @@ var tagMock: [Tag] = []
 
 struct TagUseCaseMock: TagUseCaseProtocol {
     
-    func addTag(addTag: Tag, idTaskItem: UUID) -> [Tag] {
+    func addTag(withTitle title: String, idTaskItem: UUID, idTag: UUID) -> [Tag] {
         let tasks = taskMock
-        let checkTitle = addTag.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let checkTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         if let index = tasks.firstIndex(where: { $0.id == idTaskItem }) {
             if !checkTitle.isEmpty {
-                addTag.taskItem = tasks[index]
+                let newTag = Tag(id: idTag, title: title)
+                newTag.taskItem = tasks[index]
                 tasks[index].lastUpdate = Date()
-                tagMock.append(addTag)
+                tagMock.append(newTag)
             }
         }
         return tagMock
     }
     
-    func removeOneTag(tag: Tag) -> [Tag] {
-        if let index = tagMock.firstIndex(where: {$0.id == tag.id}) {
+    func removeOneTag(withId id: UUID) -> [Tag] {
+        if let index = tagMock.firstIndex(where: {$0.id == id}) {
             tagMock.remove(at: index)
         }
         return tagMock
