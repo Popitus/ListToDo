@@ -10,8 +10,7 @@ struct TagsView: View {
     @Environment(\.colorScheme) private var colorScheme
    
     var body: some View {
-        BackSpaceListnerTextField(hint: "Tag", text: $tag.title, onBackPressed: {
-            if allTags.count > 1 {                if tag.title.isEmpty {
+        BackSpaceListnerTextField(hint: "Tag", text: $tag.title, onBackPressed: {            if allTags.count > 1 {                if tag.title.isEmpty {
                     allTags.removeAll(where: {$0.id == tag.id })
                     if let lastIndex = allTags.indices.last {
                         allTags[lastIndex].isInitial = false

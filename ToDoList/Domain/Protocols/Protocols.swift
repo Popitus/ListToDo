@@ -17,8 +17,8 @@ protocol TaskUseCaseProtocol {
 }
 
 protocol TagUseCaseProtocol {
-    func addTag(addTag: Tag, idTaskItem: UUID) -> [Tag]
-    func removeOneTag(tag: Tag) -> [Tag]
+    func addTag(withTitle title: String, idTaskItem: UUID, idTag: UUID) -> [Tag]
+    func removeOneTag(withId id: UUID) -> [Tag]
     func removeAllTag(tag: [Tag]) -> [Tag]
     func fetchAllTags() -> [Tag]
 }

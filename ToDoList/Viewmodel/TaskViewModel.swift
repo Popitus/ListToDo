@@ -99,12 +99,16 @@ class TaskViewModel {
     
     // MARK: Tags Functions
     
-    func addTag(addTag: Tag, idTaskItem: UUID) {
-        tags = tagUseCase.addTag(addTag: addTag, idTaskItem: idTaskItem)
+    func addTag(title: String, idTaskItem: UUID, idTag: UUID) {
+        if tags.contains(where: {$0.id == idTag}) {
+            return
+        } else {
+            tags = tagUseCase.addTag(withTitle: title, idTaskItem: idTaskItem, idTag: idTag)
+        }
     }
     
-    func removeOneTag(tag: Tag) {
-        tags = tagUseCase.removeOneTag(tag: tag)
+    func removeOneTag(id: UUID) {
+        tags = tagUseCase.removeOneTag(withId: id)
     }
     
     func removeAllTag(tag: [Tag]) {

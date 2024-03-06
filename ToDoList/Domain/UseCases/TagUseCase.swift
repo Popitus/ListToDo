@@ -8,32 +8,33 @@ class TagUseCase: TagUseCaseProtocol {
         self.swiftDataManager = swiftDataManager
     }
     
-    func addTag(addTag: Tag, idTaskItem: UUID) -> [Tag] {
+    func addTag(withTitle title: String, idTaskItem: UUID, idTag: UUID) -> [Tag] {
         let tasks = swiftDataManager.fetchTaskItem()
-        let checkTitle = addTag.title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let checkTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
             if !checkTitle.isEmpty {
-                addTag.taskItem = tasks[index]
+                let newTag = Tag(id: idTag, title: title)
+                newTag.taskItem = tasks[index]
                 tasks[index].lastUpdate = Date()
-                swiftDataManager.addTagToTask(tag: addTag)
+                swiftDataManager.addTagToTask(tag: newTag)
             }
         }
-        return swiftDataManager.fetchTags()
+        return fetchAllTags()
     }
     
-    func removeOneTag(tag: Tag) -> [Tag] {
-        let tags = swiftDataManager.fetchTags()
-        if let index = tags.firstIndex(where: {$0.id == tag.id}) {
+    func removeOneTag(withId id: UUID) -> [Tag] {
+        let tags = fetchAllTags()
+        if let index = tags.firstIndex(where: {$0.id == id}) {
             swiftDataManager.removeTagTask(tag: tags[index])
         }
-        return swiftDataManager.fetchTags()
+        return fetchAllTags()
     }
     
     func removeAllTag(tag: [Tag]) -> [Tag] {
         for tags in tag {
             swiftDataManager.removeTagTask(tag: tags)
         }
-        return swiftDataManager.fetchTags()
+        return fetchAllTags()
     }
     
     func fetchAllTags() -> [Tag] {

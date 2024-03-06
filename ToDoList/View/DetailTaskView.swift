@@ -7,6 +7,7 @@ struct DetailTaskView: View {
     
     @State private var taskTitle: String = "Titulo..."
     @State private var taskNote: String = "Añadir Nota..."
+    @State private var titleTag: String = ""
     
     @FocusState private var focused: Bool
     @State var task: TaskItem
@@ -25,14 +26,14 @@ struct DetailTaskView: View {
             Section("section_tags") {
                 TagField(tags: $localTags)
                     .onChange(of: localTags) { newTag, oldTag in
-                        if let _ = newTag.last, (oldTag.last != nil) {
+                        if let tag = newTag.last, (oldTag.last != nil) {
                             if newTag.count < oldTag.count {
-                                taskViewModel.addTag(addTag: newTag.last ?? Tag(title: ""), idTaskItem: task.id)
+                                taskViewModel.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
                             } else {
-                                taskViewModel.removeOneTag(tag: oldTag.last ?? Tag(title: ""))
+                                taskViewModel.removeOneTag(id: oldTag.last?.id ?? UUID())
                             }
                         }
-                    }
+                }
             }
             
             Section("section_status") {
