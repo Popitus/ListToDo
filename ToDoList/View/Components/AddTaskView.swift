@@ -16,12 +16,14 @@ struct AddTaskView: View {
         HStack {
             TextField("new_task", text: $newTaskTitle)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                .accessibilityIdentifier("title_add_new_task")
             
             Button(action: {
                 addAdction()
                 newTaskTitle = ""
             }, label: {
                 Text("button_add")
+                    .accessibilityIdentifier("button_add_new_task")
             })
         }
     }

@@ -17,6 +17,7 @@
 		121B88222B762E63009007B5 /* EmptyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B88212B762E63009007B5 /* EmptyPageView.swift */; };
 		121B88242B762F6C009007B5 /* EmptyTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B88232B762F6C009007B5 /* EmptyTaskView.swift */; };
 		121B88262B763818009007B5 /* TitleSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B88252B763818009007B5 /* TitleSection.swift */; };
+		1250952D2B97748A003A004A /* SwiftDataManagerFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290457D2B91C601007EDDA0 /* SwiftDataManagerFake.swift */; };
 		12614E082B5587D300869790 /* SwiftDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12614E072B5587D300869790 /* SwiftDataManager.swift */; };
 		1263F48C2B56973C006B7B42 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263F48B2B56973C006B7B42 /* Enums.swift */; };
 		1263F48F2B569A1E006B7B42 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1263F48E2B569A1E006B7B42 /* Log.swift */; };
@@ -29,7 +30,6 @@
 		128E02042B67E5C200484AEB /* CustomTagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E02032B67E5C200484AEB /* CustomTagTextField.swift */; };
 		128E02062B67F6E300484AEB /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E02052B67F6E300484AEB /* CustomTextField.swift */; };
 		128FB6E22B70EEC4004968B4 /* Optional.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128FB6E12B70EEC4004968B4 /* Optional.swift */; };
-		1290457E2B91C601007EDDA0 /* SwiftDataManagerFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1290457D2B91C601007EDDA0 /* SwiftDataManagerFake.swift */; };
 		129045812B91CEE3007EDDA0 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 129045802B91CEE3007EDDA0 /* Protocols.swift */; };
 		1293C29E2B601785009BDCDB /* DetailTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1293C29D2B601785009BDCDB /* DetailTaskView.swift */; };
 		12983DB12B581AED000545EB /* HorizontalPages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12983DB02B581AED000545EB /* HorizontalPages.swift */; };
@@ -501,7 +501,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1205489A2B8CD8E600B841FA /* ViewModelIntegrationTest.swift in Sources */,
-				1290457E2B91C601007EDDA0 /* SwiftDataManagerFake.swift in Sources */,
+				1250952D2B97748A003A004A /* SwiftDataManagerFake.swift in Sources */,
 				120548932B8CCCA300B841FA /* TagUseCaseMock.swift in Sources */,
 				1205489C2B8CD97D00B841FA /* ViewModelTests.swift in Sources */,
 				120548822B8C956200B841FA /* ModelsToDoListTests.swift in Sources */,

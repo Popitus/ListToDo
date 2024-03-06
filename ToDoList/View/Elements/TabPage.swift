@@ -23,6 +23,7 @@ struct TabPage: View {
             
             .background(page.selected ? .blue : .gray)
             .clipShape(Capsule())
+            .accessibilityIdentifier("tap_page_title")
     }
 }
 

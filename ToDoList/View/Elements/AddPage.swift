@@ -16,6 +16,7 @@ struct AddPage: View {
             .padding(8)
             .background(.gray)
             .clipShape(Capsule())
+            .accessibilityIdentifier("add_title_to_page")
     }
 }
 

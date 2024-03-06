@@ -12,7 +12,11 @@ final class SwiftDataManager: SwiftDataManagerProtocol {
     @MainActor
     static func setupContainer() -> ModelContainer {
         do {
-            let container = try ModelContainer(for: TaskPageItem.self, TaskItem.self, Tag.self, configurations: ModelConfiguration(isStoredInMemoryOnly: false))
+            var inMemory: Bool = false
+            if CommandLine.arguments.contains("enable-testing") {
+                inMemory = true
+            }
+            let container = try ModelContainer(for: TaskPageItem.self, TaskItem.self, Tag.self, configurations: ModelConfiguration(isStoredInMemoryOnly: inMemory))
             container.mainContext.autosaveEnabled = true
             return container
         } catch {

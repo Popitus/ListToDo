@@ -51,7 +51,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertEqual(sut?.pages.count, 2)
     }
     
-    func testToogleTaskCompletionWithTask() {
+    func testToggleTaskCompletionWithTask() {
         createArrayOfPages()
         
         guard let page = sut?.pages.randomElement() else {
@@ -103,7 +103,7 @@ final class ViewModelIntegrationTest: XCTestCase {
 
     }
     
-    func testADDTwoTasks() {
+    func testAddTwoTasks() {
         sut?.addTaskPage(title: "Texto pagina 1")
         
         guard let page = sut?.pages.first else {

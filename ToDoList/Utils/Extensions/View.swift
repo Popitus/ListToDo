@@ -38,6 +38,7 @@ extension View {
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alert.addTextField { field in
                 field.placeholder = hintText
+                field.accessibilityIdentifier = "title_new_page_textfield"
             }
             
             alert.addAction(.init(title: secondaryTitle, style: .cancel, handler: { _ in
@@ -51,7 +52,7 @@ extension View {
                     primaryAction("")
                 }
             }))
-            
+        
             // Presenting Alert
             rootController().present(alert, animated: true, completion: nil)
     }
