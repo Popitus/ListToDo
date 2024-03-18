@@ -13,9 +13,9 @@ final class TaskItem {
     var lastUpdate: Date
     var completed = false
     
-    @Relationship(deleteRule: .cascade) var tag = [Tag]()
+    @Relationship(deleteRule: .cascade, inverse: \Tag.taskItem) var tag: [Tag]
         
-    init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, note: String, lastUpdate: Date, completed: Bool = false) {
+    init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, note: String, lastUpdate: Date, completed: Bool = false, taskPageItem: TaskPageItem? = nil, tag: [Tag] = []) {
         self.id = id
         self.title = title
         self.date = date
@@ -23,7 +23,14 @@ final class TaskItem {
         self.note = note
         self.lastUpdate = lastUpdate
         self.completed = completed
+        self.taskPageItem = taskPageItem
+        self.tag = tag
     }
     
     var taskPageItem: TaskPageItem?
+    
+    @Attribute(.ephemeral)
+    var printObject: String {
+        return "id: \(self.id), title: \(self.title), date: \(self.date), note: \(self.note), lastUpdate: \(self.lastUpdate), completed: \(self.completed)"
+    }
 }

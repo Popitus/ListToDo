@@ -10,8 +10,11 @@ struct TitleSection: View {
     
     var body: some View {
         HStack {
-            Text("\(title)\(taskViewModel.checkActivetask(is: conditional, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: conditional, id: idTaskFromPage))" : "")")
+            /*Text("\(title)\(taskViewModel.checkActivetask(is: conditional, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: conditional, id: idTaskFromPage))" : "")")
+                .font(.headline)*/
+            Text("\(title)")
                 .font(.headline)
+            
             Spacer()
             Image(systemName: showActive ? "chevron.down" : "chevron.right")
         }

@@ -8,12 +8,13 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
         self.swiftDataManager = swiftDataManager
     }
     
-    func addTaskPage(title: String) -> [TaskPageItem]{
+    func addTaskPage(title: String) -> TaskPageItem? {
         if !title.isEmpty {
-            let newTaskPage = TaskPageItem(title: title)
+            let newTaskPage = TaskPageItem(title: title, taskItems: [])
             swiftDataManager.addTaskPageItem(item: newTaskPage)
+            return newTaskPage
         }
-        return swiftDataManager.fetchTaskPageItem()
+        return nil
     }
     
     func togglePageSelection(page: TaskPageItem) {
@@ -27,12 +28,13 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
             .forEach { pages[$0].selected = false }
     }
     
-    func removePages(with uuid: UUID) -> [TaskPageItem] {
+    func removePages(with uuid: UUID) -> Int? {
         let pages = swiftDataManager.fetchTaskPageItem()
         if let index = pages.firstIndex(where: {$0.id == uuid}) {
-            swiftDataManager.removeTaskPageItem(item: pages[index])
+            swiftDataManager.removeTaskPageItem(id: pages[index].id)
+            return index
         }
-        return swiftDataManager.fetchTaskPageItem()
+        return nil
     }
     
     func fetchAllPages() -> [TaskPageItem] {

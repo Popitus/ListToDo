@@ -4,7 +4,6 @@ struct TaskItemRow: View {
     
     //Propierties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
-
     @State var task: TaskItem
     
     var body: some View {

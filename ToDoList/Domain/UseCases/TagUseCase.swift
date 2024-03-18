@@ -8,31 +8,34 @@ class TagUseCase: TagUseCaseProtocol {
         self.swiftDataManager = swiftDataManager
     }
     
-    func addTag(withTitle title: String, idTaskItem: UUID, idTag: UUID) -> [Tag] {
+    func addTag(withTitle title: String, idTaskItem: UUID) -> Tag? {
         let tasks = swiftDataManager.fetchTaskItem()
         let checkTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
             if !checkTitle.isEmpty {
-                let newTag = Tag(id: idTag, title: title)
-                newTag.taskItem = tasks[index]
+                let newTag = Tag(id: UUID(), title: title, taskItem: tasks[index])
+                tasks[index].tag.append(newTag)
                 tasks[index].lastUpdate = Date()
                 swiftDataManager.addTagToTask(tag: newTag)
+                return newTag
+                
             }
         }
-        return fetchAllTags()
+        return nil
     }
     
-    func removeOneTag(withId id: UUID) -> [Tag] {
+    func removeOneTag(withId id: UUID) -> Int? {
         let tags = fetchAllTags()
         if let index = tags.firstIndex(where: {$0.id == id}) {
-            swiftDataManager.removeTagTask(tag: tags[index])
+            swiftDataManager.removeTagTask(id: tags[index].id)
+            return index
         }
-        return fetchAllTags()
+        return nil
     }
     
     func removeAllTag(tag: [Tag]) -> [Tag] {
         for tags in tag {
-            swiftDataManager.removeTagTask(tag: tags)
+            swiftDataManager.removeTagTask(id: tags.id)
         }
         return fetchAllTags()
     }
@@ -40,5 +43,4 @@ class TagUseCase: TagUseCaseProtocol {
     func fetchAllTags() -> [Tag] {
         return swiftDataManager.fetchTags()
     }
-
 }

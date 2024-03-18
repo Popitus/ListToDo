@@ -10,7 +10,7 @@ class TaskUseCase: TaskUseCaseProtocol {
     }
     
     
-    func addTask(with title: String, idTaskPage: UUID) -> [TaskItem]{
+    func addTask(with title: String, idTaskPage: UUID) -> TaskItem? {
         let pages = swiftDataManager.fetchTaskPageItem()
         if let index = pages.firstIndex(where: {$0.id == idTaskPage}), !title.isEmpty {
             let newTask = TaskItem(
@@ -18,12 +18,15 @@ class TaskUseCase: TaskUseCaseProtocol {
                 date: Date(),
                 status: TodoStatus.pending,
                 note: "",
-                lastUpdate: Date()
+                lastUpdate: Date(),
+                taskPageItem: pages[index]
             )
-            newTask.taskPageItem = pages[index]
+            newTask.tag = []
+            pages[index].tasksItems.append(newTask)
             swiftDataManager.addTaskItem(item: newTask)
+            return newTask
         }
-        return swiftDataManager.fetchTaskItem()
+        return nil
     }
     
     func toggleTaskCompletion(task: TaskItem) {
@@ -41,17 +44,18 @@ class TaskUseCase: TaskUseCaseProtocol {
         }
     }
     
-    func removeTask(at index: IndexSet) -> [TaskItem] {
+    func removeTask(at index: IndexSet) -> Int? {
         let tasks = swiftDataManager.fetchTaskItem()
         for index in index {
-            swiftDataManager.removeTaskItem(item: tasks[index])
+            swiftDataManager.removeTaskItem(id: tasks[index].id)
+            return index
         }
-        return swiftDataManager.fetchTaskItem()
+        return nil
     }
     
     func removeTasks(tasks: [TaskItem]) -> [TaskItem] {
         for task in tasks {
-            swiftDataManager.removeTaskItem(item: task)
+            swiftDataManager.removeTaskItem(id: task.id)
         }
         return swiftDataManager.fetchTaskItem()
     }

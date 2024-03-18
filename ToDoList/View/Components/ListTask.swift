@@ -4,28 +4,31 @@ import SwiftUI
 struct ListTask: View {
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
     
-    @State var item: TaskItem
+    @State var item: TaskItem?
     
     var body: some View {
-    
-            #if DEBUG
+        
+        if let item = item {
+        #if DEBUG
             NavigationLink(
                 destination: DetailTaskView(
                     task: item,
-                    localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                    localTags: taskViewModel.tags.isEmpty ? [] :  taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
                         TaskItemRow(task: item)
                     }
-            #else
+        #else
             if (item.completed != true) {
                 NavigationLink(
                     destination: DetailTaskView(
                         task: item,
-                        localTags: taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                        localTags: taskViewModel.tags.isEmpty ? [] :  taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
                             TaskItemRow(task: item)
                         }
             }
-            #endif
-
+        #endif
+        }
+        
+        
     }
 }
 

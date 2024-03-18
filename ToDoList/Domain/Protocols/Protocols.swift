@@ -2,23 +2,23 @@ import Foundation
 
 // MARK: - Usecases Protocols
 protocol TaskPageUseCaseProtocol {
-    func addTaskPage(title: String) -> [TaskPageItem]
+    func addTaskPage(title: String) -> TaskPageItem?
     func togglePageSelection(page: TaskPageItem)
-    func removePages(with uuid: UUID) -> [TaskPageItem]
+    func removePages(with uuid: UUID) -> Int?
     func fetchAllPages() -> [TaskPageItem]
 }
 
 protocol TaskUseCaseProtocol {
-    func addTask(with title: String, idTaskPage: UUID) -> [TaskItem]
+    func addTask(with title: String, idTaskPage: UUID) -> TaskItem?
     func toggleTaskCompletion(task: TaskItem)
-    func removeTask(at index: IndexSet) -> [TaskItem]
+    func removeTask(at index: IndexSet) -> Int?
     func removeTasks(tasks: [TaskItem]) -> [TaskItem]
     func fetchAllTask() -> [TaskItem]
 }
 
 protocol TagUseCaseProtocol {
-    func addTag(withTitle title: String, idTaskItem: UUID, idTag: UUID) -> [Tag]
-    func removeOneTag(withId id: UUID) -> [Tag]
+    func addTag(withTitle title: String, idTaskItem: UUID) -> Tag?
+    func removeOneTag(withId id: UUID) -> Int?
     func removeAllTag(tag: [Tag]) -> [Tag]
     func fetchAllTags() -> [Tag]
 }
@@ -28,12 +28,12 @@ protocol TagUseCaseProtocol {
 protocol SwiftDataManagerProtocol {
     func addTaskItem(item: TaskItem)
     func fetchTaskItem() -> [TaskItem]
-    func removeTaskItem(item: TaskItem)
+    func removeTaskItem(id: UUID)
     func addTaskPageItem(item: TaskPageItem)
     func fetchTaskPageItem() -> [TaskPageItem]
-    func removeTaskPageItem(item: TaskPageItem)
+    func removeTaskPageItem(id: UUID)
     func addTagToTask(tag: Tag)
     func fetchTags() -> [Tag]
-    func removeTagTask(tag: Tag)
+    func removeTagTask(id: UUID)
 }
 

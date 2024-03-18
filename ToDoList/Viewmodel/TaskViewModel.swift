@@ -34,7 +34,7 @@ class TaskViewModel {
         if let title = page.first?.title {
             return title
         } else {
-            return pages.count > 0 ? String(localized:"title_select_category") : ""
+            return pages.count >= 0 ? String(localized:"title_select_category") : ""
         }
         
     }
@@ -52,6 +52,7 @@ class TaskViewModel {
             self.taskUseCase = taskUseCase
             self.taskPageUseCase = taskPageUseCase
             self.tagUseCase = tagUseCase
+            
             fetchData()
             
         }
@@ -63,9 +64,11 @@ class TaskViewModel {
     }
     
     // MARK: TaskItems functions
-    
+        
     func addTask(title: String, idTaskPage: UUID) {
-        tasks = taskUseCase.addTask(with: title, idTaskPage: idTaskPage)
+        if let task = taskUseCase.addTask(with: title, idTaskPage: idTaskPage) {
+            tasks.append(task)
+        }
     }
     
     func toggleTaskCompletion(task: TaskItem) {
@@ -73,17 +76,18 @@ class TaskViewModel {
     }
     
     func removeTask(at index: IndexSet) {
-        for index in index {
-            tags = tagUseCase.removeAllTag(tag: tags.filter({$0.taskItem?.id == tasks[index].id }))
+        if let index = taskUseCase.removeTask(at: index) {
+            tasks.remove(at: index)
         }
-        tasks = taskUseCase.removeTask(at: index)
-        
+        self.tags = tagUseCase.fetchAllTags()
     }
     
     // MARK: TaskPageItems Functions
     
     func addTaskPage(title: String) {
-        pages = taskPageUseCase.addTaskPage(title: title)
+        if let page = taskPageUseCase.addTaskPage(title: title) {
+            pages.append(page)
+        }
     }
     
     func togglePageSelection(page: TaskPageItem) {
@@ -91,24 +95,29 @@ class TaskViewModel {
     }
     
     func removePages(with uuid: UUID) {
-        tags = tagUseCase.removeAllTag(tag: tags.filter({$0.taskItem?.taskPageItem?.id == uuid}))
-        tasks = taskUseCase.removeTasks(tasks: tasks.filter({$0.taskPageItem?.id == uuid}))
-        pages = taskPageUseCase.removePages(with: uuid)
-        
+        if let index = taskPageUseCase.removePages(with: uuid) {
+            pages.remove(at: index)
+        }
+        self.pages = taskPageUseCase.fetchAllPages()
+        self.tasks = taskUseCase.fetchAllTask()
     }
     
     // MARK: Tags Functions
     
     func addTag(title: String, idTaskItem: UUID, idTag: UUID) {
-        if tags.contains(where: {$0.id == idTag}) {
+        if (!tags.isEmpty && tags.contains(where: {$0.id == idTag})) {
             return
         } else {
-            tags = tagUseCase.addTag(withTitle: title, idTaskItem: idTaskItem, idTag: idTag)
+            if let tag = tagUseCase.addTag(withTitle: title, idTaskItem: idTaskItem) {
+                tags.append(tag)
+            }
         }
     }
     
     func removeOneTag(id: UUID) {
-        tags = tagUseCase.removeOneTag(withId: id)
+        if let index = tagUseCase.removeOneTag(withId: id) {
+            tags.remove(at: index)
+        }
     }
     
     func removeAllTag(tag: [Tag]) {
@@ -116,7 +125,7 @@ class TaskViewModel {
     }
     
     // MARK: Utils functions
-    func checkPageSelected() -> UUID {
+    func checkPageIdSelected() -> UUID {
         if let selectedPage =  pages.firstIndex(where: {$0.selected == true }) {
             return pages[selectedPage].id
         } else {

@@ -5,25 +5,25 @@ struct TaskView: View {
     
     //Properties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
-    
-    @AppStorage("check") var checkListEmpty: Bool = true
-    
+        
     @State private var newTaskTitle = String()
     @State private var checkTasks: [TaskItem] = []
     @State private var titleSelected = ""
     @State private var idTaskFromPage = UUID()
     @State private var showActive = true
     @State private var showInactive = true
+    @State private var pageSelected = false
     
     
     var body: some View {
         @Bindable var taskvmBindable = taskViewModel //<- @Environment object aren’t directly bindable
+        
         NavigationView {
             VStack {
                 if taskViewModel.pages.isEmpty {
                     EmptyPageView()
                 } else {
-                    if (!taskViewModel.tasks.isEmpty){
+                    if (pageSelected && !checkTasks.isEmpty){
                         List {
                             Section {
                                 if showActive {
@@ -36,7 +36,7 @@ struct TaskView: View {
                                 }
                                 
                             } header: {
-                                if !taskViewModel.tasks.isEmpty {
+                                if !checkTasks.isEmpty {
                                     HStack {
                                         TitleSection(
                                             title: String(localized:"title_pending"),
@@ -59,6 +59,7 @@ struct TaskView: View {
                                         }
                                     }
                                     .onDelete(perform: taskViewModel.removeTask)
+                                   
                                 }
                                 
                             } header: {
@@ -86,7 +87,8 @@ struct TaskView: View {
                         EmptyTaskView(titleSelected: $titleSelected)
                     }
                 }
-
+                
+                
                 HorizontalPages(
                     pages: taskViewModel.pages,
                     toggleCompletionAddPage: {
@@ -106,11 +108,12 @@ struct TaskView: View {
                     },
                     toggleSelectedPage:  { page in
                         taskViewModel.togglePageSelection(page: page)
-                        
                         if page.selected {
+                            pageSelected = true
                             idTaskFromPage = page.id
                             self.titleSelected = page.title
                         } else {
+                            pageSelected = false
                             idTaskFromPage = UUID()
                             if let _ = taskViewModel.checkPageSelected() {
                                 self.titleSelected = ""
@@ -123,17 +126,18 @@ struct TaskView: View {
                     },
                     toggleDeletedPage: { idPage in
                         withAnimation {
+                            pageSelected = false
                             taskViewModel.removePages(with: idPage)
                             if let page = taskViewModel.checkPageSelected() {
                                 idTaskFromPage = page.id
                                 self.titleSelected = page.title
                             } else {
+                                idTaskFromPage = UUID()
                                 self.titleSelected = taskViewModel.pages.isEmpty ? String(localized:"title_add_category") : String(localized:"title_select_category")
                             }
-                           
-                            
+                            checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
                         }
-                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+                        
                     })
                 .padding()
                 
@@ -144,15 +148,16 @@ struct TaskView: View {
                     }
                 }
                 .padding()
+                
             }
             .navigationTitle(titleSelected.isEmpty ? String(localized:"title_add_category"):"\(titleSelected)" )
-            .onChange(of: taskViewModel.tasks) { _, _ in
-                checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+            .onChange(of: taskViewModel.tasks) { _, newValue in
+                checkTasks = newValue.filter({$0.taskPageItem?.id == idTaskFromPage})
             }
             
             .onAppear {
                 taskViewModel.fetchData()
-                idTaskFromPage = taskViewModel.checkPageSelected()
+                idTaskFromPage = taskViewModel.checkPageIdSelected()
                 checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
                 titleSelected = taskViewModel.titleSelected
             }
