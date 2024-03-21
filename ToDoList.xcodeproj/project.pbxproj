@@ -29,6 +29,9 @@
 		1267FF342BAC263E0025CA09 /* TagLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267FF332BAC263E0025CA09 /* TagLocal.swift */; };
 		1267FF362BAC26790025CA09 /* TaskLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267FF352BAC26790025CA09 /* TaskLocal.swift */; };
 		1267FF382BAC27220025CA09 /* TaskPageLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267FF372BAC27220025CA09 /* TaskPageLocal.swift */; };
+		1267FF3C2BAC28720025CA09 /* TaskPageMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267FF3B2BAC28720025CA09 /* TaskPageMapper.swift */; };
+		1267FF3E2BAC298C0025CA09 /* TaskMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267FF3D2BAC298C0025CA09 /* TaskMapper.swift */; };
+		1267FF402BAC33B50025CA09 /* TagMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1267FF3F2BAC33B50025CA09 /* TagMapper.swift */; };
 		128E02022B67E58200484AEB /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E02012B67E58200484AEB /* ViewRepresentable.swift */; };
 		128E02042B67E5C200484AEB /* CustomTagTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E02032B67E5C200484AEB /* CustomTagTextField.swift */; };
 		128E02062B67F6E300484AEB /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 128E02052B67F6E300484AEB /* CustomTextField.swift */; };
@@ -94,6 +97,9 @@
 		1267FF332BAC263E0025CA09 /* TagLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLocal.swift; sourceTree = "<group>"; };
 		1267FF352BAC26790025CA09 /* TaskLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskLocal.swift; sourceTree = "<group>"; };
 		1267FF372BAC27220025CA09 /* TaskPageLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageLocal.swift; sourceTree = "<group>"; };
+		1267FF3B2BAC28720025CA09 /* TaskPageMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageMapper.swift; sourceTree = "<group>"; };
+		1267FF3D2BAC298C0025CA09 /* TaskMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskMapper.swift; sourceTree = "<group>"; };
+		1267FF3F2BAC33B50025CA09 /* TagMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMapper.swift; sourceTree = "<group>"; };
 		128E02012B67E58200484AEB /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
 		128E02032B67E5C200484AEB /* CustomTagTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTagTextField.swift; sourceTree = "<group>"; };
 		128E02052B67F6E300484AEB /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
@@ -187,6 +193,7 @@
 		12614E052B5587B500869790 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1267FF392BAC28180025CA09 /* Mappers */,
 				12F247F62B7B857600763AFF /* Localizable */,
 				128E02002B67E57A00484AEB /* Auxiliar */,
 				1263F4902B569A52006B7B42 /* Extensions */,
@@ -242,6 +249,16 @@
 				1267FF372BAC27220025CA09 /* TaskPageLocal.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		1267FF392BAC28180025CA09 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+				1267FF3B2BAC28720025CA09 /* TaskPageMapper.swift */,
+				1267FF3D2BAC298C0025CA09 /* TaskMapper.swift */,
+				1267FF3F2BAC33B50025CA09 /* TagMapper.swift */,
+			);
+			path = Mappers;
 			sourceTree = "<group>";
 		};
 		128E02002B67E57A00484AEB /* Auxiliar */ = {
@@ -558,9 +575,11 @@
 				12983DB12B581AED000545EB /* HorizontalPages.swift in Sources */,
 				1263F4972B569A52006B7B42 /* View.swift in Sources */,
 				121B88222B762E63009007B5 /* EmptyPageView.swift in Sources */,
+				1267FF402BAC33B50025CA09 /* TagMapper.swift in Sources */,
 				121B88242B762F6C009007B5 /* EmptyTaskView.swift in Sources */,
 				1293C29E2B601785009BDCDB /* DetailTaskView.swift in Sources */,
 				12F248012B7BC78300763AFF /* TaskPageUseCase.swift in Sources */,
+				1267FF3E2BAC298C0025CA09 /* TaskMapper.swift in Sources */,
 				12F247FF2B7BBBFD00763AFF /* TaskUseCase.swift in Sources */,
 				12983DB42B581F27000545EB /* AddPage.swift in Sources */,
 				12E62D992B5FE9CB0016C9B1 /* LayoutSubView.swift in Sources */,
@@ -571,6 +590,7 @@
 				121B88262B763818009007B5 /* TitleSection.swift in Sources */,
 				128E02022B67E58200484AEB /* ViewRepresentable.swift in Sources */,
 				12B6CF392B57E06B008E5D92 /* PreviewSwiftdata.swift in Sources */,
+				1267FF3C2BAC28720025CA09 /* TaskPageMapper.swift in Sources */,
 				12CE7F9D2B553AD000D7974A /* ToDoListApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
