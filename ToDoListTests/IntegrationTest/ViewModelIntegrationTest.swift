@@ -166,7 +166,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         guard let task = sut?.tasks.randomElement() else {
             return XCTFail()
         }
-        let tag = Tag(title: "Texto Test Tag1")
+        let tag = TagItem(title: "Texto Test Tag1")
         sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
         
         XCTAssertTrue(tag.title == sut?.tags.first?.title)
@@ -179,7 +179,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         guard let task = sut?.tasks.randomElement() else {
             return XCTFail()
         }
-        let tag = Tag(title: "")
+        let tag = TagItem(title: "")
         sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
         
         XCTAssertFalse(tag.title == sut?.tags.first?.title)
@@ -212,11 +212,11 @@ final class ViewModelIntegrationTest: XCTestCase {
      
     // MARK: - Helpers functions
     
-    private func createArrayOfTags() -> [Tag]  {
-        var arrayOfTags: [Tag] = []
-        arrayOfTags.append(Tag(title: "Tag1"))
-        arrayOfTags.append(Tag(title: "Tag2"))
-        arrayOfTags.append(Tag(title: "Tag3"))
+    private func createArrayOfTags() -> [TagItem]  {
+        var arrayOfTags: [TagItem] = []
+        arrayOfTags.append(TagItem(title: "Tag1"))
+        arrayOfTags.append(TagItem(title: "Tag2"))
+        arrayOfTags.append(TagItem(title: "Tag3"))
         return arrayOfTags
     }
     

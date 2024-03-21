@@ -11,7 +11,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
     @MainActor
     static func setupContainer() -> ModelContainer {
         do {
-            let container = try ModelContainer(for: TaskPageItem.self, TaskItem.self, Tag.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+            let container = try ModelContainer(for: TaskPageItem.self, TaskItem.self, TagItem.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
             container.mainContext.autosaveEnabled = true
             return container
         } catch {
@@ -99,7 +99,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
     // MARK: Tagsfunctions
     
     @MainActor
-    func addTagToTask(tag: Tag) {
+    func addTagToTask(tag: TagItem) {
         modelContainer.mainContext.insert(tag)
         do {
             try modelContainer.mainContext.save()
@@ -109,9 +109,9 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
     }
     
     @MainActor
-    func fetchTags() -> [Tag] {
+    func fetchTags() -> [TagItem] {
         do {
-            return try modelContainer.mainContext.fetch(FetchDescriptor<Tag>(sortBy: [SortDescriptor(\.date)]))
+            return try modelContainer.mainContext.fetch(FetchDescriptor<TagItem>(sortBy: [SortDescriptor(\.date)]))
         } catch {
             fatalError(error.localizedDescription)
         }
@@ -119,10 +119,10 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
     
     @MainActor
     func removeTagTask(id: UUID) {
-        let itemPredicate = #Predicate<Tag> {
+        let itemPredicate = #Predicate<TagItem> {
             $0.id == id
         }
-        var fetchDescriptor = FetchDescriptor<Tag>(predicate: itemPredicate)
+        var fetchDescriptor = FetchDescriptor<TagItem>(predicate: itemPredicate)
         fetchDescriptor.fetchLimit = 1
         do {
             guard let deleteTagItem = try modelContainer.mainContext.fetch(fetchDescriptor).first else { return }

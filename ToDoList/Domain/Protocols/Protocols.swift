@@ -17,10 +17,10 @@ protocol TaskUseCaseProtocol {
 }
 
 protocol TagUseCaseProtocol {
-    func addTag(withTitle title: String, idTaskItem: UUID) -> Tag?
+    func addTag(withTitle title: String, idTaskItem: UUID) -> TagItem?
     func removeOneTag(withId id: UUID) -> Int?
-    func removeAllTag(tag: [Tag]) -> [Tag]
-    func fetchAllTags() -> [Tag]
+    func removeAllTag(tag: [TagItem]) -> [TagItem]
+    func fetchAllTags() -> [TagItem]
 }
 
 // MARK: - SwiftdataManager Protocols
@@ -32,8 +32,8 @@ protocol SwiftDataManagerProtocol {
     func addTaskPageItem(item: TaskPageItem)
     func fetchTaskPageItem() -> [TaskPageItem]
     func removeTaskPageItem(id: UUID)
-    func addTagToTask(tag: Tag)
-    func fetchTags() -> [Tag]
+    func addTagToTask(tag: TagItem)
+    func fetchTags() -> [TagItem]
     func removeTagTask(id: UUID)
 }
 

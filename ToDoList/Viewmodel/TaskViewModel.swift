@@ -40,7 +40,7 @@ class TaskViewModel {
     }
     
     var pages: [TaskPageItem] = []
-    var tags: [Tag] = []
+    var tags: [TagItem] = []
     var tasks: [TaskItem] = []
     var search: String = ""
    
@@ -121,7 +121,7 @@ class TaskViewModel {
         }
     }
     
-    func removeAllTag(tag: [Tag]) {
+    func removeAllTag(tag: [TagItem]) {
         tags = tagUseCase.removeAllTag(tag: tag)		
     }
     

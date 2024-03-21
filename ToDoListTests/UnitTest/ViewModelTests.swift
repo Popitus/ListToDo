@@ -212,8 +212,8 @@ final class ViewModelTests: XCTestCase {
     
     // MARK: - Helpers Tests
     
-    private func makeInitTag(with title: String) -> Tag {
-        return Tag(title: title)
+    private func makeInitTag(with title: String) -> TagItem {
+        return TagItem(title: title)
     }
     
     private func makeInitTaskItem(with title: String) -> TaskItem {
@@ -224,8 +224,8 @@ final class ViewModelTests: XCTestCase {
         return TaskPageItem(title: title)
     }
      
-    private func createArrayOfTags() -> [Tag]  {
-        var arrayOfTags: [Tag] = []
+    private func createArrayOfTags() -> [TagItem]  {
+        var arrayOfTags: [TagItem] = []
         arrayOfTags.append(makeInitTag(with: "Tag1"))
         arrayOfTags.append(makeInitTag(with: "Tag2"))
         arrayOfTags.append(makeInitTag(with: "Tag3"))

@@ -11,7 +11,7 @@ struct DetailTaskView: View {
     
     @FocusState private var focused: Bool
     @State var task: TaskItem
-    @State var localTags: [Tag]
+    @State var localTags: [TagItem]
     
     
     var body: some View {
@@ -93,7 +93,7 @@ struct DetailTaskView: View {
 
 #Preview {
     @State var taskViewModel = TaskViewModel()
-    let tags = [Tag(title: "Tag1"), Tag(title: "Tag2")]
+    let tags = [TagItem(title: "Tag1"), TagItem(title: "Tag2")]
     let task = TaskItem(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota", lastUpdate: Date())
     
     return DetailTaskView(task: task, localTags: tags)

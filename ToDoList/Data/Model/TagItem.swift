@@ -3,7 +3,7 @@ import Foundation
 import SwiftData
 
 @Model
-final class Tag {
+final class TagItem {
     
     // Properties
     @Attribute(.unique) var id = UUID()

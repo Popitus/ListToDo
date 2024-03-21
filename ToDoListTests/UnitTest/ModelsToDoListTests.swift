@@ -58,8 +58,8 @@ final class ModelsToDoListTests: XCTestCase {
     
     // MARK: - Helpers Tests
     
-    private func makeInitTag(with title: String) -> Tag {
-        return Tag(title: title)
+    private func makeInitTag(with title: String) -> TagItem {
+        return TagItem(title: title)
     }
     
     private func makeInitTaskItem(with title: String) -> TaskItem {
