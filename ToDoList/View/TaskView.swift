@@ -108,7 +108,7 @@ struct TaskView: View {
                     },
                     toggleSelectedPage:  { page in
                         taskViewModel.togglePageSelection(page: page)
-                        if page.selected {
+                        if !page.selected {
                             pageSelected = true
                             idTaskFromPage = page.id
                             self.titleSelected = page.title

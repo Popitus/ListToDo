@@ -2,10 +2,10 @@ import Foundation
 
 // MARK: - Usecases Protocols
 protocol TaskPageUseCaseProtocol {
-    func addTaskPage(title: String) -> TaskPageItem?
-    func togglePageSelection(page: TaskPageItem)
+    func addTaskPage(title: String) -> TaskPageLocal?
+    func togglePageSelection(page: TaskPageLocal) -> [TaskPageLocal]
     func removePages(with uuid: UUID) -> Int?
-    func fetchAllPages() -> [TaskPageItem]
+    func fetchAllPages() -> [TaskPageLocal]
 }
 
 protocol TaskUseCaseProtocol {

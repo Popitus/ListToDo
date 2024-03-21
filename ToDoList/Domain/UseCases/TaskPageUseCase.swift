@@ -8,24 +8,26 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
         self.swiftDataManager = swiftDataManager
     }
     
-    func addTaskPage(title: String) -> TaskPageItem? {
+    func addTaskPage(title: String) -> TaskPageLocal? {
         if !title.isEmpty {
             let newTaskPage = TaskPageItem(title: title, taskItems: [])
             swiftDataManager.addTaskPageItem(item: newTaskPage)
-            return newTaskPage
+            return TaskPageMapper.mapToDomain(taskPageItem: newTaskPage)
         }
         return nil
     }
     
-    func togglePageSelection(page: TaskPageItem) {
+    func togglePageSelection(page: TaskPageLocal) -> [TaskPageLocal]{
         let pages = swiftDataManager.fetchTaskPageItem()
         guard let index = pages.firstIndex(where: { $0.id == page.id }) else {
-            return
+            return pages.map { TaskPageMapper.mapToDomain(taskPageItem: $0)}
         }
         pages[index].selected.toggle()
         pages.indices
             .filter { $0 != index }
             .forEach { pages[$0].selected = false }
+        
+        return pages.map { TaskPageMapper.mapToDomain(taskPageItem: $0)}
     }
     
     func removePages(with uuid: UUID) -> Int? {
@@ -37,8 +39,9 @@ class TaskPageUseCase: TaskPageUseCaseProtocol {
         return nil
     }
     
-    func fetchAllPages() -> [TaskPageItem] {
-        return swiftDataManager.fetchTaskPageItem()
+    func fetchAllPages() -> [TaskPageLocal] {
+        let pagesSw = swiftDataManager.fetchTaskPageItem().map { TaskPageMapper.mapToDomain(taskPageItem: $0)}
+        return pagesSw
     }
 }
 

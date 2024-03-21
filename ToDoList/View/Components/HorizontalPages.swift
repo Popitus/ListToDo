@@ -2,9 +2,9 @@ import SwiftUI
 
 struct HorizontalPages: View {
     // Properties
-    var pages: [TaskPageItem] = []
+    var pages: [TaskPageLocal] = []
     var toggleCompletionAddPage: () -> Void
-    var toggleSelectedPage: (TaskPageItem) -> Void
+    var toggleSelectedPage: (TaskPageLocal) -> Void
     var toggleDeletedPage: (UUID) -> Void
 
     
@@ -32,15 +32,15 @@ struct HorizontalPages: View {
 }
 
 #Preview {
-    let preview = PreviewSwiftdata([TaskPageItem.self])
-    return HorizontalPages(pages:
-                            [TaskPageItem(title: "Corto"),
-                             TaskPageItem(title: "Largo - 1"),
-                             TaskPageItem(title: "Largisimos - 2")],
+    
+   HorizontalPages(pages:
+                            [TaskPageLocal(title: "Corto"),
+                             TaskPageLocal(title: "Largo - 1"),
+                             TaskPageLocal(title: "Largisimos - 2")],
                            toggleCompletionAddPage: {},
                            toggleSelectedPage: { _ in },
                            toggleDeletedPage: { _ in }
     )
-    .modelContainer(preview.container)
+    
     
 }

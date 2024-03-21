@@ -1,6 +1,6 @@
 import Foundation
 
-struct TaskPageLocal {
+struct TaskPageLocal: Identifiable {
     
     // Properties
     var id = UUID()

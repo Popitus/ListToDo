@@ -39,7 +39,7 @@ class TaskViewModel {
         
     }
     
-    var pages: [TaskPageItem] = []
+    var pages: [TaskPageLocal] = []
     var tags: [TagItem] = []
     var tasks: [TaskItem] = []
     var search: String = ""
@@ -90,8 +90,8 @@ class TaskViewModel {
         }
     }
     
-    func togglePageSelection(page: TaskPageItem) {
-        taskPageUseCase.togglePageSelection(page: page)
+    func togglePageSelection(page: TaskPageLocal) {
+        self.pages = taskPageUseCase.togglePageSelection(page: page)
     }
     
     func removePages(with uuid: UUID) {
@@ -134,7 +134,7 @@ class TaskViewModel {
         }
     }
     
-    func checkPageSelected() -> TaskPageItem? {
+    func checkPageSelected() -> TaskPageLocal? {
         if let index = pages.firstIndex(where: { $0.selected == true }) {
             return pages[index]
         } else {

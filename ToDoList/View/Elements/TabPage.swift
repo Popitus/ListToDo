@@ -3,7 +3,7 @@ import SwiftUI
 struct TabPage: View {
         
     //Properties
-    var page: TaskPageItem
+    var page: TaskPageLocal
     var toggleSelectedPage: () -> Void
     var toggleDeletedPage: () -> Void
     
@@ -28,7 +28,7 @@ struct TabPage: View {
 }
 
 #Preview {
-    let preview = PreviewSwiftdata([TaskPageItem.self])
-    return TabPage(page: TaskPageItem(title: "Test"), toggleSelectedPage: {}, toggleDeletedPage: {})
-        .modelContainer(preview.container)
+   
+    TabPage(page: TaskPageLocal(title: "Test"), toggleSelectedPage: {}, toggleDeletedPage: {})
+       
 }

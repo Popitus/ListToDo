@@ -1,6 +1,6 @@
 import Foundation
 
-struct TagLocal {
+struct TagLocal: Identifiable {
     
     // Properties
     var id = UUID()
