@@ -5,12 +5,13 @@ var pagesMock: [TaskPageItem] = []
 
 struct TaskPageUseCaseMock: TaskPageUseCaseProtocol {
     
-    func addTaskPage(title: String) -> [TaskPageItem] {
+    func addTaskPage(title: String) -> TaskPageItem? {
         if !title.isEmpty {
-            let newPage = TaskPageItem(title: title)
+            let newPage = TaskPageItem(title: title, taskItems: [])
             pagesMock.append(newPage)
+            return newPage
         }
-        return pagesMock
+        return nil
     }
     
     func togglePageSelection(page: TaskPageItem) {
@@ -23,11 +24,12 @@ struct TaskPageUseCaseMock: TaskPageUseCaseProtocol {
             .forEach { pagesMock[$0].selected = false }
     }
     
-    func removePages(with uuid: UUID) -> [TaskPageItem] {
+    func removePages(with uuid: UUID) -> Int? {
         if let index = pagesMock.firstIndex(where: {$0.id == uuid}) {
             pagesMock.remove(at: index)
+            return index
         }
-        return pagesMock
+        return nil
     }
     
     func fetchAllPages() -> [TaskPageItem] {

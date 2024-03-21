@@ -105,6 +105,7 @@ class TaskViewModel {
     // MARK: Tags Functions
     
     func addTag(title: String, idTaskItem: UUID, idTag: UUID) {
+        tags = tagUseCase.fetchAllTags()
         if (!tags.isEmpty && tags.contains(where: {$0.id == idTag})) {
             return
         } else {
@@ -125,11 +126,11 @@ class TaskViewModel {
     }
     
     // MARK: Utils functions
-    func checkPageIdSelected() -> UUID {
+    func checkPageIdSelected() -> (UUID, Bool) {
         if let selectedPage =  pages.firstIndex(where: {$0.selected == true }) {
-            return pages[selectedPage].id
+            return (pages[selectedPage].id, true)
         } else {
-            return UUID()
+            return (UUID(), false)
         }
     }
     

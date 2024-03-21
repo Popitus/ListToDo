@@ -6,20 +6,22 @@ var taskMock: [TaskItem] = []
 
 struct TaskUseCaseMock: TaskUseCaseProtocol {
     
-    func addTask(with title: String, idTaskPage: UUID) -> [TaskItem] {
-        let pages = pagesMock
+    func addTask(with title: String, idTaskPage: UUID) -> TaskItem? {
         if let index = pagesMock.firstIndex(where: {$0.id == idTaskPage }), !title.isEmpty {
             let newTask = TaskItem(
                 title: title,
                 date: Date(),
                 status: TodoStatus.pending,
                 note: "",
-                lastUpdate: Date()
+                lastUpdate: Date(),
+                taskPageItem: pagesMock[index]
             )
-            newTask.taskPageItem?.id = pages[index].id
+            newTask.tag = []
             taskMock.append(newTask)
+            //pagesMock[index].tasksItems = taskMock
+            return newTask
         }
-        return taskMock
+        return nil
         
     }
     
@@ -37,11 +39,12 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
         }
     }
     
-    func removeTask(at index: IndexSet) -> [TaskItem]{
+    func removeTask(at index: IndexSet) -> Int? {
         for index in index {
             taskMock.remove(at: index)
+            return index
         }
-        return taskMock
+        return nil
     }
     
     func removeTasks(tasks: [TaskItem]) -> [TaskItem] {

@@ -2,6 +2,8 @@ import SwiftUI
 
 struct TagField: View {
     @Binding var tags: [Tag]
+    @State private var focus: Bool = false
+    
     var body: some View {
         TagLayout(alignment: .leading) {
             ForEach($tags) { $tag in
@@ -23,10 +25,17 @@ struct TagField: View {
             if tags.isEmpty {
                 tags.append(.init(title: "", isInitial: true))
             }
+            focus.toggle()
+        }
+        .onDisappear {
+            focus.toggle()
         }
         .onReceive(NotificationCenter.default.publisher(for: UIResponder.keyboardWillChangeFrameNotification), perform: { _ in
-            if let lastTag = tags.last, !lastTag.title.isEmpty {
-                tags.append(.init(title: "", isInitial: true))
+            if let lastTag = tags.last, focus {
+                if !lastTag.title.isEmpty {
+                    tags.append(.init(title: "", isInitial: true))
+                }
+               
             }
         })
        

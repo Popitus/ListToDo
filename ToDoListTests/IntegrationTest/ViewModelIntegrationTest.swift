@@ -167,7 +167,7 @@ final class ViewModelIntegrationTest: XCTestCase {
             return XCTFail()
         }
         let tag = Tag(title: "Texto Test Tag1")
-        sut?.addTag(addTag: tag, idTaskItem: task.id)
+        sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
         
         XCTAssertTrue(tag.title == sut?.tags.first?.title)
         XCTAssertTrue(sut?.tags.count == 1)
@@ -180,7 +180,7 @@ final class ViewModelIntegrationTest: XCTestCase {
             return XCTFail()
         }
         let tag = Tag(title: "")
-        sut?.addTag(addTag: tag, idTaskItem: task.id)
+        sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
         
         XCTAssertFalse(tag.title == sut?.tags.first?.title)
         XCTAssertTrue(sut?.tags.count == 0)
@@ -192,7 +192,7 @@ final class ViewModelIntegrationTest: XCTestCase {
             return XCTFail()
         }
         let countTags = tags.count
-        sut?.removeOneTag(tag: tag)
+        sut?.removeOneTag(id: tag.id)
         
         XCTAssertTrue(sut?.tags.contains(tag) == false)
         XCTAssertTrue(sut?.tasks.count != countTags)

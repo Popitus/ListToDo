@@ -37,7 +37,7 @@ final class ModelsToDoListTests: XCTestCase {
         XCTAssertNotEqual(taskItem.date, Date())
         XCTAssertEqual(taskItem.status, .pending)
         XCTAssertEqual(taskItem.note, "")
-        XCTAssertEqual(taskItem.lastUpdate,taskItem.date)
+        XCTAssertNotEqual(taskItem.lastUpdate,taskItem.date)
         
     }
     

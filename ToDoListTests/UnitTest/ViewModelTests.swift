@@ -159,7 +159,7 @@ final class ViewModelTests: XCTestCase {
             return XCTFail()
         }
         let tag = makeInitTag(with: "Prueba Tag")
-        viewModel?.addTag(addTag: tag, idTaskItem: task.id)
+        viewModel?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
         
         XCTAssertTrue(tag.title == viewModel?.tags.first?.title)
         XCTAssertTrue(viewModel?.tags.count == 1)
@@ -171,7 +171,7 @@ final class ViewModelTests: XCTestCase {
             return XCTFail()
         }
         let tag = makeInitTag(with: "")
-        viewModel?.addTag(addTag: tag, idTaskItem: task.id)
+        viewModel?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
         
         XCTAssertFalse(tag.title == viewModel?.tags.first?.title)
         XCTAssertTrue(viewModel?.tags.count == 0)
@@ -183,7 +183,7 @@ final class ViewModelTests: XCTestCase {
             return XCTFail()
         }
         let countTags = tags.count
-        viewModel?.removeOneTag(tag: tag)
+        viewModel?.removeOneTag(id: tag.id)
         
         XCTAssertTrue(viewModel?.tags.contains(tag) == false)
         XCTAssertTrue(viewModel?.tasks.count != countTags)

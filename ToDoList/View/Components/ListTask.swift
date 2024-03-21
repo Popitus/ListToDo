@@ -13,7 +13,7 @@ struct ListTask: View {
             NavigationLink(
                 destination: DetailTaskView(
                     task: item,
-                    localTags: taskViewModel.tags.isEmpty ? [] :  taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                    localTags: item.tag.isEmpty ? [] :  taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
                         TaskItemRow(task: item)
                     }
         #else
@@ -21,7 +21,7 @@ struct ListTask: View {
                 NavigationLink(
                     destination: DetailTaskView(
                         task: item,
-                        localTags: taskViewModel.tags.isEmpty ? [] :  taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
+                        localTags: item.tag.isEmpty ? [] :  taskViewModel.tags.filter{$0.taskItem?.id == item.id})) {
                             TaskItemRow(task: item)
                         }
             }

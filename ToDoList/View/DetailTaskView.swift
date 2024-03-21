@@ -86,6 +86,8 @@ struct DetailTaskView: View {
         .scrollIndicators(.hidden)
         .navigationTitle("\(task.title)")
         .navigationBarTitleDisplayMode(.inline)
+      
+        
     }
 }
 

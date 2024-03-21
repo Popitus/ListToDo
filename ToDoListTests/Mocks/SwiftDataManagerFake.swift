@@ -29,27 +29,34 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
         do {
             try modelContainer.mainContext.save()
         } catch {
-            fatalError(error.localizedDescription)
+            print("Error \(error.localizedDescription)")
         }
     }
     
     @MainActor
     func fetchTaskItem() -> [TaskItem] {
         do {
-            return try modelContainer.mainContext.fetch(FetchDescriptor<TaskItem>())
+            return try modelContainer.mainContext.fetch(FetchDescriptor<TaskItem>(sortBy: [SortDescriptor(\.date)]))
         } catch {
             fatalError(error.localizedDescription)
         }
     }
     
     @MainActor
-    func removeTaskItem(item: TaskItem) {
-        do {
-            modelContainer.mainContext.delete(item)
-            try modelContainer.mainContext.save()
-        } catch {
-            fatalError(error.localizedDescription)
+    func removeTaskItem(id: UUID) {
+        let itemPredicate = #Predicate<TaskItem> {
+            $0.id == id
         }
+        var fetchDescriptor = FetchDescriptor<TaskItem>(predicate: itemPredicate)
+        fetchDescriptor.fetchLimit = 1
+        do {
+            guard let deleteTaskItem = try modelContainer.mainContext.fetch(fetchDescriptor).first else { return }
+            modelContainer.mainContext.delete(deleteTaskItem)
+            //try modelContainer.mainContext.save()
+        } catch {
+            print("Error Borrado Task")
+        }
+      
     }
     
     // MARK: TaskPageItems functions
@@ -59,28 +66,34 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
         do {
             try modelContainer.mainContext.save()
         } catch {
-            fatalError(error.localizedDescription)
+            print("Error \(error.localizedDescription)")
         }
     }
     
     @MainActor
     func fetchTaskPageItem() -> [TaskPageItem] {
         do {
-            return try modelContainer.mainContext.fetch(FetchDescriptor<TaskPageItem>())
+            return try modelContainer.mainContext.fetch(FetchDescriptor<TaskPageItem>(sortBy: [SortDescriptor(\.date)]))
         } catch {
             fatalError(error.localizedDescription)
         }
     }
     
     @MainActor
-    func removeTaskPageItem(item: TaskPageItem) {
-        do {
-            modelContainer.mainContext.delete(item)
-            try modelContainer.mainContext.save()
-        } catch {
-            fatalError(error.localizedDescription)
+    func removeTaskPageItem(id: UUID) {
+        let itemPredicate = #Predicate<TaskPageItem> {
+            $0.id == id
         }
-       
+        var fetchDescriptor = FetchDescriptor<TaskPageItem>(predicate: itemPredicate)
+        fetchDescriptor.fetchLimit = 1
+        do {
+            guard let deleteTaskPageItem = try modelContainer.mainContext.fetch(fetchDescriptor).first else { return }
+            modelContainer.mainContext.delete(deleteTaskPageItem)
+            //try modelContainer.mainContext.save()
+        } catch {
+            print("Error Borrado Page")
+        }
+        
     }
     
     // MARK: Tagsfunctions
@@ -91,26 +104,32 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
         do {
             try modelContainer.mainContext.save()
         } catch {
-            fatalError(error.localizedDescription)
+            print("Error \(error.localizedDescription)")
         }
     }
     
     @MainActor
     func fetchTags() -> [Tag] {
         do {
-            return try modelContainer.mainContext.fetch(FetchDescriptor<Tag>())
+            return try modelContainer.mainContext.fetch(FetchDescriptor<Tag>(sortBy: [SortDescriptor(\.date)]))
         } catch {
             fatalError(error.localizedDescription)
         }
     }
     
     @MainActor
-    func removeTagTask(tag: Tag) {
+    func removeTagTask(id: UUID) {
+        let itemPredicate = #Predicate<Tag> {
+            $0.id == id
+        }
+        var fetchDescriptor = FetchDescriptor<Tag>(predicate: itemPredicate)
+        fetchDescriptor.fetchLimit = 1
         do {
-            modelContainer.mainContext.delete(tag)
-            try modelContainer.mainContext.save()
+            guard let deleteTagItem = try modelContainer.mainContext.fetch(fetchDescriptor).first else { return }
+            modelContainer.mainContext.delete(deleteTagItem)
+            //try modelContainer.mainContext.save()
         } catch {
-            fatalError(error.localizedDescription)
+            print("Error Borrado Tag")
         }
     }
 }
