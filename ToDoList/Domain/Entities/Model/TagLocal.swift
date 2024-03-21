@@ -8,7 +8,7 @@ struct TagLocal: Identifiable {
     var isInitial = false
     var date = Date()
     
-    init(id: UUID = UUID(), title: String, isInitial: Bool = false, date: Date = Date(), taskItem: TaskLocal? = nil) {
+    init(id: UUID = UUID(), title: String, isInitial: Bool = false, date: Date = Date(), taskItem: TasksLocal? = nil) {
         self.id = id
         self.title = title
         self.isInitial = isInitial
@@ -17,5 +17,5 @@ struct TagLocal: Identifiable {
     
     }
     
-    var taskItem: TaskLocal?
+    var taskItem: TasksLocal?
 }

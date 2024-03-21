@@ -1,6 +1,6 @@
 import Foundation
 
-struct TaskLocal: Identifiable {
+struct TasksLocal: Identifiable {
     
     var id = UUID()
     var title: String

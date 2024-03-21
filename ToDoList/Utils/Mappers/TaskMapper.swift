@@ -1,7 +1,7 @@
 import Foundation
 
 struct TaskMapper {
-    static func mapToData(taskLocal: TaskLocal) -> TaskItem {
+    static func mapToData(taskLocal: TasksLocal) -> TaskItem {
         let taskPage = taskLocal.taskPageItem ?? TaskPageLocal(title: "")
         return TaskItem(
             id: taskLocal.id,
@@ -15,9 +15,9 @@ struct TaskMapper {
             tag: taskLocal.tag.map{ TagMapper.mapToData(tagLocal: $0)})
     }
     
-    static func mapToDomain(taskItem: TaskItem) -> TaskLocal {
+    static func mapToDomain(taskItem: TaskItem) -> TasksLocal {
         let taskPage = taskItem.taskPageItem ?? TaskPageItem(title: "")
-        return TaskLocal(
+        return TasksLocal(
             id: taskItem.id,
             title: taskItem.title,
             date: taskItem.date,
