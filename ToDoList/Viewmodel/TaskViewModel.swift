@@ -12,7 +12,7 @@ class TaskViewModel {
     @ObservationIgnored
     private let tagUseCase: TagUseCaseProtocol
     
-    var taskSearch: [TaskItem] {
+    var taskSearch: [TasksLocal] {
         guard !search.isEmpty else { return tasks }
         return tasks.filter { task in
             task.title.lowercased().contains(search.lowercased())
@@ -40,8 +40,8 @@ class TaskViewModel {
     }
     
     var pages: [TaskPageLocal] = []
-    var tags: [TagItem] = []
-    var tasks: [TaskItem] = []
+    var tags: [TagLocal] = []
+    var tasks: [TasksLocal] = []
     var search: String = ""
    
     init(
@@ -71,15 +71,15 @@ class TaskViewModel {
         }
     }
     
-    func toggleTaskCompletion(task: TaskItem) {
-        taskUseCase.toggleTaskCompletion(task: task)
+    func toggleTaskCompletion(task: TasksLocal) {
+        tasks = taskUseCase.toggleTaskCompletion(task: task)
     }
     
     func removeTask(at index: IndexSet) {
         if let index = taskUseCase.removeTask(at: index) {
             tasks.remove(at: index)
         }
-        self.tags = tagUseCase.fetchAllTags()
+        tags = tagUseCase.fetchAllTags()
     }
     
     // MARK: TaskPageItems Functions
@@ -91,15 +91,15 @@ class TaskViewModel {
     }
     
     func togglePageSelection(page: TaskPageLocal) {
-        self.pages = taskPageUseCase.togglePageSelection(page: page)
+        pages = taskPageUseCase.togglePageSelection(page: page)
     }
     
     func removePages(with uuid: UUID) {
         if let index = taskPageUseCase.removePages(with: uuid) {
             pages.remove(at: index)
         }
-        self.pages = taskPageUseCase.fetchAllPages()
-        self.tasks = taskUseCase.fetchAllTask()
+        pages = taskPageUseCase.fetchAllPages()
+        tasks = taskUseCase.fetchAllTask()
     }
     
     // MARK: Tags Functions
@@ -111,6 +111,9 @@ class TaskViewModel {
         } else {
             if let tag = tagUseCase.addTag(withTitle: title, idTaskItem: idTaskItem) {
                 tags.append(tag)
+                if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
+                    tasks[index].tag.append(tag)
+                }
             }
         }
     }
@@ -121,7 +124,7 @@ class TaskViewModel {
         }
     }
     
-    func removeAllTag(tag: [TagItem]) {
+    func removeAllTag(tag: [TagLocal]) {
         tags = tagUseCase.removeAllTag(tag: tag)		
     }
     
@@ -145,9 +148,9 @@ class TaskViewModel {
     func checkActivetask(is inactive: Bool = false, id: UUID) -> Int {
         let trueElements = tasks.filter { element in
             if inactive {
-                element.completed == true && element.taskPageItem?.id == id
+                element.completed == true && element.taskPageItemID == id
             } else {
-                element.completed == false && element.taskPageItem?.id == id
+                element.completed == false && element.taskPageItemID == id
             }
         }
         return trueElements.count

@@ -2,8 +2,8 @@ import SwiftUI
 
 struct TagsView: View {
     // Properties
-    @Binding var tag: TagItem
-    @Binding var allTags: [TagItem]
+    @Binding var tag: TagLocal
+    @Binding var allTags: [TagLocal]
     @FocusState private var isFocused: Bool
     
     // View properties
@@ -53,7 +53,7 @@ struct TagsView: View {
 
 #Preview {
     let preview = PreviewSwiftdata([TagItem.self])
-    @State var simpleTag = TagItem(title: "test1")
+    @State var simpleTag = TagLocal(title: "test1")
     @State var arrayOfTag = [simpleTag, simpleTag]
 
     return TagsView(

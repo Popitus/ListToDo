@@ -7,7 +7,7 @@ struct TaskView: View {
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
         
     @State private var newTaskTitle = String()
-    @State private var checkTasks: [TaskItem] = []
+    @State private var checkTasks: [TasksLocal] = []
     @State private var titleSelected = ""
     @State private var idTaskFromPage = UUID()
     @State private var showActive = true
@@ -28,8 +28,10 @@ struct TaskView: View {
                             Section {
                                 if showActive {
                                     ForEach(taskViewModel.taskSearch) { item in
-                                        if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != true) {
+                                        if (item.taskPageItemID == idTaskFromPage) && (item.completed != true) {
                                             ListTask(item: item)
+                                            printView("Tags: \(item)")
+
                                         }
                                     }
                                     .onDelete(perform: taskViewModel.removeTask)
@@ -54,7 +56,7 @@ struct TaskView: View {
                             Section {
                                 if showInactive {
                                     ForEach(taskViewModel.taskSearch) { item in
-                                        if (item.taskPageItem?.id == idTaskFromPage) && (item.completed != false) {
+                                        if (item.taskPageItemID == idTaskFromPage) && (item.completed != false) {
                                             ListTask(item: item)
                                         }
                                     }
@@ -122,7 +124,7 @@ struct TaskView: View {
                             }
                             
                         }
-                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
                     },
                     toggleDeletedPage: { idPage in
                         withAnimation {
@@ -134,7 +136,7 @@ struct TaskView: View {
                                 self.titleSelected = taskViewModel.pages.isEmpty ? String(localized:"title_add_category") : String(localized:"title_select_category")
                             }
                             (self.idTaskFromPage, self.pageSelected) = taskViewModel.checkPageIdSelected()
-                            checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+                            checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
                         }
                         
                     })
@@ -144,6 +146,7 @@ struct TaskView: View {
                 AddTaskView(newTaskTitle: $newTaskTitle) {
                     if !newTaskTitle.isEmpty {
                         taskViewModel.addTask(title: newTaskTitle, idTaskPage: idTaskFromPage)
+                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
                     }
                 }
                 .padding()
@@ -151,15 +154,15 @@ struct TaskView: View {
             }
             .navigationTitle(titleSelected.isEmpty ? String(localized:"title_add_category"):"\(titleSelected)" )
             
-            .onChange(of: taskViewModel.tasks) { _, newValue in
-                checkTasks = newValue.filter({$0.taskPageItem?.id == idTaskFromPage})
-            }
+            /*.onChange(of: taskViewModel.tasks) { _, newValue in
+                //checkTasks = newValue.filter {$0.taskPageItemID == idTaskFromPage}
+            }*/
             
             .onAppear {
                 taskViewModel.fetchData()
                 (idTaskFromPage, pageSelected) = taskViewModel.checkPageIdSelected()
                 titleSelected = taskViewModel.titleSelected
-                checkTasks = taskViewModel.tasks.filter({$0.taskPageItem?.id == idTaskFromPage})
+                checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
             }
         }
     }

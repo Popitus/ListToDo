@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TagField: View {
-    @Binding var tags: [TagItem]
+    @Binding var tags: [TagLocal]
     @State private var focus: Bool = false
     
     var body: some View {
@@ -44,7 +44,7 @@ struct TagField: View {
 
 #Preview {
     let preview = PreviewSwiftdata([TagItem.self])
-    @State var simpleTag = TagItem(title: "")
+    @State var simpleTag = TagLocal(title: "")
     @State var arrayOfTag = [simpleTag]
 
     return TagField(

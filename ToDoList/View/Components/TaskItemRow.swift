@@ -4,7 +4,7 @@ struct TaskItemRow: View {
     
     //Propierties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
-    @State var task: TaskItem
+    @State var task: TasksLocal
     
     var body: some View {
 
@@ -34,12 +34,12 @@ struct TaskItemRow: View {
                 Spacer()
             }
             HStack {
-                if taskViewModel.tags.filter({$0.taskItem?.id == task.id}) != [] {
+                if taskViewModel.tags.filter( {$0.taskItemID == task.id} ) != [] {
                     Image(systemName: "tag.circle")
                         .padding(.vertical, 4)
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            ForEach(taskViewModel.tags.filter{$0.taskItem?.id == task.id}) { tag in
+                            ForEach(taskViewModel.tags.filter{$0.taskItemID  == task.id}) { tag in
                                 TagsListView(tag: tag.title)
                             }
                         }
@@ -61,6 +61,6 @@ struct TaskItemRow: View {
 #Preview {
     @State var taskViewModel = TaskViewModel()
     return TaskItemRow(
-        task: TaskItem(title: "Test", date: Date(), status: .pending, note: "Prueba de nota", lastUpdate: Date()))
+        task: TasksLocal(title: "Test", date: Date(), status: .pending, note: "Prueba de nota", lastUpdate: Date()))
     .environment(taskViewModel)
 }

@@ -8,16 +8,17 @@ class TagUseCase: TagUseCaseProtocol {
         self.swiftDataManager = swiftDataManager
     }
     
-    func addTag(withTitle title: String, idTaskItem: UUID) -> TagItem? {
+    func addTag(withTitle title: String, idTaskItem: UUID) -> TagLocal? {
         let tasks = swiftDataManager.fetchTaskItem()
-        let checkTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        var checkTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         if let index = tasks.firstIndex(where: {$0.id == idTaskItem}) {
             if !checkTitle.isEmpty {
-                let newTag = TagItem(id: UUID(), title: title, taskItem: tasks[index])
+                if checkTitle.last == "," { checkTitle.removeLast() }
+                let newTag = TagItem(id: UUID(), title: checkTitle, taskItem: tasks[index])
                 tasks[index].tag.append(newTag)
                 tasks[index].lastUpdate = Date()
                 swiftDataManager.addTagToTask(tag: newTag)
-                return newTag
+                return TagMapper.mapToDomain(tagItem: newTag)
                 
             }
         }
@@ -33,14 +34,14 @@ class TagUseCase: TagUseCaseProtocol {
         return nil
     }
     
-    func removeAllTag(tag: [TagItem]) -> [TagItem] {
+    func removeAllTag(tag: [TagLocal]) -> [TagLocal] {
         for tags in tag {
             swiftDataManager.removeTagTask(id: tags.id)
         }
         return fetchAllTags()
     }
     
-    func fetchAllTags() -> [TagItem] {
-        return swiftDataManager.fetchTags()
+    func fetchAllTags() -> [TagLocal] {
+        return swiftDataManager.fetchTags().map{TagMapper.mapToDomain(tagItem: $0)}
     }
 }

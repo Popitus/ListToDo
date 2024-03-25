@@ -2,7 +2,7 @@ import Foundation
 
 struct TaskMapper {
     static func mapToData(taskLocal: TasksLocal) -> TaskItem {
-        let taskPage = taskLocal.taskPageItem ?? TaskPageLocal(title: "")
+        let taskPage = taskLocal.taskPageItemID ?? UUID()
         return TaskItem(
             id: taskLocal.id,
             title: taskLocal.title,
@@ -11,12 +11,12 @@ struct TaskMapper {
             note: taskLocal.note,
             lastUpdate: taskLocal.lastUpdate,
             completed: taskLocal.completed,
-            taskPageItem: TaskPageMapper.mapToData(taskPageLocal: taskPage),
+            taskPageItem: TaskPageItem(id: taskPage, title: ""),
             tag: taskLocal.tag.map{ TagMapper.mapToData(tagLocal: $0)})
     }
     
     static func mapToDomain(taskItem: TaskItem) -> TasksLocal {
-        let taskPage = taskItem.taskPageItem ?? TaskPageItem(title: "")
+        let taskPage = taskItem.taskPageItem?.id ?? UUID()
         return TasksLocal(
             id: taskItem.id,
             title: taskItem.title,
@@ -25,7 +25,7 @@ struct TaskMapper {
             note: taskItem.note,
             lastUpdate: taskItem.lastUpdate,
             completed: taskItem.completed,
-            taskPageItem: TaskPageMapper.mapToDomain(taskPageItem: taskPage),
+            taskPageItemID: taskPage,
             tag: taskItem.tag.map{ TagMapper.mapToDomain(tagItem: $0)})
     }
 }

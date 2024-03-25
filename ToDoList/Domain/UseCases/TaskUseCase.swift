@@ -10,7 +10,7 @@ class TaskUseCase: TaskUseCaseProtocol {
     }
     
     
-    func addTask(with title: String, idTaskPage: UUID) -> TaskItem? {
+    func addTask(with title: String, idTaskPage: UUID) -> TasksLocal? {
         let pages = swiftDataManager.fetchTaskPageItem()
         if let index = pages.firstIndex(where: {$0.id == idTaskPage}), !title.isEmpty {
             let newTask = TaskItem(
@@ -24,24 +24,25 @@ class TaskUseCase: TaskUseCaseProtocol {
             newTask.tag = []
             pages[index].tasksItems.append(newTask)
             swiftDataManager.addTaskItem(item: newTask)
-            return newTask
+            return TaskMapper.mapToDomain(taskItem: newTask)
         }
         return nil
     }
     
-    func toggleTaskCompletion(task: TaskItem) {
+    func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal]{
         let tasks = swiftDataManager.fetchTaskItem()
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             let status = task.status
             tasks[index].completed.toggle()
             switch status {
             case .completed:
-                return tasks[index].status = .pending
+                tasks[index].status = .pending
             case .pending:
                 tasks[index].lastUpdate = Date()
-                return tasks[index].status = .completed
+                tasks[index].status = .completed
             }
         }
+        return tasks.map{ TaskMapper.mapToDomain(taskItem: $0) }
     }
     
     func removeTask(at index: IndexSet) -> Int? {
@@ -53,15 +54,16 @@ class TaskUseCase: TaskUseCaseProtocol {
         return nil
     }
     
-    func removeTasks(tasks: [TaskItem]) -> [TaskItem] {
+    func removeTasks(tasks: [TasksLocal]) -> [TasksLocal] {
         for task in tasks {
             swiftDataManager.removeTaskItem(id: task.id)
         }
-        return swiftDataManager.fetchTaskItem()
+        return fetchAllTask()
     }
 
     
-    func fetchAllTask() -> [TaskItem] {
-        return swiftDataManager.fetchTaskItem()
+    func fetchAllTask() -> [TasksLocal] {
+        let tasks = swiftDataManager.fetchTaskItem().map{TaskMapper.mapToDomain(taskItem: $0)}
+        return tasks
     }
 }
