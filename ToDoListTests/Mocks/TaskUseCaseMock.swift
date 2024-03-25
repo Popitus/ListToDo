@@ -6,37 +6,37 @@ var taskMock: [TaskItem] = []
 
 struct TaskUseCaseMock: TaskUseCaseProtocol {
     
-    func addTask(with title: String, idTaskPage: UUID) -> TaskItem? {
+    func addTask(with title: String, idTaskPage: UUID) -> TasksLocal? {
         if let index = pagesMock.firstIndex(where: {$0.id == idTaskPage }), !title.isEmpty {
-            let newTask = TaskItem(
+            var newTask = TasksLocal(
                 title: title,
                 date: Date(),
                 status: TodoStatus.pending,
                 note: "",
                 lastUpdate: Date(),
-                taskPageItem: pagesMock[index]
+                taskPageItemID: pagesMock[index].id
             )
             newTask.tag = []
-            taskMock.append(newTask)
-            //pagesMock[index].tasksItems = taskMock
+            taskMock.append(TaskMapper.mapToData(taskLocal: newTask))
             return newTask
         }
         return nil
         
     }
     
-    func toggleTaskCompletion(task: TaskItem) {
+    func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal] {
         if let index = taskMock.firstIndex(where: {$0.id == task.id}) {
             let status = task.status
             taskMock[index].completed.toggle()
             switch status {
             case .completed:
-                return taskMock[index].status = .pending
+                taskMock[index].status = .pending
             case .pending:
                 taskMock[index].lastUpdate = Date()
-                return taskMock[index].status = .completed
+                taskMock[index].status = .completed
             }
         }
+        return taskMock.map{ TaskMapper.mapToDomainTestable(taskItem: $0)}
     }
     
     func removeTask(at index: IndexSet) -> Int? {
@@ -47,17 +47,18 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
         return nil
     }
     
-    func removeTasks(tasks: [TaskItem]) -> [TaskItem] {
-        for task in tasks {
-            if let index = taskMock.firstIndex(of: task) {
+    func removeTasks(tasks: [TasksLocal]) -> [TasksLocal] {
+        let tasklocal = taskMock.map{TaskMapper.mapToDomain(taskItem: $0)}
+        for task in tasklocal {
+            if let index = tasklocal.firstIndex(of: task) {
                 taskMock.remove(at: index)
             }
         }
-        return taskMock
+        return fetchAllTask()
     }
     
-    func fetchAllTask() -> [TaskItem] {
-        return taskMock
+    func fetchAllTask() -> [TasksLocal] {
+        return taskMock.map{TaskMapper.mapToDomain(taskItem: $0)}
     }
     
     

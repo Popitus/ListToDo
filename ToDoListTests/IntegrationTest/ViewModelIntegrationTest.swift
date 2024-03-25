@@ -88,7 +88,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         }
         sut?.addTask(title: "Texto 1", idTaskPage: page.id)
         
-        guard let task = sut?.tasks.filter({$0.taskPageItem?.id == page.id }) else {
+        guard let task = sut?.tasks.filter({$0.taskPageItemID == page.id }) else {
             XCTFail()
             return
         }
@@ -97,7 +97,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertNotNil(task)
         XCTAssertEqual(page.title, "Texto pagina 1")
         XCTAssertEqual(task[0].title, sut?.tasks.first?.title)
-        XCTAssertEqual(page.id, task.first?.taskPageItem?.id)
+        XCTAssertEqual(page.id, task.first?.taskPageItemID)
         XCTAssertEqual(sut?.pages.count, 1)
         XCTAssertEqual(sut?.tasks.count, 1)
 
@@ -112,7 +112,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         sut?.addTask(title: "Texto 1", idTaskPage: page.id)
         sut?.addTask(title: "Texto 2", idTaskPage: page.id)
         
-        guard let task = sut?.tasks.filter({$0.taskPageItem?.id == page.id }) else {
+        guard let task = sut?.tasks.filter({$0.taskPageItemID == page.id }) else {
             XCTFail()
             return
         }
@@ -122,7 +122,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertEqual(page.title, "Texto pagina 1")
         XCTAssertEqual(task[0].title, sut?.tasks.first?.title)
         XCTAssertEqual(task[1].title, sut?.tasks[1].title)
-        XCTAssertEqual(page.id, task.first?.taskPageItem?.id)
+        XCTAssertEqual(page.id, task.first?.taskPageItemID)
         XCTAssertEqual(sut?.pages.count, 1)
         XCTAssertEqual(sut?.tasks.count, 2)
     }
@@ -132,7 +132,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         guard let page = sut?.pages.first else {
             return XCTFail()
         }
-        let task = TaskItem(title: "Texto1", date: .now, status: .pending, note: "", lastUpdate: .now)
+        let task = TasksLocal(title: "Texto1", date: .now, status: .pending, note: "", lastUpdate: .now)
         
         let status = sut?.tasks.first?.status
         
@@ -212,11 +212,11 @@ final class ViewModelIntegrationTest: XCTestCase {
      
     // MARK: - Helpers functions
     
-    private func createArrayOfTags() -> [TagItem]  {
-        var arrayOfTags: [TagItem] = []
-        arrayOfTags.append(TagItem(title: "Tag1"))
-        arrayOfTags.append(TagItem(title: "Tag2"))
-        arrayOfTags.append(TagItem(title: "Tag3"))
+    private func createArrayOfTags() -> [TagLocal]  {
+        var arrayOfTags: [TagLocal] = []
+        arrayOfTags.append(TagLocal(title: "Tag1"))
+        arrayOfTags.append(TagLocal(title: "Tag2"))
+        arrayOfTags.append(TagLocal(title: "Tag3"))
         return arrayOfTags
     }
     

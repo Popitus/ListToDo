@@ -53,13 +53,13 @@ final class ViewModelTests: XCTestCase {
     
     func testTogglePageSelection() {
         createArrayOfPages()
-        guard let page = pagesMock.randomElement() else {
+        guard let page = viewModel?.pages.randomElement() else {
             XCTFail("Unable to get random page")
             return
         }
         if let index = viewModel?.pages.firstIndex(where: {$0.id == page.id}) {
             let selected = page.selected
-            viewModel?.togglePageSelection(page: page)
+            viewModel?.togglePageSelection(page: page )
             XCTAssertTrue(selected != viewModel?.pages[index].selected)
             XCTAssertTrue(selected != pagesMock[index].selected)
         }
@@ -68,7 +68,7 @@ final class ViewModelTests: XCTestCase {
     
     func testRemoveSelectedPage() {
         createArrayOfPages()
-        guard let page = pagesMock.randomElement() else {
+        guard let page = viewModel?.pages.randomElement() else {
             XCTFail("Unable to get random page")
             return
         }
@@ -82,7 +82,7 @@ final class ViewModelTests: XCTestCase {
     // MARK: - Task Testing
     func testAddTask() {
         createArrayOfPages()
-        guard let idTaskPage = pagesMock.randomElement()?.id else {
+        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
             return XCTFail()
         }
         let taskTitle = "Test Task title"
@@ -94,7 +94,7 @@ final class ViewModelTests: XCTestCase {
     
     func testAddEmpyTask() {
         createArrayOfPages()
-        guard let idTaskPage = pagesMock.randomElement()?.id else {
+        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
             return XCTFail()
         }
         let taskTitle = ""
@@ -106,7 +106,7 @@ final class ViewModelTests: XCTestCase {
     
     func testAddThreeTasks() {
         createArrayOfPages()
-        guard let idTaskPage = pagesMock.randomElement()?.id else {
+        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
             return XCTFail()
         }
         let taskTitle1 = "Test Task title1"
@@ -124,23 +124,25 @@ final class ViewModelTests: XCTestCase {
     
     func testToggleCompletionTask() {
         createArrayOfTask()
-        guard let task = taskMock.randomElement() else {
+        guard let task = viewModel?.tasks.randomElement() else {
             return XCTFail()
         }
         let selected = task.status
         viewModel?.toggleTaskCompletion(task: task)
-        
-        XCTAssertTrue(selected != task.status)
+        guard let taskChange = viewModel?.tasks.first(where: {$0.id == task.id}) else {
+            return XCTFail()
+        }
+        XCTAssertTrue(selected != taskChange.status)
         
     }
     
     func testRemoveTask() {
         createArrayOfTask()
-        guard let task = taskMock.randomElement() else {
+        guard let task = viewModel?.tasks.randomElement() else {
             return XCTFail()
         }
         
-        guard let index = taskMock.firstIndex(of: task) else {
+        guard let index = viewModel?.tasks.firstIndex(of: task) else {
             return XCTFail()
         }
         
@@ -155,7 +157,7 @@ final class ViewModelTests: XCTestCase {
     
     func testAddTag() {
         createArrayOfTask()
-        guard let task = taskMock.randomElement() else {
+        guard let task = viewModel?.tasks.randomElement() else {
             return XCTFail()
         }
         let tag = makeInitTag(with: "Prueba Tag")
@@ -167,7 +169,7 @@ final class ViewModelTests: XCTestCase {
     
     func testAddTagWithEmptyTitle() {
         createArrayOfTask()
-        guard let task = taskMock.randomElement() else {
+        guard let task = viewModel?.tasks.randomElement() else {
             return XCTFail()
         }
         let tag = makeInitTag(with: "")
@@ -212,8 +214,8 @@ final class ViewModelTests: XCTestCase {
     
     // MARK: - Helpers Tests
     
-    private func makeInitTag(with title: String) -> TagItem {
-        return TagItem(title: title)
+    private func makeInitTag(with title: String) -> TagLocal {
+        return TagLocal(title: title)
     }
     
     private func makeInitTaskItem(with title: String) -> TaskItem {
@@ -224,8 +226,8 @@ final class ViewModelTests: XCTestCase {
         return TaskPageItem(title: title)
     }
      
-    private func createArrayOfTags() -> [TagItem]  {
-        var arrayOfTags: [TagItem] = []
+    private func createArrayOfTags() -> [TagLocal]  {
+        var arrayOfTags: [TagLocal] = []
         arrayOfTags.append(makeInitTag(with: "Tag1"))
         arrayOfTags.append(makeInitTag(with: "Tag2"))
         arrayOfTags.append(makeInitTag(with: "Tag3"))
@@ -240,7 +242,7 @@ final class ViewModelTests: XCTestCase {
     
     private func createArrayOfTask() {
         createArrayOfPages()
-        guard let page = pagesMock.randomElement() else {
+        guard let page = viewModel?.pages.randomElement() else {
             return
         }
         viewModel?.addTask(title: "Titulo task1", idTaskPage: page.id)

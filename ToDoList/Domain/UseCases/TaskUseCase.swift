@@ -29,7 +29,7 @@ class TaskUseCase: TaskUseCaseProtocol {
         return nil
     }
     
-    func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal]{
+    func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal] {
         let tasks = swiftDataManager.fetchTaskItem()
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             let status = task.status

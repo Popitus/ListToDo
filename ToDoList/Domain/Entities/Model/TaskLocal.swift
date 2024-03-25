@@ -1,6 +1,6 @@
 import Foundation
 
-struct TasksLocal: Identifiable {
+struct TasksLocal: Identifiable, Equatable {
     
     var id = UUID()
     var title: String
@@ -24,5 +24,9 @@ struct TasksLocal: Identifiable {
     }
     
     var taskPageItemID: UUID?
+    
+    var printObject: String {
+        return "id: \(self.id), title: \(self.title), date: \(self.date), note: \(self.note), lastUpdate: \(self.lastUpdate), completed: \(self.completed), taskPageItemId: \(taskPageItemID)"
+    }
 
 }

@@ -5,23 +5,25 @@ var pagesMock: [TaskPageItem] = []
 
 struct TaskPageUseCaseMock: TaskPageUseCaseProtocol {
     
-    func addTaskPage(title: String) -> TaskPageItem? {
+    func addTaskPage(title: String) -> TaskPageLocal? {
         if !title.isEmpty {
             let newPage = TaskPageItem(title: title, taskItems: [])
             pagesMock.append(newPage)
-            return newPage
+            return TaskPageMapper.mapToDomain(taskPageItem: newPage)
         }
         return nil
     }
     
-    func togglePageSelection(page: TaskPageItem) {
+    func togglePageSelection(page: TaskPageLocal) -> [TaskPageLocal] {
         guard let index = pagesMock.firstIndex(where: { $0.id == page.id }) else {
-            return
+            return pagesMock.map{TaskPageMapper.mapToDomain(taskPageItem: $0)}
         }
         pagesMock[index].selected.toggle()
         pagesMock.indices
             .filter { $0 != index }
             .forEach { pagesMock[$0].selected = false }
+        
+        return pagesMock.map{TaskPageMapper.mapToDomain(taskPageItem: $0)}
     }
     
     func removePages(with uuid: UUID) -> Int? {
@@ -32,8 +34,8 @@ struct TaskPageUseCaseMock: TaskPageUseCaseProtocol {
         return nil
     }
     
-    func fetchAllPages() -> [TaskPageItem] {
-        return pagesMock
+    func fetchAllPages() -> [TaskPageLocal] {
+        return pagesMock.map{ TaskPageMapper.mapToDomain(taskPageItem: $0) }
     }
 
 }

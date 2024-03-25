@@ -5,15 +5,15 @@ var tagMock: [TagItem] = []
 
 struct TagUseCaseMock: TagUseCaseProtocol {
     
-    func addTag(withTitle title: String, idTaskItem: UUID) -> TagItem? {
+    func addTag(withTitle title: String, idTaskItem: UUID) -> TagLocal? {
         let tasks = taskMock
-        let checkTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        var checkTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         if let index = tasks.firstIndex(where: { $0.id == idTaskItem }) {
             if !checkTitle.isEmpty {
-                let newTag = TagItem(id: UUID(), title: title, taskItem: tasks[index])
-               // tasks[index].tag.append(newTag)
+                if checkTitle.last == "," { checkTitle.removeLast() }
+                let newTag = TagLocal(id: UUID(), title: checkTitle, taskItemID: tasks[index].id)
                 tasks[index].lastUpdate = Date()
-                tagMock.append(newTag)
+                tagMock.append(TagMapper.mapToData(tagLocal: newTag))
                 return newTag
             }
         }
@@ -28,13 +28,13 @@ struct TagUseCaseMock: TagUseCaseProtocol {
         return nil
     }
     
-    func removeAllTag(tag: [TagItem]) -> [TagItem] {
+    func removeAllTag(tag: [TagLocal]) -> [TagLocal] {
         tagMock = []
-        return tagMock
+        return tagMock.map{TagMapper.mapToDomain(tagItem:$0)}
     }
     
-    func fetchAllTags() -> [TagItem] {
-        return tagMock
+    func fetchAllTags() -> [TagLocal] {
+        return tagMock.map{TagMapper.mapToDomain(tagItem:$0)}
     }
     
     

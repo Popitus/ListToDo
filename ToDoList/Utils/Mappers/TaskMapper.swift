@@ -28,4 +28,16 @@ struct TaskMapper {
             taskPageItemID: taskPage,
             tag: taskItem.tag.map{ TagMapper.mapToDomain(tagItem: $0)})
     }
+    
+    static func mapToDomainTestable(taskItem: TaskItem) -> TasksLocal {
+        return TasksLocal(
+            id: taskItem.id,
+            title: taskItem.title,
+            date: taskItem.date,
+            status: taskItem.status,
+            note: taskItem.note,
+            lastUpdate: taskItem.lastUpdate,
+            completed: taskItem.completed,
+            tag: taskItem.tag.map{ TagMapper.mapToDomain(tagItem: $0)})
+    }
 }
