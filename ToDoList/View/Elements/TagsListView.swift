@@ -1,12 +1,10 @@
 
 import SwiftUI
 
-
 struct TagsListView: View {
     @State var tag: String
 
     var body: some View {
-
         Text(tag)
             .font(.footnote)
             .foregroundColor(.white)
@@ -19,4 +17,3 @@ struct TagsListView: View {
 #Preview {
     TagsListView(tag: "Prueba")
 }
-

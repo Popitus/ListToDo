@@ -1,11 +1,9 @@
 import Foundation
 
 extension String {
-
     private func createFormatter() -> DateFormatter {
-
         let formatter = DateFormatter()
-        formatter.locale =  .autoupdatingCurrent
+        formatter.locale = .autoupdatingCurrent
         formatter.dateFormat = "HH:mm - dd/MM/yyyy"
 
         return formatter
@@ -28,11 +26,11 @@ extension String {
 
         return Date()
     }
-    
+
     func localized() -> String {
         return localized(withComment: "")
     }
-    
+
     func localized(withComment: String) -> String {
         var localized = Bundle.main.localizedString(forKey: self, value: withComment, table: "Localizable")
         if localized == self {
@@ -40,5 +38,4 @@ extension String {
         }
         return localized
     }
-
 }

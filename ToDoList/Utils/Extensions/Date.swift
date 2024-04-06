@@ -9,7 +9,7 @@ extension Date {
         let component = formatter.string(from: self)
         return component
     }
-    
+
     func toString() -> String {
         return Log.dateFormatter.string(from: self as Date)
     }

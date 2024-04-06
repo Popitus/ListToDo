@@ -1,6 +1,6 @@
 import Foundation
 
-struct TaskMapper {
+enum TaskMapper {
     static func mapToData(taskLocal: TasksLocal) -> TaskItem {
         let taskPage = taskLocal.taskPageItemID ?? UUID()
         return TaskItem(
@@ -12,9 +12,10 @@ struct TaskMapper {
             lastUpdate: taskLocal.lastUpdate,
             completed: taskLocal.completed,
             taskPageItem: TaskPageItem(id: taskPage, title: ""),
-            tag: taskLocal.tag.map{ TagMapper.mapToData(tagLocal: $0)})
+            tag: taskLocal.tag.map { TagMapper.mapToData(tagLocal: $0) }
+        )
     }
-    
+
     static func mapToDomain(taskItem: TaskItem) -> TasksLocal {
         let taskPage = taskItem.taskPageItem?.id ?? UUID()
         return TasksLocal(
@@ -26,9 +27,10 @@ struct TaskMapper {
             lastUpdate: taskItem.lastUpdate,
             completed: taskItem.completed,
             taskPageItemID: taskPage,
-            tag: taskItem.tag.map{ TagMapper.mapToDomain(tagItem: $0)})
+            tag: taskItem.tag.map { TagMapper.mapToDomain(tagItem: $0) }
+        )
     }
-    
+
     static func mapToDomainTestable(taskItem: TaskItem) -> TasksLocal {
         return TasksLocal(
             id: taskItem.id,
@@ -38,6 +40,7 @@ struct TaskMapper {
             note: taskItem.note,
             lastUpdate: taskItem.lastUpdate,
             completed: taskItem.completed,
-            tag: taskItem.tag.map{ TagMapper.mapToDomain(tagItem: $0)})
+            tag: taskItem.tag.map { TagMapper.mapToDomain(tagItem: $0) }
+        )
     }
 }

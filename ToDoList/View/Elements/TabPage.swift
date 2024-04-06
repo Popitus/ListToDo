@@ -1,14 +1,12 @@
 import SwiftUI
 
 struct TabPage: View {
-        
-    //Properties
+    // Properties
     var page: TaskPageLocal
     var toggleSelectedPage: () -> Void
     var toggleDeletedPage: () -> Void
-    
+
     var body: some View {
-        
         Text("\(page.title)")
             .frame(maxWidth: .infinity)
             .font(.footnote)
@@ -17,10 +15,10 @@ struct TabPage: View {
             .onTapGesture {
                 toggleSelectedPage()
             }
-            .gesture(LongPressGesture().onEnded({ _ in
+            .gesture(LongPressGesture().onEnded { _ in
                 toggleDeletedPage()
-            }))
-            
+            })
+
             .background(page.selected ? .blue : .gray)
             .clipShape(Capsule())
             .accessibilityIdentifier("tap_page_title")
@@ -28,7 +26,5 @@ struct TabPage: View {
 }
 
 #Preview {
-   
     TabPage(page: TaskPageLocal(title: "Test"), toggleSelectedPage: {}, toggleDeletedPage: {})
-       
 }

@@ -1,11 +1,10 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct TaskView: View {
-    
-    //Properties
+    // Properties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
-        
+
     @State private var newTaskTitle = String()
     @State private var checkTasks: [TasksLocal] = []
     @State private var titleSelected = ""
@@ -13,17 +12,16 @@ struct TaskView: View {
     @State private var showActive = true
     @State private var showInactive = true
     @State private var pageSelected = false
-    
-    
+
     var body: some View {
-        @Bindable var taskvmBindable = taskViewModel //<- @Environment object aren’t directly bindable
-        
+        @Bindable var taskvmBindable = taskViewModel // <- @Environment object aren’t directly bindable
+
         NavigationView {
             VStack {
                 if taskViewModel.pages.isEmpty {
                     EmptyPageView()
                 } else {
-                    if (pageSelected && !checkTasks.isEmpty){
+                    if pageSelected && !checkTasks.isEmpty {
                         List {
                             Section {
                                 if showActive {
@@ -31,19 +29,19 @@ struct TaskView: View {
                                         if (item.taskPageItemID == idTaskFromPage) && (item.completed != true) {
                                             ListTask(item: item)
                                             printView("Tags: \(item)")
-
                                         }
                                     }
                                     .onDelete(perform: taskViewModel.removeTask)
                                 }
-                                
+
                             } header: {
                                 if !checkTasks.isEmpty {
                                     HStack {
                                         TitleSection(
-                                            title: String(localized:"title_pending"),
+                                            title: String(localized: "title_pending"),
                                             showActive: $showActive,
-                                            idTaskFromPage: $idTaskFromPage)
+                                            idTaskFromPage: $idTaskFromPage
+                                        )
                                     }
                                     .onTapGesture {
                                         withAnimation {
@@ -61,17 +59,17 @@ struct TaskView: View {
                                         }
                                     }
                                     .onDelete(perform: taskViewModel.removeTask)
-                                   
                                 }
-                                
+
                             } header: {
                                 if !checkTasks.isEmpty {
                                     HStack {
                                         TitleSection(
-                                            title: String(localized:"title_completed"),
+                                            title: String(localized: "title_completed"),
                                             conditional: true,
                                             showActive: $showInactive,
-                                            idTaskFromPage: $idTaskFromPage)
+                                            idTaskFromPage: $idTaskFromPage
+                                        )
                                     }
                                     .onTapGesture {
                                         withAnimation {
@@ -79,36 +77,34 @@ struct TaskView: View {
                                         }
                                     }
                                     .symbolEffect(.variableColor.reversing.iterative, value: showInactive)
-        
                                 }
-
                             }
                         }
-                        .searchable(text: $taskvmBindable.search, prompt:"searchbox_task...")
+                        .searchable(text: $taskvmBindable.search, prompt: "searchbox_task...")
                     } else {
                         EmptyTaskView(titleSelected: $titleSelected)
                     }
                 }
-                
-                
+
                 HorizontalPages(
                     pages: taskViewModel.pages,
                     toggleCompletionAddPage: {
                         alertTextField(
-                            title: String(localized:"alert_title_category"),
-                            message: String(localized:"alert_message_category"),
-                            hintText: String(localized:"alert_title_category_placeholder"),
-                            primaryTitle: String(localized:"button_add"),
-                            secondaryTitle: String(localized:"button_discard"),
+                            title: String(localized: "alert_title_category"),
+                            message: String(localized: "alert_message_category"),
+                            hintText: String(localized: "alert_title_category_placeholder"),
+                            primaryTitle: String(localized: "button_add"),
+                            secondaryTitle: String(localized: "button_discard"),
                             primaryAction: { text in
                                 if !text.isEmpty {
                                     taskViewModel.addTaskPage(title: text)
-                                    self.titleSelected = self.titleSelected.isEmpty ? String(localized:"title_select_category") : self.titleSelected
+                                    self.titleSelected = self.titleSelected.isEmpty ? String(localized: "title_select_category") : self.titleSelected
                                 }
                             },
-                            secondaryAction: {})
+                            secondaryAction: {}
+                        )
                     },
-                    toggleSelectedPage:  { page in
+                    toggleSelectedPage: { page in
                         taskViewModel.togglePageSelection(page: page)
                         if !page.selected {
                             pageSelected = true
@@ -120,11 +116,10 @@ struct TaskView: View {
                             if let _ = taskViewModel.checkPageSelected() {
                                 self.titleSelected = ""
                             } else {
-                                self.titleSelected = String(localized:"title_select_category")
+                                self.titleSelected = String(localized: "title_select_category")
                             }
-                            
                         }
-                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
+                        checkTasks = taskViewModel.tasks.filter { $0.taskPageItemID == idTaskFromPage }
                     },
                     toggleDeletedPage: { idPage in
                         withAnimation {
@@ -133,36 +128,30 @@ struct TaskView: View {
                             if let page = taskViewModel.checkPageSelected() {
                                 self.titleSelected = page.title
                             } else {
-                                self.titleSelected = taskViewModel.pages.isEmpty ? String(localized:"title_add_category") : String(localized:"title_select_category")
+                                self.titleSelected = taskViewModel.pages.isEmpty ? String(localized: "title_add_category") : String(localized: "title_select_category")
                             }
                             (self.idTaskFromPage, self.pageSelected) = taskViewModel.checkPageIdSelected()
-                            checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
+                            checkTasks = taskViewModel.tasks.filter { $0.taskPageItemID == idTaskFromPage }
                         }
-                        
-                    })
+                    }
+                )
                 .padding()
-                
-                
+
                 AddTaskView(newTaskTitle: $newTaskTitle) {
                     if !newTaskTitle.isEmpty {
                         taskViewModel.addTask(title: newTaskTitle, idTaskPage: idTaskFromPage)
-                        checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
+                        checkTasks = taskViewModel.tasks.filter { $0.taskPageItemID == idTaskFromPage }
                     }
                 }
                 .padding()
-                
             }
-            .navigationTitle(titleSelected.isEmpty ? String(localized:"title_add_category"):"\(titleSelected)" )
-            
-            /*.onChange(of: taskViewModel.tasks) { _, newValue in
-                //checkTasks = newValue.filter {$0.taskPageItemID == idTaskFromPage}
-            }*/
-            
+            .navigationTitle(titleSelected.isEmpty ? String(localized: "title_add_category") : "\(titleSelected)")
+
             .onAppear {
                 taskViewModel.fetchData()
                 (idTaskFromPage, pageSelected) = taskViewModel.checkPageIdSelected()
                 titleSelected = taskViewModel.titleSelected
-                checkTasks = taskViewModel.tasks.filter({$0.taskPageItemID == idTaskFromPage})
+                checkTasks = taskViewModel.tasks.filter { $0.taskPageItemID == idTaskFromPage }
             }
         }
     }
@@ -173,4 +162,3 @@ struct TaskView: View {
     return TaskView()
         .environment(taskViewModel)
 }
-

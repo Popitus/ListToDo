@@ -1,13 +1,12 @@
 import SwiftUI
 
 struct EmptyTaskView: View {
-    
-    //Properties
+    // Properties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
-    
+
     @State private var animationCount = 0
     @Binding var titleSelected: String
-    
+
     var body: some View {
         VStack {
             Spacer()
@@ -17,11 +16,11 @@ struct EmptyTaskView: View {
                 .onTapGesture {
                     animationCount += 1
                 }
-            if (titleSelected != "")  {
-                Text("\(taskViewModel.checkPageSelected() != nil ? "\(String(localized:"empty_task_info")) \(titleSelected)" : String(localized:"title_select_category"))")
+            if titleSelected != "" {
+                Text("\(taskViewModel.checkPageSelected() != nil ? "\(String(localized: "empty_task_info")) \(titleSelected)" : String(localized: "title_select_category"))")
             }
             Spacer()
-        }        
+        }
     }
 }
 

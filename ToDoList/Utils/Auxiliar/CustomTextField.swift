@@ -12,7 +12,7 @@ struct CustomTextField: UIViewRepresentable {
         return textField
     }
 
-    func updateUIView(_ uiView: UITextField, context: Context) {
+    func updateUIView(_ uiView: UITextField, context _: Context) {
         uiView.text = text
     }
 
@@ -32,7 +32,7 @@ struct CustomTextField: UIViewRepresentable {
             textField.selectedTextRange = textField.textRange(from: textField.endOfDocument, to: textField.endOfDocument)
         }
 
-        func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        func textFieldDidEndEditing(_: UITextField, reason _: UITextField.DidEndEditingReason) {
             parent.onEditingChanged(false)
         }
 

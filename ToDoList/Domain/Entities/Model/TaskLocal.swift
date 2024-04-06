@@ -1,7 +1,6 @@
 import Foundation
 
 struct TasksLocal: Identifiable, Equatable {
-    
     var id = UUID()
     var title: String
     var date: Date
@@ -10,7 +9,7 @@ struct TasksLocal: Identifiable, Equatable {
     var lastUpdate: Date
     var completed = false
     var tag: [TagLocal]
-        
+
     init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, note: String, lastUpdate: Date, completed: Bool = false, taskPageItemID: UUID? = nil, tag: [TagLocal] = []) {
         self.id = id
         self.title = title
@@ -22,11 +21,10 @@ struct TasksLocal: Identifiable, Equatable {
         self.taskPageItemID = taskPageItemID
         self.tag = tag
     }
-    
-    var taskPageItemID: UUID?
-    
-    var printObject: String {
-        return "id: \(self.id), title: \(self.title), date: \(self.date), note: \(self.note), lastUpdate: \(self.lastUpdate), completed: \(self.completed), taskPageItemId: \(taskPageItemID)"
-    }
 
+    var taskPageItemID: UUID?
+
+    var printObject: String {
+        return "id: \(id), title: \(title), date: \(date), note: \(note), lastUpdate: \(lastUpdate), completed: \(completed), taskPageItemId: \(taskPageItemID)"
+    }
 }

@@ -1,13 +1,13 @@
-@testable import ToDoList
-import SwiftData
 import Foundation
+import SwiftData
+@testable import ToDoList
 
 final class SwiftDataManagerFake: SwiftDataManagerProtocol {
     static let shared = SwiftDataManagerFake()
-    
+
     @MainActor
     var modelContainer: ModelContainer = setupContainer()
-    
+
     @MainActor
     static func setupContainer() -> ModelContainer {
         do {
@@ -18,11 +18,11 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
             fatalError("Could not initialize ModelContainer")
         }
     }
-    
+
     private init() {}
-    
+
     // MARK: TaskItems Functions
-    
+
     @MainActor
     func addTaskItem(item: TaskItem) {
         modelContainer.mainContext.insert(item)
@@ -32,7 +32,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
             print("Error \(error.localizedDescription)")
         }
     }
-    
+
     @MainActor
     func fetchTaskItem() -> [TaskItem] {
         do {
@@ -41,7 +41,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
+
     @MainActor
     func removeTaskItem(id: UUID) {
         let itemPredicate = #Predicate<TaskItem> {
@@ -52,14 +52,14 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
         do {
             guard let deleteTaskItem = try modelContainer.mainContext.fetch(fetchDescriptor).first else { return }
             modelContainer.mainContext.delete(deleteTaskItem)
-            //try modelContainer.mainContext.save()
+            // try modelContainer.mainContext.save()
         } catch {
             print("Error Borrado Task")
         }
-      
     }
-    
+
     // MARK: TaskPageItems functions
+
     @MainActor
     func addTaskPageItem(item: TaskPageItem) {
         modelContainer.mainContext.insert(item)
@@ -69,7 +69,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
             print("Error \(error.localizedDescription)")
         }
     }
-    
+
     @MainActor
     func fetchTaskPageItem() -> [TaskPageItem] {
         do {
@@ -78,7 +78,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
+
     @MainActor
     func removeTaskPageItem(id: UUID) {
         let itemPredicate = #Predicate<TaskPageItem> {
@@ -89,15 +89,14 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
         do {
             guard let deleteTaskPageItem = try modelContainer.mainContext.fetch(fetchDescriptor).first else { return }
             modelContainer.mainContext.delete(deleteTaskPageItem)
-            //try modelContainer.mainContext.save()
+            // try modelContainer.mainContext.save()
         } catch {
             print("Error Borrado Page")
         }
-        
     }
-    
+
     // MARK: Tagsfunctions
-    
+
     @MainActor
     func addTagToTask(tag: TagItem) {
         modelContainer.mainContext.insert(tag)
@@ -107,7 +106,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
             print("Error \(error.localizedDescription)")
         }
     }
-    
+
     @MainActor
     func fetchTags() -> [TagItem] {
         do {
@@ -116,7 +115,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
             fatalError(error.localizedDescription)
         }
     }
-    
+
     @MainActor
     func removeTagTask(id: UUID) {
         let itemPredicate = #Predicate<TagItem> {
@@ -127,7 +126,7 @@ final class SwiftDataManagerFake: SwiftDataManagerProtocol {
         do {
             guard let deleteTagItem = try modelContainer.mainContext.fetch(fetchDescriptor).first else { return }
             modelContainer.mainContext.delete(deleteTagItem)
-            //try modelContainer.mainContext.save()
+            // try modelContainer.mainContext.save()
         } catch {
             print("Error Borrado Tag")
         }

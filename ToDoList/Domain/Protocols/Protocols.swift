@@ -1,6 +1,7 @@
 import Foundation
 
 // MARK: - Usecases Protocols
+
 protocol TaskPageUseCaseProtocol {
     func addTaskPage(title: String) -> TaskPageLocal?
     func togglePageSelection(page: TaskPageLocal) -> [TaskPageLocal]
@@ -36,4 +37,3 @@ protocol SwiftDataManagerProtocol {
     func fetchTags() -> [TagItem]
     func removeTagTask(id: UUID)
 }
-

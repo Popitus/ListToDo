@@ -1,6 +1,6 @@
 import Foundation
 
-struct TagMapper {
+enum TagMapper {
     static func mapToData(tagLocal: TagLocal) -> TagItem {
         let tag = tagLocal.taskItemID ?? UUID()
         return TagItem(
@@ -8,9 +8,10 @@ struct TagMapper {
             title: tagLocal.title,
             isInitial: tagLocal.isInitial,
             date: tagLocal.date,
-            taskItem: TaskItem(id: tag, title: "", date: .now, status: .pending, note: "", lastUpdate: .now))
+            taskItem: TaskItem(id: tag, title: "", date: .now, status: .pending, note: "", lastUpdate: .now)
+        )
     }
-    
+
     static func mapToDomain(tagItem: TagItem) -> TagLocal {
         let tag = tagItem.taskItem?.id ?? UUID()
         return TagLocal(
@@ -18,6 +19,7 @@ struct TagMapper {
             title: tagItem.title,
             isInitial: tagItem.isInitial,
             date: tagItem.date,
-            taskItemID: tag)
+            taskItemID: tag
+        )
     }
 }

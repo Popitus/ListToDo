@@ -1,45 +1,43 @@
 import SwiftUI
 
 struct TaskItemRow: View {
-    
-    //Propierties
+    // Propierties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
     @State var task: TasksLocal
-    
-    var body: some View {
 
+    var body: some View {
         VStack {
             HStack {
                 Text(task.title)
                     .strikethrough(task.completed)
                     .foregroundColor(task.completed ? .gray : .primary)
                     .font(.title3)
-                
+
                 Spacer()
-                
+
                 StatusIndicator(status: task.status)
-                    .onTapGesture{
+                    .onTapGesture {
                         withAnimation {
                             taskViewModel.toggleTaskCompletion(task: task)
                         }
                     }
             }
-            
+
             HStack {
                 Text(task.lastUpdate.format())
                     .strikethrough(task.completed)
                     .foregroundColor(.gray)
                     .font(.subheadline)
-                
+
                 Spacer()
             }
             HStack {
-                if taskViewModel.tags.filter( {$0.taskItemID == task.id} ) != [] {
+                if taskViewModel.tags.filter({ $0.taskItemID == task.id }) != [] {
                     Image(systemName: "tag.circle")
                         .padding(.vertical, 4)
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack {
-                            ForEach(taskViewModel.tags.filter{$0.taskItemID  == task.id}) { tag in
+                            ForEach(taskViewModel.tags.filter { $0.taskItemID == task.id }) { tag in
                                 TagsListView(tag: tag.title)
                             }
                         }
@@ -51,9 +49,7 @@ struct TaskItemRow: View {
                     Image(systemName: "text.bubble")
                         .padding(.vertical, 4)
                 }
-                
             }
-            
         }
     }
 }
@@ -62,5 +58,5 @@ struct TaskItemRow: View {
     @State var taskViewModel = TaskViewModel()
     return TaskItemRow(
         task: TasksLocal(title: "Test", date: Date(), status: .pending, note: "Prueba de nota", lastUpdate: Date()))
-    .environment(taskViewModel)
+        .environment(taskViewModel)
 }

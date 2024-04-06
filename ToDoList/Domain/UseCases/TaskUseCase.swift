@@ -1,18 +1,15 @@
 import Foundation
 
-
 class TaskUseCase: TaskUseCaseProtocol {
- 
     private let swiftDataManager: SwiftDataManagerProtocol
-    
+
     init(swiftDataManager: SwiftDataManagerProtocol = SwiftDataManager.shared) {
         self.swiftDataManager = swiftDataManager
     }
-    
-    
+
     func addTask(with title: String, idTaskPage: UUID) -> TasksLocal? {
         let pages = swiftDataManager.fetchTaskPageItem()
-        if let index = pages.firstIndex(where: {$0.id == idTaskPage}), !title.isEmpty {
+        if let index = pages.firstIndex(where: { $0.id == idTaskPage }), !title.isEmpty {
             let newTask = TaskItem(
                 title: title,
                 date: Date(),
@@ -28,7 +25,7 @@ class TaskUseCase: TaskUseCaseProtocol {
         }
         return nil
     }
-    
+
     func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal] {
         let tasks = swiftDataManager.fetchTaskItem()
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
@@ -42,9 +39,9 @@ class TaskUseCase: TaskUseCaseProtocol {
                 tasks[index].status = .completed
             }
         }
-        return tasks.map{ TaskMapper.mapToDomain(taskItem: $0) }
+        return tasks.map { TaskMapper.mapToDomain(taskItem: $0) }
     }
-    
+
     func removeTask(at index: IndexSet) -> Int? {
         let tasks = swiftDataManager.fetchTaskItem()
         for index in index {
@@ -53,7 +50,7 @@ class TaskUseCase: TaskUseCaseProtocol {
         }
         return nil
     }
-    
+
     func removeTasks(tasks: [TasksLocal]) -> [TasksLocal] {
         for task in tasks {
             swiftDataManager.removeTaskItem(id: task.id)
@@ -61,9 +58,8 @@ class TaskUseCase: TaskUseCaseProtocol {
         return fetchAllTask()
     }
 
-    
     func fetchAllTask() -> [TasksLocal] {
-        let tasks = swiftDataManager.fetchTaskItem().map{TaskMapper.mapToDomain(taskItem: $0)}
+        let tasks = swiftDataManager.fetchTaskItem().map { TaskMapper.mapToDomain(taskItem: $0) }
         return tasks
     }
 }

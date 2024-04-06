@@ -7,7 +7,6 @@ struct HorizontalPages: View {
     var toggleSelectedPage: (TaskPageLocal) -> Void
     var toggleDeletedPage: (UUID) -> Void
 
-    
     var body: some View {
         VStack {
             HStack {
@@ -20,7 +19,8 @@ struct HorizontalPages: View {
                                 TabPage(
                                     page: page,
                                     toggleSelectedPage: { toggleSelectedPage(page) },
-                                    toggleDeletedPage: { toggleDeletedPage(page.id) })
+                                    toggleDeletedPage: { toggleDeletedPage(page.id) }
+                                )
                             }
                             AddPage().onTapGesture { toggleCompletionAddPage() }
                         }
@@ -32,15 +32,11 @@ struct HorizontalPages: View {
 }
 
 #Preview {
-    
-   HorizontalPages(pages:
-                            [TaskPageLocal(title: "Corto"),
-                             TaskPageLocal(title: "Largo - 1"),
-                             TaskPageLocal(title: "Largisimos - 2")],
-                           toggleCompletionAddPage: {},
-                           toggleSelectedPage: { _ in },
-                           toggleDeletedPage: { _ in }
-    )
-    
-    
+    HorizontalPages(pages:
+        [TaskPageLocal(title: "Corto"),
+         TaskPageLocal(title: "Largo - 1"),
+         TaskPageLocal(title: "Largisimos - 2")],
+        toggleCompletionAddPage: {},
+        toggleSelectedPage: { _ in },
+        toggleDeletedPage: { _ in })
 }

@@ -3,12 +3,12 @@ import SwiftUI
 struct TagField: View {
     @Binding var tags: [TagLocal]
     @State private var focus: Bool = false
-    
+
     var body: some View {
         TagLayout(alignment: .leading) {
             ForEach($tags) { $tag in
                 TagsView(tag: $tag, allTags: $tags)
-                    .onChange(of: tag.title) { oldValue, newValue in
+                    .onChange(of: tag.title) { _, newValue in
                         if newValue.last == "," {
                             tag.title.removeLast()
                             if !tag.title.isEmpty {
@@ -35,10 +35,8 @@ struct TagField: View {
                 if !lastTag.title.isEmpty {
                     tags.append(.init(title: "", isInitial: true))
                 }
-               
             }
         })
-       
     }
 }
 
@@ -48,6 +46,6 @@ struct TagField: View {
     @State var arrayOfTag = [simpleTag]
 
     return TagField(
-    tags: $arrayOfTag)
+        tags: $arrayOfTag)
         .modelContainer(preview.container)
 }
