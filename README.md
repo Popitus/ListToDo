@@ -1,42 +1,44 @@
-# Lista de Tareas en SwiftUI con SwiftData
+# To-Do List in SwiftUI with SwiftData
 
-Este proyecto es un MVP (Producto Mínimo Viable) de una aplicación de lista de tareas mejorado, utilizando una arquitectura que incorpora algunos conceptos de Clean Architecture y SOLID.
+This project is an MVP (Minimum Viable Product) of an enhanced to-do list application, using an architecture that incorporates some concepts from Clean Architecture and SOLID.
 
-## Descripción
+## Description
 
-Esta aplicación de lista de tareas ha sido mejorada para seguir principios de diseño de software sólidos, incluyendo el uso de un repositorio, casos de uso y la implementación de los repositorios mediante protocolos. También hace uso de mappers para convertir entre modelos de datos internos y entidades de la interfaz de usuario.
+This to-do list application has been enhanced to adhere to solid software design principles, including the use of a repository, use cases, and implementing repositories through protocols. It also makes use of mappers to convert between internal data models and user interface entities.
 
-## Características
+## Features
 
-- **Agregar Tareas:** Los usuarios pueden agregar nuevas tareas mediante un formulario de entrada.
-- **Marcar y Desmarcar Tareas:** Las tareas se pueden marcar o desmarcar como completadas.
-- **Eliminar Tareas:** Las tareas se pueden eliminar fácilmente desde la lista.
-- **Detalles de Tarea Mejorados:** Se proporciona una vista detallada para cada tarea, que incluye descripción, fecha de vencimiento, prioridad, etc.
+- **Add Tasks:** Users can add new tasks through an input form.
+- **Check and Uncheck Tasks:** Tasks can be checked or unchecked as completed.
+- **Delete Tasks:** Tasks can be easily deleted from the list.
+- **Enhanced Task Details:** A detailed view is provided for each task, including description, due date, priority, etc.
 
-## Arquitectura y Tecnologías Utilizadas
+## Architecture and Technologies Used
 
-- **Repositorio y Casos de Uso:** Se implementa un repositorio para abstraer el acceso a los datos y casos de uso para la lógica empresarial.
-- **Protocolos y Mappers:** Los repositorios se implementan mediante protocolos, lo que permite una fácil sustitución y pruebas. Se utilizan mappers para convertir entre modelos de datos internos y entidades de la interfaz de usuario.
-- **Swiftdata:** La persistencia de datos se realiza utilizando SwiftData.
+- **Repository and Use Cases:** A repository is implemented to abstract data access and use cases for business logic.
+- **Protocols and Mappers:** Repositories are implemented through protocols, allowing for easy substitution and testing. Mappers are used to convert between internal data models and user interface entities.
+- **SwiftData:** Data persistence is performed using SwiftData.
 
-## Estructura del Proyecto
+## Project Structure
 
-El proyecto sigue una estructura clara y organizada, con separación de responsabilidades entre las capas de presentación, dominio y datos.
+The project follows a clear and organized structure, with separation of responsibilities among presentation, domain, and data layers.
 
-## Ejecución
+## Execution
 
-1. Clona este repositorio.
-2. Abre el proyecto en Xcode.
-3. Ejecuta la aplicación en el simulador de iOS o en un dispositivo físico.
+1. Clone this repository.
+2. Open the project in Xcode.
+3. Run the application on the iOS simulator or on a physical device.
 
-## Contribuciones
+## Contributions
 
-Las contribuciones son bienvenidas. Si encuentras algún problema o tienes una mejora, no dudes en abrir un problema o enviar un pull request. 
+Contributions are welcome. If you find any issues or have an improvement, feel free to open an issue or submit a pull request.
 
-## Notas Adicionales
+## Additional Notes
 
-Este proyecto se ha creado con el objetivo de demostrar una implementación mejorada de un MVP utilizando SwiftUI y las mejores prácticas de desarrollo de software. No tiene un valor comercial como tal, solo es a modo de práctica e ilustrativo.
+This project has been created with the aim of demonstrating an enhanced implementation of an MVP using SwiftUI and best software development practices. It does not have commercial value as such, it is only for practice and illustrative purposes.
 
-## Autor
+## Author
 
 Oliver R.C.
+
+Also, please note that there is localization available for both English and Spanish languages.
