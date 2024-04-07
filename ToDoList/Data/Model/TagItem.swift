@@ -4,7 +4,7 @@ import SwiftData
 
 @Model
 final class TagItem {
-    // Properties
+    
     @Attribute(.unique) var id = UUID()
     var title: String
     var isInitial = false

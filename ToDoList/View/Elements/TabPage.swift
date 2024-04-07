@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TabPage: View {
-    // Properties
+    
     var page: TaskPageLocal
     var toggleSelectedPage: () -> Void
     var toggleDeletedPage: () -> Void

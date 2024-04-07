@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HorizontalPages: View {
-    // Properties
+    
     var pages: [TaskPageLocal] = []
     var toggleCompletionAddPage: () -> Void
     var toggleSelectedPage: (TaskPageLocal) -> Void

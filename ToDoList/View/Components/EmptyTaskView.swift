@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct EmptyTaskView: View {
-    // Properties
+    
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
 
     @State private var animationCount = 0

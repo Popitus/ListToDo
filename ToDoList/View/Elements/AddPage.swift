@@ -1,9 +1,3 @@
-//
-//  AddPage.swift
-//  ToDoList
-//
-//  Created by Oliver Ramírez Cáceres on 17/1/24.
-//
 
 import SwiftUI
 

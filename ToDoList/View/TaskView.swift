@@ -2,7 +2,7 @@ import SwiftData
 import SwiftUI
 
 struct TaskView: View {
-    // Properties
+    
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
 
     @State private var newTaskTitle = String()

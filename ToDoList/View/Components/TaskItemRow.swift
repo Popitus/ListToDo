@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TaskItemRow: View {
-    // Propierties
+
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
     var task: TasksLocal
 

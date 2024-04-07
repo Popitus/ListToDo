@@ -3,7 +3,7 @@
 import SwiftUI
 
 struct TagLayout: Layout {
-    // Properties
+    
     var alignment: Alignment = .center
     var spacing: CGFloat = 10
 

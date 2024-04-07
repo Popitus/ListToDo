@@ -1,12 +1,11 @@
 import SwiftUI
 
 struct TagsView: View {
-    // Properties
+    
     @Binding var tag: TagLocal
     @Binding var allTags: [TagLocal]
     @FocusState private var isFocused: Bool
 
-    // View properties
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
