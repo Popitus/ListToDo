@@ -40,7 +40,6 @@ struct TagsView: View {
             }
         }
         .onChange(of: isFocused) { _, _ in
-            print("Focused \(isFocused)")
             if !isFocused {
                 tag.isInitial = true
             }

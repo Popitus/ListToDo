@@ -28,15 +28,12 @@ struct DetailTaskView: View {
                     .onChange(of: localTags) { newTag, oldTag in
                         if let tag = newTag.last, oldTag.last != nil {
                             if newTag.count < oldTag.count {
-                                print("Tags Actualizar... tag: \(tag.title) - newtag: \(newTag.map{$0.title}) - oldtag: \(oldTag.map{$0.title})")
                                 taskViewModel.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
                             } else if newTag.count > oldTag.count {
-                                print("Tags Borrar... tag: \(tag.title) - newtag: \(newTag.map{$0.title}) - oldtag: \(oldTag.map{$0.title})")
                                 taskViewModel.removeOneTag(id: oldTag.last?.id ?? UUID())
                             }
                         }
                         if let lastIndex = localTags.indices.last, lastIndex > 0, localTags[lastIndex].title == "" {
-                            print("Tags update! \(localTags[lastIndex - 1])")
                             taskViewModel.updateTag(tag: localTags[lastIndex - 1])
                         }
                     }
