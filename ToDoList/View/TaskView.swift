@@ -28,10 +28,10 @@ struct TaskView: View {
                                     ForEach(taskViewModel.taskSearch) { item in
                                         if (item.taskPageItemID == idTaskFromPage) && (item.completed != true) {
                                             ListTask(item: item)
-                                            printView("Tags: \(item)")
                                         }
                                     }
                                     .onDelete(perform: taskViewModel.removeTask)
+                                    
                                 }
 
                             } header: {
@@ -153,6 +153,14 @@ struct TaskView: View {
                 titleSelected = taskViewModel.titleSelected
                 checkTasks = taskViewModel.tasks.filter { $0.taskPageItemID == idTaskFromPage }
             }
+            
+            .onChange(of: taskViewModel.tasks) {
+                checkTasks = taskViewModel.tasks.filter { $0.taskPageItemID == idTaskFromPage }
+
+    
+            }
+            
+            
         }
     }
 }

@@ -4,10 +4,10 @@ import SwiftUI
 struct ListTask: View {
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
 
-    @State var item: TasksLocal?
+    var item: TasksLocal
 
     var body: some View {
-        if let item = item {
+       
             #if DEBUG
                 NavigationLink(
                     destination: DetailTaskView(
@@ -27,7 +27,7 @@ struct ListTask: View {
                         }
                 }
             #endif
-        }
+        
     }
 }
 

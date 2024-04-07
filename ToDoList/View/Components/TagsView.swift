@@ -10,13 +10,22 @@ struct TagsView: View {
     @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
-        BackSpaceListnerTextField(hint: "Tag", text: $tag.title, onBackPressed: { if allTags.count > 1 { if tag.title.isEmpty {
-            allTags.removeAll(where: { $0.id == tag.id })
-            if let lastIndex = allTags.indices.last {
-                allTags[lastIndex].isInitial = false
+        BackSpaceListnerTextField(hint: "Tag", text: $tag.title, onBackPressed: {
+            guard let lastTag = allTags.last else {
+                return
             }
-        }
-        }
+            if allTags.count > 1 {
+                if tag.title.isEmpty {
+                    allTags.removeAll(where: { $0.id == tag.id })
+                        if let lastIndex = allTags.indices.last {
+                                allTags[lastIndex].isInitial = false
+                                }
+                        }
+            }
+            if (lastTag.title == "" && allTags.count > 1) {
+                allTags.removeLast()
+            }
+            
         })
         .focused($isFocused)
         .padding(.horizontal, isFocused || tag.title.isEmpty ? 0 : 10)
@@ -31,6 +40,7 @@ struct TagsView: View {
             }
         }
         .onChange(of: isFocused) { _, _ in
+            print("Focused \(isFocused)")
             if !isFocused {
                 tag.isInitial = true
             }

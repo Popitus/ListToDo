@@ -50,6 +50,16 @@ class TaskUseCase: TaskUseCaseProtocol {
         }
         return nil
     }
+    
+    func updateTask(task: TasksLocal) {
+        let tasks = swiftDataManager.fetchTaskItem()
+        if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+            tasks[index].title = task.title
+            tasks[index].note = task.note
+        }
+    }
+    
+    
 
     func removeTasks(tasks: [TasksLocal]) -> [TasksLocal] {
         for task in tasks {

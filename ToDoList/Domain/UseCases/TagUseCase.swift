@@ -1,6 +1,7 @@
 import Foundation
 
 class TagUseCase: TagUseCaseProtocol {
+  
     private let swiftDataManager: SwiftDataManagerProtocol
 
     init(swiftDataManager: SwiftDataManagerProtocol = SwiftDataManager.shared) {
@@ -39,6 +40,13 @@ class TagUseCase: TagUseCaseProtocol {
         return fetchAllTags()
     }
 
+    func updateTag(tag: TagLocal) {
+        let tags = swiftDataManager.fetchTags()
+        if let index = tags.firstIndex(where: { $0.id == tag.id }) {
+            tags[index].title = tag.title
+        }
+    }
+    
     func fetchAllTags() -> [TagLocal] {
         return swiftDataManager.fetchTags().map { TagMapper.mapToDomain(tagItem: $0) }
     }

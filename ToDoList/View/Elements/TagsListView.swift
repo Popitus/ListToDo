@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct TagsListView: View {
-    @State var tag: String
+    var tag: String
 
     var body: some View {
         Text(tag)

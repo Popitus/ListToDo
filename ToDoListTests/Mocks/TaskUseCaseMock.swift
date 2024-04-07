@@ -5,6 +5,7 @@ import Foundation
 var taskMock: [TaskItem] = []
 
 struct TaskUseCaseMock: TaskUseCaseProtocol {
+    
     func addTask(with title: String, idTaskPage: UUID) -> TasksLocal? {
         if let index = pagesMock.firstIndex(where: { $0.id == idTaskPage }), !title.isEmpty {
             var newTask = TasksLocal(
@@ -53,6 +54,13 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
             }
         }
         return fetchAllTask()
+    }
+    
+    func updateTask(task: TasksLocal) {
+        if let index = taskMock.firstIndex(where: { $0.id == task.id }) {
+            taskMock[index].title = task.title
+            taskMock[index].note = task.note
+        }
     }
 
     func fetchAllTask() -> [TasksLocal] {

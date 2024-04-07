@@ -11,13 +11,6 @@ class TaskViewModel {
     @ObservationIgnored
     private let tagUseCase: TagUseCaseProtocol
 
-    var taskSearch: [TasksLocal] {
-        guard !search.isEmpty else { return tasks }
-        return tasks.filter { task in
-            task.title.lowercased().contains(search.lowercased())
-        }
-    }
-
     var activeTasks: Int {
         let falseElements = tasks.filter { $0.completed == false }
         return falseElements.count
@@ -41,6 +34,7 @@ class TaskViewModel {
     var tags: [TagLocal] = []
     var tasks: [TasksLocal] = []
     var search: String = ""
+    
 
     init(
         taskUseCase: TaskUseCaseProtocol = TaskUseCase(),
@@ -52,6 +46,15 @@ class TaskViewModel {
         self.tagUseCase = tagUseCase
 
         fetchData()
+    }
+    
+    var taskSearch: [TasksLocal] {
+        guard !search.isEmpty else {
+            return tasks
+        }
+        return tasks.filter { task in
+            task.title.lowercased().contains(search.lowercased())
+        }
     }
 
     func fetchData() {
@@ -78,6 +81,12 @@ class TaskViewModel {
         }
         tags = tagUseCase.fetchAllTags()
     }
+    
+    func updateTitleAndNote(with task: TasksLocal) {
+        taskUseCase.updateTask(task: task)
+        tasks = taskUseCase.fetchAllTask()
+    }
+    
 
     // MARK: TaskPageItems Functions
 
@@ -119,6 +128,12 @@ class TaskViewModel {
         if let index = tagUseCase.removeOneTag(withId: id) {
             tags.remove(at: index)
         }
+    }
+    
+    func updateTag(tag: TagLocal) {
+        tagUseCase.updateTag(tag: tag)
+        tags = tagUseCase.fetchAllTags()
+        
     }
 
     func removeAllTag(tag: [TagLocal]) {

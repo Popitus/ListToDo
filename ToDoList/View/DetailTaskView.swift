@@ -4,41 +4,49 @@ import SwiftUI
 struct DetailTaskView: View {
     // State properties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
-
+    
     @State private var taskTitle: String = "Titulo..."
     @State private var taskNote: String = "Añadir Nota..."
     @State private var titleTag: String = ""
-
-    @FocusState private var focused: Bool
+    
     @State var task: TasksLocal
     @State var localTags: [TagLocal]
-
+    
     var body: some View {
         List {
             Section("section_title") {
-                CustomTextField(placeholder: taskTitle, text: $task.title, onEditingChanged: { _ in
-                })
+                CustomTextField(
+                    placeholder: taskTitle,
+                    text: $task.title,
+                    onEditingChanged: { _ in
+                    })
                 .textFieldStyle(RoundedBorderTextFieldStyle())
             }
-
+            
             Section("section_tags") {
                 TagField(tags: $localTags)
                     .onChange(of: localTags) { newTag, oldTag in
                         if let tag = newTag.last, oldTag.last != nil {
                             if newTag.count < oldTag.count {
+                                print("Tags Actualizar... tag: \(tag.title) - newtag: \(newTag.map{$0.title}) - oldtag: \(oldTag.map{$0.title})")
                                 taskViewModel.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
-                            } else {
+                            } else if newTag.count > oldTag.count {
+                                print("Tags Borrar... tag: \(tag.title) - newtag: \(newTag.map{$0.title}) - oldtag: \(oldTag.map{$0.title})")
                                 taskViewModel.removeOneTag(id: oldTag.last?.id ?? UUID())
                             }
                         }
+                        if let lastIndex = localTags.indices.last, lastIndex > 0, localTags[lastIndex].title == "" {
+                            print("Tags update! \(localTags[lastIndex - 1])")
+                            taskViewModel.updateTag(tag: localTags[lastIndex - 1])
+                        }
                     }
             }
-
+            
             Section("section_status") {
                 StatusIndicator(status: task.status)
             }
             .listRowBackground(Color.clear)
-
+            
             Section("section_note") {
                 ZStack {
                     TextEditor(text: $task.note)
@@ -50,7 +58,7 @@ struct DetailTaskView: View {
                                     .foregroundStyle(.tertiary)
                                     .padding(.top, 16)
                                     .padding(.leading, 5)
-
+                                
                                 Spacer()
                             }
                             Spacer()
@@ -59,6 +67,10 @@ struct DetailTaskView: View {
                 }
             }
         }
+        .onChange(of: task) {
+            taskViewModel.updateTitleAndNote(with: task)
+        }
+        
         HStack {
             VStack {
                 Section("section_createAt") {
@@ -77,7 +89,8 @@ struct DetailTaskView: View {
                 .padding(.horizontal, 25)
             }
         }
-
+        
+        
         .listRowBackground(Color.clear)
         .scrollIndicators(.hidden)
         .navigationTitle("\(task.title)")
@@ -89,7 +102,8 @@ struct DetailTaskView: View {
     @State var taskViewModel = TaskViewModel()
     let tags = [TagLocal(title: "Tag1"), TagLocal(title: "Tag2")]
     let task = TasksLocal(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota", lastUpdate: Date())
-
+    
     return DetailTaskView(task: task, localTags: tags)
         .environment(taskViewModel)
 }
+

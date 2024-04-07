@@ -3,7 +3,7 @@ import SwiftUI
 struct TagField: View {
     @Binding var tags: [TagLocal]
     @State private var focus: Bool = false
-
+    
     var body: some View {
         TagLayout(alignment: .leading) {
             ForEach($tags) { $tag in
@@ -16,6 +16,7 @@ struct TagField: View {
                             }
                         }
                     }
+                
             }
         }
         .clipped()
@@ -42,10 +43,10 @@ struct TagField: View {
 
 #Preview {
     let preview = PreviewSwiftdata([TagItem.self])
-    @State var simpleTag = TagLocal(title: "")
-    @State var arrayOfTag = [simpleTag]
-
+    @State var simpleTag = TagLocal(title: "Prueba")
+    @State var arrayOfTag = [simpleTag, simpleTag]
+    
     return TagField(
         tags: $arrayOfTag)
-        .modelContainer(preview.container)
+    .modelContainer(preview.container)
 }

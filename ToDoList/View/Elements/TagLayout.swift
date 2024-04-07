@@ -1,9 +1,4 @@
-//
-//  TagLayout.swift
-//  ToDoList
-//
-//  Created by Oliver Ramírez Cáceres on 23/1/24.
-//
+
 
 import SwiftUI
 

@@ -26,6 +26,12 @@ struct TagUseCaseMock: TagUseCaseProtocol {
         }
         return nil
     }
+    
+    func updateTag(tag: TagLocal) {
+        if let index = tagMock.firstIndex(where: { $0.id == tag.id }) {
+            tagMock[index].title = tag.title
+        }
+    }
 
     func removeAllTag(tag _: [TagLocal]) -> [TagLocal] {
         tagMock = []

@@ -3,7 +3,7 @@ import SwiftUI
 struct TaskItemRow: View {
     // Propierties
     @Environment(TaskViewModel.self) var taskViewModel: TaskViewModel
-    @State var task: TasksLocal
+    var task: TasksLocal
 
     var body: some View {
         VStack {

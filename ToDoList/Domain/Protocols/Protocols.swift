@@ -14,6 +14,7 @@ protocol TaskUseCaseProtocol {
     func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal]
     func removeTask(at index: IndexSet) -> Int?
     func removeTasks(tasks: [TasksLocal]) -> [TasksLocal]
+    func updateTask(task: TasksLocal)
     func fetchAllTask() -> [TasksLocal]
 }
 
@@ -21,6 +22,7 @@ protocol TagUseCaseProtocol {
     func addTag(withTitle title: String, idTaskItem: UUID) -> TagLocal?
     func removeOneTag(withId id: UUID) -> Int?
     func removeAllTag(tag: [TagLocal]) -> [TagLocal]
+    func updateTag(tag: TagLocal)
     func fetchAllTags() -> [TagLocal]
 }
 
