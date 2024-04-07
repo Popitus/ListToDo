@@ -22,4 +22,13 @@ enum TagMapper {
             taskItemID: tag
         )
     }
+    
+    static func mapToDomainTestable(tagItem: TagItem) -> TagLocal {
+        return TagLocal(
+            id: tagItem.id,
+            title: tagItem.title,
+            isInitial: tagItem.isInitial,
+            date: tagItem.date
+        )
+    }
 }

@@ -40,11 +40,12 @@ class TagUseCase: TagUseCaseProtocol {
         return fetchAllTags()
     }
 
-    func updateTag(tag: TagLocal) {
+    func updateTag(tag: TagLocal) -> [TagLocal] {
         let tags = swiftDataManager.fetchTags()
         if let index = tags.firstIndex(where: { $0.id == tag.id }) {
             tags[index].title = tag.title
         }
+        return fetchAllTags()
     }
     
     func fetchAllTags() -> [TagLocal] {

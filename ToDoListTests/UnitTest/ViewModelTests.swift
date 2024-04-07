@@ -117,6 +117,70 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(taskTitle3 == viewModel?.tasks[2].title)
         XCTAssertTrue(viewModel?.tasks.count == 3)
     }
+    
+    func testUpdateTaskTitle() {
+        createArrayOfPages()
+        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
+            return XCTFail()
+        }
+        let title = "New Task"
+        var newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
+        XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
+        
+        newTask.title = "Change Task Title"
+        viewModel?.updateTitleAndNote(with: newTask)
+        XCTAssertTrue(newTask.title != title)
+        XCTAssertTrue(newTask.note == "")
+ 
+    }
+    
+    func testUpdateTaskNote() {
+        createArrayOfPages()
+        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
+            return XCTFail()
+        }
+        let title = "New Task"
+        var newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
+        XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
+        
+        newTask.note = "New Note"
+        viewModel?.updateTitleAndNote(with: newTask)
+        XCTAssertTrue(newTask.note != "")
+        XCTAssertTrue(newTask.title == title)
+ 
+    }
+    
+    func testUpdateTaskWithoutChangeTitle() {
+        createArrayOfPages()
+        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
+            return XCTFail()
+        }
+        let title = "New Task"
+        let newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
+        XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
+        
+        viewModel?.updateTitleAndNote(with: newTask)
+        XCTAssertTrue(newTask.note == "")
+        XCTAssertTrue(newTask.title == title)
+    }
+    
+    func testUpdateTaskWithoutChangeNote() {
+        createArrayOfPages()
+        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
+            return XCTFail()
+        }
+        let title = "New Task"
+        let newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
+        XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
+        
+        viewModel?.updateTitleAndNote(with: newTask)
+        XCTAssertTrue(newTask.note == "")
+        XCTAssertTrue(newTask.title == title)
+    }
 
     func testToggleCompletionTask() {
         createArrayOfTask()
@@ -171,6 +235,22 @@ final class ViewModelTests: XCTestCase {
 
         XCTAssertFalse(tag.title == viewModel?.tags.first?.title)
         XCTAssertTrue(viewModel?.tags.count == 0)
+    }
+    
+    func testUpdateTag() {
+        createArrayOfTask()
+        guard let task = viewModel?.tasks.randomElement() else {
+            return XCTFail()
+        }
+        let tagName = "Tag1"
+        var tag = makeInitTag(with: tagName)
+        viewModel?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
+        tag.title = "New Tag2"
+        
+        viewModel?.updateTag(tag: tag)
+
+        XCTAssertFalse(tagName != viewModel?.tags.first?.title)
+        XCTAssertTrue(viewModel?.tags.count != 0)
     }
 
     func testRemoveOneTag() {

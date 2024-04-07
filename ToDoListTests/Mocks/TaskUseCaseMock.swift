@@ -56,11 +56,12 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
         return fetchAllTask()
     }
     
-    func updateTask(task: TasksLocal) {
+    func updateTask(task: TasksLocal) -> [TasksLocal] {
         if let index = taskMock.firstIndex(where: { $0.id == task.id }) {
             taskMock[index].title = task.title
             taskMock[index].note = task.note
         }
+        return taskMock.map { TaskMapper.mapToDomainTestable(taskItem: $0) }
     }
 
     func fetchAllTask() -> [TasksLocal] {
