@@ -40,8 +40,3 @@ Este proyecto se ha creado con el objetivo de demostrar una implementación mejo
 ## Autor
 
 Oliver R.C.
-
-## Licencia
-
-Este proyecto está bajo la [Licencia MIT](LICENSE).
-
