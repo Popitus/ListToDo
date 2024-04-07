@@ -138,6 +138,61 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertFalse(sut?.tasks == nil)
         XCTAssertNotEqual(status, sut?.tasks.first?.status)
     }
+    func testUpdateTaskTitle() {
+        sut?.addTaskPage(title: "Texto pagina 1")
+        guard let page = sut?.pages.first else {
+            return XCTFail()
+        }
+        let title = "Texto 1"
+        sut?.addTask(title: title, idTaskPage: page.id)
+        guard var taskItem = sut?.tasks.first else {
+            XCTFail()
+            return
+        }
+        taskItem.title = "Texto 2"
+    
+        sut?.updateTitleAndNote(with: taskItem)
+        XCTAssertTrue(sut?.tasks.count == 1)
+        XCTAssertNotEqual(title, sut?.tasks.first?.title)
+        
+    }
+    
+    func testUpdateTaskNote() {
+        sut?.addTaskPage(title: "Texto pagina 1")
+        guard let page = sut?.pages.first else {
+            return XCTFail()
+        }
+        let title = "Texto 1"
+        sut?.addTask(title: title, idTaskPage: page.id)
+        guard var taskItem = sut?.tasks.first else {
+            XCTFail()
+            return
+        }
+        taskItem.note = "Prueba"
+    
+        sut?.updateTitleAndNote(with: taskItem)
+        XCTAssertTrue(sut?.tasks.count == 1)
+        XCTAssertNotEqual("", sut?.tasks.first?.note)
+        XCTAssertEqual("Prueba", sut?.tasks.first?.note)
+    }
+    
+    func testUpdateTaskWithoutChangeTitleOrNote() {
+        sut?.addTaskPage(title: "Texto pagina 1")
+        guard let page = sut?.pages.first else {
+            return XCTFail()
+        }
+        let title = "Texto 1"
+        sut?.addTask(title: title, idTaskPage: page.id)
+        guard var taskItem = sut?.tasks.first else {
+            XCTFail()
+            return
+        }
+    
+        sut?.updateTitleAndNote(with: taskItem)
+        XCTAssertTrue(sut?.tasks.count == 1)
+        XCTAssertEqual("", sut?.tasks.first?.note)
+
+    }
 
     func testRemoveTask() {
         createArrayOfTask()
@@ -162,7 +217,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         guard let task = sut?.tasks.randomElement() else {
             return XCTFail()
         }
-        let tag = TagItem(title: "Texto Test Tag1")
+        let tag = TagLocal(title: "Texto Test Tag1")
         sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
 
         XCTAssertTrue(tag.title == sut?.tags.first?.title)
@@ -179,6 +234,29 @@ final class ViewModelIntegrationTest: XCTestCase {
 
         XCTAssertFalse(tag.title == sut?.tags.first?.title)
         XCTAssertTrue(sut?.tags.count == 0)
+    }
+    
+    func testUpdateTag() {
+        createArrayOfTask()
+        guard let task = sut?.tasks.randomElement() else {
+            return XCTFail()
+        }
+        let title = "Texto Test Tag1"
+        var tag = TagLocal(title: title)
+        sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
+        XCTAssertTrue(tag.title == sut?.tags.first?.title)
+        
+        guard var tagItem = sut?.tags.first else {
+            XCTFail()
+            return
+        }
+        
+        tagItem.title = "Texto Nuevo"
+        sut?.updateTag(tag: tagItem)
+        XCTAssertFalse(tagItem.title != sut?.tags.first?.title)
+        XCTAssertTrue(tagItem.id == sut?.tags.first?.id)
+        
+        
     }
 
     func testRemoveOneTag() {

@@ -83,8 +83,7 @@ class TaskViewModel {
     }
     
     func updateTitleAndNote(with task: TasksLocal) {
-        taskUseCase.updateTask(task: task)
-        tasks = taskUseCase.fetchAllTask()
+        tasks = taskUseCase.updateTask(task: task)
     }
     
 
@@ -131,9 +130,7 @@ class TaskViewModel {
     }
     
     func updateTag(tag: TagLocal) {
-        tagUseCase.updateTag(tag: tag)
-        tags = tagUseCase.fetchAllTags()
-        
+        tags = tagUseCase.updateTag(tag: tag)        
     }
 
     func removeAllTag(tag: [TagLocal]) {
