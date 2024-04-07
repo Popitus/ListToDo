@@ -42,3 +42,7 @@ This project has been created with the aim of demonstrating an enhanced implemen
 Oliver R.C.
 
 Also, please note that there is localization available for both English and Spanish languages.
+
+## Preview
+![](https://github.com/Popitus/ListToDo/blob/6edf78bcb3b08b60fd6e6ed1f616e5846a9db42a/ToDoList/Preview%20Content/Preview%20Assets.xcassets/ListToDo.dataset/ListToDo.gif)
+
