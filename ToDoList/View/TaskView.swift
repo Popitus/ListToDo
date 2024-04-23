@@ -51,8 +51,13 @@ struct TaskView: View {
                             taskViewModel.addTaskPage(title: text)
                             self.titleSelected = self.titleSelected.isEmpty ? String(localized: "title_select_category") : self.titleSelected
                             
-                            if taskViewModel.pages.count == 1 {
-                                titleSelected = text
+                            //Activa la Page al ser creada
+                            titleSelected = text
+                            if let index = taskViewModel.pages.firstIndex(where: { $0.title == titleSelected }) {
+                                taskViewModel.pages[index].selected = true
+                                let selectedPage =  taskViewModel.pages[index]
+                                taskViewModel.togglePageSelection(page:selectedPage )
+                                idTaskFromPage = selectedPage.id
                             }
                             showNewCategory.toggle()
                         }
@@ -72,7 +77,9 @@ struct TaskView: View {
             }
             
             .onChange(of: taskViewModel.tasks) {
+                (idTaskFromPage, pageSelected) = taskViewModel.checkPageIdSelected()
                 checkTasks = taskViewModel.tasks.filter { $0.taskPageItemID == idTaskFromPage }
+                
             }
         }
     }
