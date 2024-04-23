@@ -62,6 +62,7 @@
 		12F247F82B7B85CC00763AFF /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 12F247F72B7B85CC00763AFF /* Localizable.xcstrings */; };
 		12F247FF2B7BBBFD00763AFF /* TaskUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F247FE2B7BBBFD00763AFF /* TaskUseCase.swift */; };
 		12F248012B7BC78300763AFF /* TaskPageUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12F248002B7BC78300763AFF /* TaskPageUseCase.swift */; };
+		3AB41F922BD807DB00A89F93 /* AlertPopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB41F912BD807DB00A89F93 /* AlertPopUp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,7 @@
 		12F247F72B7B85CC00763AFF /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		12F247FE2B7BBBFD00763AFF /* TaskUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskUseCase.swift; sourceTree = "<group>"; };
 		12F248002B7BC78300763AFF /* TaskPageUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPageUseCase.swift; sourceTree = "<group>"; };
+		3AB41F912BD807DB00A89F93 /* AlertPopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPopUp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -375,6 +377,7 @@
 				12E62D922B5FD6A10016C9B1 /* TagsView.swift */,
 				121B88212B762E63009007B5 /* EmptyPageView.swift */,
 				121B88232B762F6C009007B5 /* EmptyTaskView.swift */,
+				3AB41F912BD807DB00A89F93 /* AlertPopUp.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -557,6 +560,7 @@
 				12614E082B5587D300869790 /* SwiftDataManager.swift in Sources */,
 				1263F48F2B569A1E006B7B42 /* Log.swift in Sources */,
 				12CE7FAF2B553B9600D7974A /* TaskViewModel.swift in Sources */,
+				3AB41F922BD807DB00A89F93 /* AlertPopUp.swift in Sources */,
 				129045812B91CEE3007EDDA0 /* Protocols.swift in Sources */,
 				1267FF382BAC27220025CA09 /* TaskPageLocal.swift in Sources */,
 				128E02042B67E5C200484AEB /* CustomTagTextField.swift in Sources */,
