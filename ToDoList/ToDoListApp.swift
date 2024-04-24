@@ -7,7 +7,9 @@ struct ToDoListApp: App {
     @State var taskViewModel = TaskViewModel()
     var body: some Scene {
         WindowGroup {
-            TaskView()
+            NavigationView {
+                TaskView()
+            }
                 .environment(taskViewModel)
         }
     }
