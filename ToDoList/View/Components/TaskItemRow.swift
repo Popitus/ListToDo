@@ -18,7 +18,7 @@ struct TaskItemRow: View {
                 StatusIndicator(status: task.status)
                     .onTapGesture {
                         withAnimation {
-                            taskViewModel.toggleTaskCompletion(task: task)
+                            taskViewModel.toggleTaskStatus(task: task)
                         }
                     }
             }
@@ -57,6 +57,6 @@ struct TaskItemRow: View {
 #Preview {
     @State var taskViewModel = TaskViewModel()
     return TaskItemRow(
-        task: TasksLocal(title: "Test", date: Date(), status: .pending, note: "Prueba de nota", lastUpdate: Date()))
+        task: TasksLocal(title: "Test", date: Date(), status: .inProcess, note: "Prueba de nota", lastUpdate: Date()))
         .environment(taskViewModel)
 }

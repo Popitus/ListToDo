@@ -49,13 +49,10 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertEqual(sut?.pages.count, 2)
     }
 
-    func testToggleTaskCompletionWithTask() {
+    func testToggleTaskCompletionWithTask() throws {
         createArrayOfPages()
 
-        guard let page = sut?.pages.randomElement() else {
-            XCTFail("Unable to get random page")
-            return
-        }
+        let page = try XCTUnwrap(sut?.pages.randomElement(),"Unable to get random page")
 
         if let index = sut?.pages.firstIndex(where: { $0.id == page.id }) {
             let selected = page.selected
@@ -64,12 +61,10 @@ final class ViewModelIntegrationTest: XCTestCase {
         }
     }
 
-    func testRemovePage() {
+    func testRemovePage() throws {
         createArrayOfPages()
-        guard let page = sut?.pages.randomElement() else {
-            XCTFail("Unable to get random page")
-            return
-        }
+        let page = try XCTUnwrap(sut?.pages.randomElement())
+        
         if let _ = sut?.pages.firstIndex(where: { $0.id == page.id }) {
             sut?.removePages(with: page.id)
             XCTAssertTrue((sut?.pages.contains(page)) == false)
@@ -78,17 +73,13 @@ final class ViewModelIntegrationTest: XCTestCase {
 
     // MARK: - Viewmodel Integration Test: TasksItem
 
-    func testAddTaskItem() {
+    func testAddTaskItem() throws {
         sut?.addTaskPage(title: "Texto pagina 1")
-        guard let page = sut?.pages.first else {
-            return XCTFail()
-        }
+        let page = try XCTUnwrap(sut?.pages.first)
+        
         sut?.addTask(title: "Texto 1", idTaskPage: page.id)
 
-        guard let task = sut?.tasks.filter({ $0.taskPageItemID == page.id }) else {
-            XCTFail()
-            return
-        }
+        let task = try XCTUnwrap(sut?.tasks.filter({ $0.taskPageItemID == page.id }))
 
         XCTAssertNotNil(page)
         XCTAssertNotNil(task)
@@ -99,19 +90,15 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertEqual(sut?.tasks.count, 1)
     }
 
-    func testAddTwoTasks() {
+    func testAddTwoTasks() throws {
         sut?.addTaskPage(title: "Texto pagina 1")
 
-        guard let page = sut?.pages.first else {
-            return XCTFail()
-        }
+        let page = try XCTUnwrap(sut?.pages.first)
+        
         sut?.addTask(title: "Texto 1", idTaskPage: page.id)
         sut?.addTask(title: "Texto 2", idTaskPage: page.id)
 
-        guard let task = sut?.tasks.filter({ $0.taskPageItemID == page.id }) else {
-            XCTFail()
-            return
-        }
+        let task = try XCTUnwrap(sut?.tasks.filter({ $0.taskPageItemID == page.id }))
 
         XCTAssertNotNil(page)
         XCTAssertNotNil(task)
@@ -123,32 +110,28 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertEqual(sut?.tasks.count, 2)
     }
 
-    func testToggleTaskCompletion() {
+    func testToggleTaskCompletion() throws {
         sut?.addTaskPage(title: "Texto pagina 1")
-        guard let page = sut?.pages.first else {
-            return XCTFail()
-        }
+        let page = try XCTUnwrap(sut?.pages.first)
+        
         let task = TasksLocal(title: "Texto1", date: .now, status: .pending, note: "", lastUpdate: .now)
 
         let status = sut?.tasks.first?.status
 
         sut?.addTask(title: task.title, idTaskPage: page.id)
 
-        sut?.toggleTaskCompletion(task: task)
+        sut?.toggleTaskStatus(task: task)
         XCTAssertFalse(sut?.tasks == nil)
         XCTAssertNotEqual(status, sut?.tasks.first?.status)
     }
-    func testUpdateTaskTitle() {
+    func testUpdateTaskTitle() throws {
         sut?.addTaskPage(title: "Texto pagina 1")
-        guard let page = sut?.pages.first else {
-            return XCTFail()
-        }
+        let page = try XCTUnwrap(sut?.pages.first)
+        
         let title = "Texto 1"
         sut?.addTask(title: title, idTaskPage: page.id)
-        guard var taskItem = sut?.tasks.first else {
-            XCTFail()
-            return
-        }
+        var taskItem = try XCTUnwrap(sut?.tasks.first)
+        
         taskItem.title = "Texto 2"
     
         sut?.updateTitleAndNote(with: taskItem)
@@ -157,17 +140,15 @@ final class ViewModelIntegrationTest: XCTestCase {
         
     }
     
-    func testUpdateTaskNote() {
+    func testUpdateTaskNote() throws {
         sut?.addTaskPage(title: "Texto pagina 1")
-        guard let page = sut?.pages.first else {
-            return XCTFail()
-        }
+        
+        let page = try XCTUnwrap(sut?.pages.first)
+        
         let title = "Texto 1"
         sut?.addTask(title: title, idTaskPage: page.id)
-        guard var taskItem = sut?.tasks.first else {
-            XCTFail()
-            return
-        }
+        var taskItem = try XCTUnwrap(sut?.tasks.first)
+        
         taskItem.note = "Prueba"
     
         sut?.updateTitleAndNote(with: taskItem)
@@ -176,17 +157,13 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertEqual("Prueba", sut?.tasks.first?.note)
     }
     
-    func testUpdateTaskWithoutChangeTitleOrNote() {
+    func testUpdateTaskWithoutChangeTitleOrNote() throws {
         sut?.addTaskPage(title: "Texto pagina 1")
-        guard let page = sut?.pages.first else {
-            return XCTFail()
-        }
+        let page = try XCTUnwrap(sut?.pages.first)
+        
         let title = "Texto 1"
         sut?.addTask(title: title, idTaskPage: page.id)
-        guard var taskItem = sut?.tasks.first else {
-            XCTFail()
-            return
-        }
+        let taskItem = try XCTUnwrap(sut?.tasks.first)
     
         sut?.updateTitleAndNote(with: taskItem)
         XCTAssertTrue(sut?.tasks.count == 1)
@@ -194,15 +171,11 @@ final class ViewModelIntegrationTest: XCTestCase {
 
     }
 
-    func testRemoveTask() {
-        createArrayOfTask()
-        guard let task = sut?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testRemoveTask() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(sut?.tasks.randomElement())
 
-        guard let index = sut?.tasks.firstIndex(of: task) else {
-            return XCTFail()
-        }
+        let index = try XCTUnwrap(sut?.tasks.firstIndex(of: task))
 
         sut?.removeTask(at: IndexSet(integer: index))
 
@@ -212,11 +185,10 @@ final class ViewModelIntegrationTest: XCTestCase {
 
     // MARK: - Viewmodel Integration Test: Tags
 
-    func testAddTag() {
-        createArrayOfTask()
-        guard let task = sut?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testAddTag() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(sut?.tasks.randomElement())
+        
         let tag = TagLocal(title: "Texto Test Tag1")
         sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
 
@@ -224,11 +196,10 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertTrue(sut?.tags.count == 1)
     }
 
-    func testAddTagWithEmptyTitle() {
-        createArrayOfTask()
-        guard let task = sut?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testAddTagWithEmptyTitle() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(sut?.tasks.randomElement())
+        
         let tag = TagItem(title: "")
         sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
 
@@ -236,20 +207,16 @@ final class ViewModelIntegrationTest: XCTestCase {
         XCTAssertTrue(sut?.tags.count == 0)
     }
     
-    func testUpdateTag() {
-        createArrayOfTask()
-        guard let task = sut?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testUpdateTag() throws {
+       try createArrayOfTask()
+        let task = try XCTUnwrap(sut?.tasks.randomElement())
+        
         let title = "Texto Test Tag1"
-        var tag = TagLocal(title: title)
+        let tag = TagLocal(title: title)
         sut?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
         XCTAssertTrue(tag.title == sut?.tags.first?.title)
         
-        guard var tagItem = sut?.tags.first else {
-            XCTFail()
-            return
-        }
+        var tagItem = try XCTUnwrap(sut?.tags.first)
         
         tagItem.title = "Texto Nuevo"
         sut?.updateTag(tag: tagItem)
@@ -259,11 +226,10 @@ final class ViewModelIntegrationTest: XCTestCase {
         
     }
 
-    func testRemoveOneTag() {
+    func testRemoveOneTag() throws {
         let tags = createArrayOfTags()
-        guard let tag = tags.randomElement() else {
-            return XCTFail()
-        }
+        let tag = try XCTUnwrap(tags.randomElement())
+        
         let countTags = tags.count
         sut?.removeOneTag(id: tag.id)
 
@@ -296,11 +262,10 @@ final class ViewModelIntegrationTest: XCTestCase {
         sut?.addTaskPage(title: "Titulo página 3")
     }
 
-    private func createArrayOfTask() {
+    private func createArrayOfTask() throws {
         createArrayOfPages()
-        guard let page = sut?.pages.randomElement() else {
-            return
-        }
+        let page = try XCTUnwrap(sut?.pages.randomElement())
+        
         sut?.addTask(title: "Titulo task1", idTaskPage: page.id)
         sut?.addTask(title: "Titulo task2", idTaskPage: page.id)
         sut?.addTask(title: "Titulo task3", idTaskPage: page.id)

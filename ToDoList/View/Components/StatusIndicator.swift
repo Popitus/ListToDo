@@ -2,18 +2,20 @@ import SwiftUI
 
 struct StatusIndicator: View {
     var status: TodoStatus
-
+    
     var body: some View {
-        let backgroundColor: Color = {
+        let (backgroundColor,title): (Color, String) = {
             switch status {
             case .completed:
-                return Color.green
+                (Color.green,String(localized: "status_completed"))
+            case .inProcess:
+                (Color.yellow,String(localized: "status_inprocess"))
             case .pending:
-                return Color.orange
+                (Color.orange,String(localized: "status_pending"))
             }
         }()
-
-        Text(status == .completed ? String(localized: "status_completed") : String(localized: "status_pending"))
+        
+        Text(title)
             .font(.footnote)
             .foregroundColor(.white)
             .padding(8)
@@ -23,5 +25,9 @@ struct StatusIndicator: View {
 }
 
 #Preview {
-    StatusIndicator(status: TodoStatus.pending)
+    VStack {
+        StatusIndicator(status: TodoStatus.pending)
+        StatusIndicator(status: TodoStatus.inProcess)
+        StatusIndicator(status: TodoStatus.completed)
+    }
 }

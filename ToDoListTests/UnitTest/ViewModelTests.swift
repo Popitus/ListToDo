@@ -48,12 +48,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel?.pages[1].title, pagesMock[1].title)
     }
 
-    func testTogglePageSelection() {
+    func testTogglePageSelection() throws {
         createArrayOfPages()
-        guard let page = viewModel?.pages.randomElement() else {
-            XCTFail("Unable to get random page")
-            return
-        }
+        let page = try XCTUnwrap(viewModel?.pages.randomElement(),"Unable to get random page")
+        
         if let index = viewModel?.pages.firstIndex(where: { $0.id == page.id }) {
             let selected = page.selected
             viewModel?.togglePageSelection(page: page)
@@ -62,12 +60,10 @@ final class ViewModelTests: XCTestCase {
         }
     }
 
-    func testRemoveSelectedPage() {
+    func testRemoveSelectedPage() throws {
         createArrayOfPages()
-        guard let page = viewModel?.pages.randomElement() else {
-            XCTFail("Unable to get random page")
-            return
-        }
+        let page = try XCTUnwrap(viewModel?.pages.randomElement())
+        
         let selectedId = page.id
         viewModel?.removePages(with: selectedId)
 
@@ -76,11 +72,10 @@ final class ViewModelTests: XCTestCase {
 
     // MARK: - Task Testing
 
-    func testAddTask() {
+    func testAddTask() throws {
         createArrayOfPages()
-        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
-            return XCTFail()
-        }
+        let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
+        
         let taskTitle = "Test Task title"
         viewModel?.addTask(title: taskTitle, idTaskPage: idTaskPage)
 
@@ -88,11 +83,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel?.tasks.count == 1)
     }
 
-    func testAddEmpyTask() {
+    func testAddEmpyTask() throws {
         createArrayOfPages()
-        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
-            return XCTFail()
-        }
+        let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
+        
         let taskTitle = ""
         viewModel?.addTask(title: taskTitle, idTaskPage: idTaskPage)
 
@@ -100,11 +94,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel?.tasks.count == 0)
     }
 
-    func testAddThreeTasks() {
+    func testAddThreeTasks() throws {
         createArrayOfPages()
-        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
-            return XCTFail()
-        }
+        let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
+        
         let taskTitle1 = "Test Task title1"
         let taskTitle2 = "Test Task title2"
         let taskTitle3 = "Test Task title3"
@@ -118,11 +111,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel?.tasks.count == 3)
     }
     
-    func testUpdateTaskTitle() {
+    func testUpdateTaskTitle() throws {
         createArrayOfPages()
-        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
-            return XCTFail()
-        }
+        let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
+        
         let title = "New Task"
         var newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
@@ -135,11 +127,10 @@ final class ViewModelTests: XCTestCase {
  
     }
     
-    func testUpdateTaskNote() {
+    func testUpdateTaskNote() throws {
         createArrayOfPages()
-        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
-            return XCTFail()
-        }
+        let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
+        
         let title = "New Task"
         var newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
@@ -152,11 +143,10 @@ final class ViewModelTests: XCTestCase {
  
     }
     
-    func testUpdateTaskWithoutChangeTitle() {
+    func testUpdateTaskWithoutChangeTitle() throws {
         createArrayOfPages()
-        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
-            return XCTFail()
-        }
+        let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
+        
         let title = "New Task"
         let newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
@@ -167,11 +157,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(newTask.title == title)
     }
     
-    func testUpdateTaskWithoutChangeNote() {
+    func testUpdateTaskWithoutChangeNote() throws {
         createArrayOfPages()
-        guard let idTaskPage = viewModel?.pages.randomElement()?.id else {
-            return XCTFail()
-        }
+        let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
+        
         let title = "New Task"
         let newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
@@ -182,42 +171,93 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(newTask.title == title)
     }
 
-    func testToggleCompletionTask() {
-        createArrayOfTask()
-        guard let task = viewModel?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testToggleCompletionTask() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(viewModel?.tasks.randomElement())
+        
         let selected = task.status
-        viewModel?.toggleTaskCompletion(task: task)
-        guard let taskChange = viewModel?.tasks.first(where: { $0.id == task.id }) else {
-            return XCTFail()
-        }
+        viewModel?.toggleTaskStatus(task: task)
+        let taskChange = try XCTUnwrap(viewModel?.tasks.first(where: { $0.id == task.id }))
+        
         XCTAssertTrue(selected != taskChange.status)
     }
 
-    func testRemoveTask() {
-        createArrayOfTask()
-        guard let task = viewModel?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testRemoveTask() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(viewModel?.tasks.randomElement())
 
-        guard let index = viewModel?.tasks.firstIndex(of: task) else {
-            return XCTFail()
-        }
+        let index = try XCTUnwrap(viewModel?.tasks.firstIndex(of: task))
 
         viewModel?.removeTask(at: IndexSet(integer: index))
 
         XCTAssertEqual(viewModel?.tasks.count, 2)
         XCTAssertTrue((viewModel?.tasks.contains(task)) == false)
     }
+    
+    
+    func testCheckActiveTask_NotCompletedShouldBe3() throws {
+        try createArrayOfTask()
+        let page = try XCTUnwrap(viewModel?.tasks.first?.taskPageItemID)
+        let completed = false
+        let completedTask = viewModel?.checkActivetask(is: completed, id: page)
+        
+        XCTAssertEqual(completedTask, 3)
+    }
+    func testToggleTaskPendingToInProcess_ShouldBe3() throws {
+        try createArrayOfTask()
+        let newStatus = TodoStatus.inProcess
+        
+        viewModel?.tasks.forEach {
+            viewModel?.toggleTaskStatus(task: $0)
+        }
+        
+        let totalTasks = viewModel?.tasks.filter { $0.status == newStatus }.count
+        
+        XCTAssertEqual(totalTasks, 3)
+    }
+    
+    func testToggleTaskPendingToInProcessToCompletedToPending_ShouldBe3() throws {
+        //Status Pending
+        try createArrayOfTask()
+        
+        viewModel?.tasks.forEach {
+            viewModel?.toggleTaskStatus(task: $0)
+        }
+        let inProcess = TodoStatus.inProcess
+        let inProcessTasks = viewModel?.tasks.filter { $0.status == inProcess }.count
+        XCTAssertEqual(inProcessTasks, 3)
+        
+        viewModel?.tasks.forEach {
+            viewModel?.toggleTaskStatus(task: $0)
+        }
+        let completed = TodoStatus.completed
+        let completedTasks = viewModel?.tasks.filter { $0.status == completed }.count
+        XCTAssertEqual(completedTasks,3)
+        
+        viewModel?.tasks.forEach {
+            viewModel?.toggleTaskStatus(task: $0)
+        }
+        let pending = TodoStatus.pending
+        let pendingTasks = viewModel?.tasks.filter { $0.status == pending }.count
+        XCTAssertEqual(pendingTasks, 3)
+    }
+    
+    
+    func testCheckStatusPendingTasks_ShouldBe3() throws {
+        try createArrayOfTask()
+        let pageId = try XCTUnwrap(viewModel?.tasks.first?.taskPageItemID)
+        let status = TodoStatus.pending
+        let totalTasks = viewModel?.checkStatusTasks(status, id: pageId)
+        
+        XCTAssertEqual(totalTasks, 3)
+    }
 
     // MARK: - Tags Testing
 
-    func testAddTag() {
-        createArrayOfTask()
-        guard let task = viewModel?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testAddTag() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(viewModel?.tasks.randomElement())
+        
         let tag = makeInitTag(with: "Prueba Tag")
         viewModel?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
 
@@ -225,11 +265,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel?.tags.count == 1)
     }
 
-    func testAddTagWithEmptyTitle() {
-        createArrayOfTask()
-        guard let task = viewModel?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testAddTagWithEmptyTitle() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(viewModel?.tasks.randomElement())
+        
         let tag = makeInitTag(with: "")
         viewModel?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
 
@@ -237,11 +276,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel?.tags.count == 0)
     }
     
-    func testUpdateTag() {
-        createArrayOfTask()
-        guard let task = viewModel?.tasks.randomElement() else {
-            return XCTFail()
-        }
+    func testUpdateTag() throws {
+        try createArrayOfTask()
+        let task = try XCTUnwrap(viewModel?.tasks.randomElement())
+        
         let tagName = "Tag1"
         var tag = makeInitTag(with: tagName)
         viewModel?.addTag(title: tag.title, idTaskItem: task.id, idTag: tag.id)
@@ -253,11 +291,10 @@ final class ViewModelTests: XCTestCase {
         XCTAssertTrue(viewModel?.tags.count != 0)
     }
 
-    func testRemoveOneTag() {
+    func testRemoveOneTag() throws {
         let tags = createArrayOfTags()
-        guard let tag = tags.randomElement() else {
-            return XCTFail()
-        }
+        let tag = try XCTUnwrap(tags.randomElement())
+        
         let countTags = tags.count
         viewModel?.removeOneTag(id: tag.id)
 
@@ -315,11 +352,10 @@ final class ViewModelTests: XCTestCase {
         viewModel?.addTaskPage(title: "Titulo página 3")
     }
 
-    private func createArrayOfTask() {
+    private func createArrayOfTask() throws {
         createArrayOfPages()
-        guard let page = viewModel?.pages.randomElement() else {
-            return
-        }
+        let page = try XCTUnwrap(viewModel?.pages.randomElement())
+        
         viewModel?.addTask(title: "Titulo task1", idTaskPage: page.id)
         viewModel?.addTask(title: "Titulo task2", idTaskPage: page.id)
         viewModel?.addTask(title: "Titulo task3", idTaskPage: page.id)

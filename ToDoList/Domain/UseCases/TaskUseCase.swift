@@ -26,17 +26,22 @@ class TaskUseCase: TaskUseCaseProtocol {
         return nil
     }
 
-    func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal] {
+    func toggleTaskStatus(task: TasksLocal) -> [TasksLocal] {
         let tasks = swiftDataManager.fetchTaskItem()
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             let status = task.status
-            tasks[index].completed.toggle()
             switch status {
             case .completed:
                 tasks[index].status = .pending
-            case .pending:
+                tasks[index].completed = false
+            case .inProcess:
                 tasks[index].lastUpdate = Date()
                 tasks[index].status = .completed
+                tasks[index].completed = true
+            case .pending:
+                tasks[index].lastUpdate = Date()
+                tasks[index].status = .inProcess
+                tasks[index].completed = false
             }
         }
         return tasks.map { TaskMapper.mapToDomain(taskItem: $0) }

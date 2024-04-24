@@ -71,8 +71,8 @@ class TaskViewModel {
         }
     }
 
-    func toggleTaskCompletion(task: TasksLocal) {
-        tasks = taskUseCase.toggleTaskCompletion(task: task)
+    func toggleTaskStatus(task: TasksLocal) {
+        tasks = taskUseCase.toggleTaskStatus(task: task)
     }
 
     func removeTask(at index: IndexSet) {
@@ -164,5 +164,12 @@ class TaskViewModel {
             }
         }
         return trueElements.count
+    }
+    
+    func checkStatusTasks(_ status: TodoStatus, id: UUID) -> Int {
+        let elements = tasks.filter { element in
+           element.status == status && element.taskPageItemID == id
+        }
+        return elements.count
     }
 }

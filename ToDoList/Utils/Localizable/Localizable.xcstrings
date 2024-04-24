@@ -305,6 +305,23 @@
         }
       }
     },
+    "status_inprocess" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In process"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En Proceso"
+          }
+        }
+      }
+    },
     "status_pending" : {
       "localizations" : {
         "en" : {
@@ -349,6 +366,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Completado"
+          }
+        }
+      }
+    },
+    "title_inprocess" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In process"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En proceso"
           }
         }
       }

@@ -11,7 +11,7 @@ protocol TaskPageUseCaseProtocol {
 
 protocol TaskUseCaseProtocol {
     func addTask(with title: String, idTaskPage: UUID) -> TasksLocal?
-    func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal]
+    func toggleTaskStatus(task: TasksLocal) -> [TasksLocal]
     func removeTask(at index: IndexSet) -> Int?
     func removeTasks(tasks: [TasksLocal]) -> [TasksLocal]
     func updateTask(task: TasksLocal) -> [TasksLocal]

@@ -13,10 +13,13 @@ extension TaskView {
                 if pageSelected && !checkTasks.isEmpty {
                     List {
                         Section {
-                            SectionListTaskView(idTaskFromPage: $idTaskFromPage, title: String(localized:"title_pending"), completed: false)
+                            SectionListTaskView(idTaskFromPage: $idTaskFromPage, title: String(localized:"title_pending"),status: .pending)
                         }
                         Section {
-                            SectionListTaskView(idTaskFromPage: $idTaskFromPage, title: String(localized:"title_completed"), completed: true)
+                            SectionListTaskView(idTaskFromPage: $idTaskFromPage, title: String(localized:"title_inprocess"),status: .inProcess)
+                        }
+                        Section {
+                            SectionListTaskView(idTaskFromPage: $idTaskFromPage, title: String(localized:"title_completed"), status: .completed)
                         }
                     }
                 } else {

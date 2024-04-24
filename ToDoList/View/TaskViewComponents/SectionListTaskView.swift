@@ -5,20 +5,20 @@ struct SectionListTaskView: View {
     @State var show = true
     @Binding var idTaskFromPage: UUID
     var title: String
-    var completed: Bool
+    var status: TodoStatus
     var body: some View {
         DisclosureGroup(
             isExpanded: $show,
             content: {
                 ForEach(taskViewModel.taskSearch) { item in
-                    if (item.taskPageItemID == idTaskFromPage) && (item.completed == completed) {
+                    if (item.taskPageItemID == idTaskFromPage) && (item.status == status) {
                         ListTask(item: item)
                     }
                 }
                 .onDelete(perform: taskViewModel.removeTask)
             },
             label: {
-                Text("\(title)\(taskViewModel.checkActivetask(is: completed, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkActivetask(is: completed, id: idTaskFromPage))" : "")")
+                Text("\(title)\(taskViewModel.checkStatusTasks(status, id: idTaskFromPage) > 0 ? " - \(taskViewModel.checkStatusTasks(status, id: idTaskFromPage))" : "")")
                     .foregroundStyle(.blue)
                     .font(.headline)
             }

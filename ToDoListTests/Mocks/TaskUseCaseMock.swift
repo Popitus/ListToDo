@@ -23,16 +23,18 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
         return nil
     }
 
-    func toggleTaskCompletion(task: TasksLocal) -> [TasksLocal] {
+    func toggleTaskStatus(task: TasksLocal) -> [TasksLocal] {
         if let index = taskMock.firstIndex(where: { $0.id == task.id }) {
             let status = task.status
-            taskMock[index].completed.toggle()
+           // taskMock[index].completed.toggle()
             switch status {
             case .completed:
                 taskMock[index].status = .pending
+            case .inProcess:
+                taskMock[index].status = .completed
             case .pending:
                 taskMock[index].lastUpdate = Date()
-                taskMock[index].status = .completed
+                taskMock[index].status = .inProcess
             }
         }
         return taskMock.map { TaskMapper.mapToDomainTestable(taskItem: $0) }
