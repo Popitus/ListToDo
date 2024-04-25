@@ -129,6 +129,22 @@
         }
       }
     },
+    "cancel" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
+          }
+        }
+      }
+    },
     "empty_categories" : {
       "localizations" : {
         "en" : {
@@ -237,22 +253,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notas"
-          }
-        }
-      }
-    },
-    "section_status" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Status"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Estado"
           }
         }
       }
