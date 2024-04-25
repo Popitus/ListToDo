@@ -25,8 +25,6 @@ struct EmptyTaskView: View {
 }
 
 #Preview {
-    @State var taskViewModel = TaskViewModel()
-    @State var title = "Prueba"
-    return EmptyTaskView(titleSelected: $title)
-        .environment(taskViewModel)
+    return EmptyTaskView(titleSelected: .constant("Test"))
+        .environment(TaskViewModel.preview)
 }

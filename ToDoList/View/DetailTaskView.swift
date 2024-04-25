@@ -39,6 +39,24 @@ struct DetailTaskView: View {
                             }
                         }
                 }
+                Section("section_sticker") {
+                    Menu {
+                        ForEach(Sticker.allCases, id:\.self) { sticker in
+                            Button {
+                                task.sticker = sticker
+                            } label: {
+                                LabeledContent(sticker.name) {
+                                    sticker.image
+                                }
+                            }
+                        }
+                        
+                    } label: {
+                        task.sticker.image
+                            .font(.largeTitle)
+                    }
+                    .tint(.black)
+                }
                 
                 Section("section_note") {
                     ZStack {
@@ -119,13 +137,9 @@ struct DetailTaskView: View {
 }
 
 #Preview {
-    @State var taskViewModel = TaskViewModel()
-    let tags = [TagLocal(title: "Tag1"), TagLocal(title: "Tag2")]
-    let task = TasksLocal(title: "Prueba", date: Date.now, status: .pending, note: "Prueba de nota", lastUpdate: Date())
-    
-    return NavigationView {
-        DetailTaskView(task: task, localTags: tags)
-            .environment(taskViewModel)
+    NavigationView {
+        DetailTaskView(task: .sample, localTags: TagLocal.samples)
+            .environment(TaskViewModel.preview)
     }
 }
 

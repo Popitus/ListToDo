@@ -59,7 +59,7 @@ final class ModelsToDoListTests: XCTestCase {
     }
 
     private func makeInitTaskItem(with title: String) -> TaskItem {
-        return TaskItem(title: title, date: Date().addingTimeInterval(20), status: .pending, note: "", lastUpdate: .now)
+        return TaskItem(title: title, date: Date().addingTimeInterval(20), status: .pending, note: "", lastUpdate: .now, sticker: .none)
     }
 
     private func makeInitTaskPageInit(with title: String) -> TaskPageItem {

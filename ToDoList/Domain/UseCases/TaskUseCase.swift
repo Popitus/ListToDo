@@ -16,6 +16,7 @@ class TaskUseCase: TaskUseCaseProtocol {
                 status: TodoStatus.pending,
                 note: "",
                 lastUpdate: Date(),
+                sticker: .none,
                 taskPageItem: pages[index]
             )
             newTask.tag = []
@@ -61,6 +62,7 @@ class TaskUseCase: TaskUseCaseProtocol {
         if let index = tasks.firstIndex(where: { $0.id == task.id }) {
             tasks[index].title = task.title
             tasks[index].note = task.note
+            tasks[index].sticker = task.sticker
         }
         return fetchAllTask()
     }

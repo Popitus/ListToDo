@@ -14,16 +14,17 @@ struct TaskItemRow: View {
                     .font(.title3)
 
                 Spacer()
-
-                StatusIndicator(status: task.status)
-                    .onTapGesture {
-                        withAnimation {
-                            taskViewModel.toggleTaskStatus(task: task)
-                        }
+                Button {
+                    withAnimation {
+                        taskViewModel.toggleTaskStatus(task: task)
+                    }
+                } label: {
+                        StatusIndicator(status: task.status)
                     }
             }
-
             HStack {
+                task.sticker.image
+                    .font(.title)
                 Text(task.lastUpdate.format())
                     .strikethrough(task.completed)
                     .foregroundColor(.gray)
@@ -55,8 +56,7 @@ struct TaskItemRow: View {
 }
 
 #Preview {
-    @State var taskViewModel = TaskViewModel()
-    return TaskItemRow(
-        task: TasksLocal(title: "Test", date: Date(), status: .inProcess, note: "Prueba de nota", lastUpdate: Date()))
-        .environment(taskViewModel)
+    TaskItemRow(
+        task: .sample)
+        .environment(TaskViewModel.preview)
 }

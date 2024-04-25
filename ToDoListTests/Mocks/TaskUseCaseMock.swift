@@ -14,6 +14,7 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
                 status: TodoStatus.pending,
                 note: "",
                 lastUpdate: Date(),
+                sticker: .none,
                 taskPageItemID: pagesMock[index].id
             )
             newTask.tag = []
@@ -62,6 +63,7 @@ struct TaskUseCaseMock: TaskUseCaseProtocol {
         if let index = taskMock.firstIndex(where: { $0.id == task.id }) {
             taskMock[index].title = task.title
             taskMock[index].note = task.note
+            taskMock[index].sticker = task.sticker
         }
         return taskMock.map { TaskMapper.mapToDomainTestable(taskItem: $0) }
     }

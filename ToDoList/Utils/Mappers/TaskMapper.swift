@@ -11,6 +11,7 @@ enum TaskMapper {
             note: taskLocal.note,
             lastUpdate: taskLocal.lastUpdate,
             completed: taskLocal.completed,
+            sticker: taskLocal.sticker,
             taskPageItem: TaskPageItem(id: taskPage, title: ""),
             tag: taskLocal.tag.map { TagMapper.mapToData(tagLocal: $0) }
         )
@@ -26,6 +27,7 @@ enum TaskMapper {
             note: taskItem.note,
             lastUpdate: taskItem.lastUpdate,
             completed: taskItem.completed,
+            sticker: taskItem.sticker,
             taskPageItemID: taskPage,
             tag: taskItem.tag.map { TagMapper.mapToDomain(tagItem: $0) }
         )
@@ -40,6 +42,7 @@ enum TaskMapper {
             note: taskItem.note,
             lastUpdate: taskItem.lastUpdate,
             completed: taskItem.completed,
+            sticker: taskItem.sticker,
             tag: taskItem.tag.map { TagMapper.mapToDomain(tagItem: $0) }
         )
     }

@@ -19,9 +19,6 @@ struct TitleSection: View {
 }
 
 #Preview {
-    @State var taskViewModel = TaskViewModel()
-    @State var showActive = true
-    @State var idTaskFromPage = UUID()
-    return TitleSection(showActive: $showActive, idTaskFromPage: $idTaskFromPage)
-        .environment(taskViewModel)
+    TitleSection(showActive: .constant(true), idTaskFromPage: .constant(UUID()))
+        .environment(TaskViewModel.preview)
 }

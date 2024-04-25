@@ -114,7 +114,7 @@ final class ViewModelIntegrationTest: XCTestCase {
         sut?.addTaskPage(title: "Texto pagina 1")
         let page = try XCTUnwrap(sut?.pages.first)
         
-        let task = TasksLocal(title: "Texto1", date: .now, status: .pending, note: "", lastUpdate: .now)
+        let task = createNewTask(title: "Title 1")
 
         let status = sut?.tasks.first?.status
 
@@ -269,5 +269,9 @@ final class ViewModelIntegrationTest: XCTestCase {
         sut?.addTask(title: "Titulo task1", idTaskPage: page.id)
         sut?.addTask(title: "Titulo task2", idTaskPage: page.id)
         sut?.addTask(title: "Titulo task3", idTaskPage: page.id)
+    }
+    
+    private func createNewTask(title: String) -> TasksLocal {
+        TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now,sticker: .none)
     }
 }

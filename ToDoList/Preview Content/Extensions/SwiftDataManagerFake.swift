@@ -1,6 +1,5 @@
 import Foundation
 import SwiftData
-@testable import ToDoList
 
 final class SwiftDataManagerFake: SwiftDataManagerProtocol {
     static let shared = SwiftDataManagerFake()

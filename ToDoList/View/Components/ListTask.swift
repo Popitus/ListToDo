@@ -32,8 +32,6 @@ struct ListTask: View {
 }
 
 #Preview {
-    @State var taskViewModel = TaskViewModel()
-
-    return ListTask(item: TasksLocal(title: "Titulo 1", date: .now, status: .completed, note: "Nota completa", lastUpdate: .now))
-        .environment(taskViewModel)
+    ListTask(item: .sample)
+        .environment(TaskViewModel.preview)
 }

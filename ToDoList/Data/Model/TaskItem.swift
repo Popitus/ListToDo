@@ -11,10 +11,10 @@ final class TaskItem {
     var note: String
     var lastUpdate: Date
     var completed = false
-
+    var sticker: Sticker
     @Relationship(deleteRule: .cascade, inverse: \TagItem.taskItem) var tag: [TagItem]
 
-    init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, note: String, lastUpdate: Date, completed: Bool = false, taskPageItem: TaskPageItem? = nil, tag: [TagItem] = []) {
+    init(id: UUID = UUID(), title: String, date: Date, status: TodoStatus, note: String, lastUpdate: Date, completed: Bool = false, sticker: Sticker, taskPageItem: TaskPageItem? = nil, tag: [TagItem] = []) {
         self.id = id
         self.title = title
         self.date = date
@@ -22,6 +22,7 @@ final class TaskItem {
         self.note = note
         self.lastUpdate = lastUpdate
         self.completed = completed
+        self.sticker = sticker
         self.taskPageItem = taskPageItem
         self.tag = tag
     }
@@ -30,6 +31,6 @@ final class TaskItem {
 
     @Attribute(.ephemeral)
     var printObject: String {
-        return "id: \(id), title: \(title), date: \(date), note: \(note), lastUpdate: \(lastUpdate), completed: \(completed)"
+        return "id: \(id), title: \(title), date: \(date), note: \(note), lastUpdate: \(lastUpdate), completed: \(completed), sticker: \(sticker.name)"
     }
 }

@@ -8,7 +8,7 @@ enum TagMapper {
             title: tagLocal.title,
             isInitial: tagLocal.isInitial,
             date: tagLocal.date,
-            taskItem: TaskItem(id: tag, title: "", date: .now, status: .pending, note: "", lastUpdate: .now)
+            taskItem: TaskItem(id: tag, title: "", date: .now, status: .pending, note: "", lastUpdate: .now, sticker: .none)
         )
     }
 

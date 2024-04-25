@@ -116,7 +116,7 @@ final class ViewModelTests: XCTestCase {
         let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
         
         let title = "New Task"
-        var newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        var newTask = createNewTask(title: title)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
         XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
         
@@ -132,7 +132,7 @@ final class ViewModelTests: XCTestCase {
         let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
         
         let title = "New Task"
-        var newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        var newTask = createNewTask(title: title)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
         XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
         
@@ -148,7 +148,7 @@ final class ViewModelTests: XCTestCase {
         let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
         
         let title = "New Task"
-        let newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        let newTask = createNewTask(title: title)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
         XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
         
@@ -162,7 +162,7 @@ final class ViewModelTests: XCTestCase {
         let idTaskPage = try XCTUnwrap(viewModel?.pages.randomElement()?.id)
         
         let title = "New Task"
-        let newTask = TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now)
+        let newTask = createNewTask(title: title)
         viewModel?.addTask(title: newTask.title, idTaskPage: idTaskPage)
         XCTAssertTrue(newTask.title == viewModel?.tasks.first?.title)
         
@@ -331,7 +331,7 @@ final class ViewModelTests: XCTestCase {
     }
 
     private func makeInitTaskItem(with title: String) -> TaskItem {
-        return TaskItem(title: title, date: Date(), status: .pending, note: "", lastUpdate: Date())
+        return TaskItem(title: title, date: Date(), status: .pending, note: "", lastUpdate: Date(),sticker: .none)
     }
 
     private func makeInitTaskPageInit(with title: String) -> TaskPageItem {
@@ -359,5 +359,8 @@ final class ViewModelTests: XCTestCase {
         viewModel?.addTask(title: "Titulo task1", idTaskPage: page.id)
         viewModel?.addTask(title: "Titulo task2", idTaskPage: page.id)
         viewModel?.addTask(title: "Titulo task3", idTaskPage: page.id)
+    }
+    private func createNewTask(title: String) -> TasksLocal {
+        TasksLocal(title: title, date: .now, status: .pending, note: "", lastUpdate: .now,sticker: .none)
     }
 }
